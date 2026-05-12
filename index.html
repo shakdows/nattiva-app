@@ -37,14 +37,14 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 .page.hidden{
   position:fixed;top:0;left:50%;
   transform:translateX(-50%) translateX(100%);
-  width:100%;max-width:480px;
+  width:100%;max-width:900px;
   opacity:0;pointer-events:none;
   z-index:200;
 }
 .page.visible{
   position:fixed;top:0;left:50%;
   transform:translateX(-50%) translateX(0);
-  width:100%;max-width:480px;
+  width:100%;max-width:900px;
   opacity:1;pointer-events:all;
   z-index:200;
   background:var(--paper);
@@ -55,6 +55,7 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 /* ── HEADER ── */
 .hd{
   position:sticky;top:0;z-index:300;
+  max-width:900px;margin:0 auto;width:100%;
   background:rgba(248,246,242,.95);
   backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   border-bottom:1px solid var(--ink-20);
@@ -84,47 +85,80 @@ img{display:block;width:100%;height:100%;object-fit:cover}
 .back-btn svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 
 /* ── MAIN HOME ── */
-main{padding:18px 14px 112px;display:flex;flex-direction:column;gap:18px}
+main{padding:18px 14px 112px;display:flex;flex-direction:column;gap:18px;max-width:900px;margin:0 auto}
+@media(min-width:600px){
+  main{ padding:28px 28px 112px; gap:24px; }
+}
+@media(min-width:600px){
+  main{ padding:24px 20px 112px; gap:22px; }
+}
 
 /* ── PROFILE HERO ── */
 .profile-hero{
   border-radius:var(--r-lg);overflow:hidden;
-  height:270px;position:relative;
+  height:340px;position:relative;
   box-shadow:var(--sh-lg);
   animation:up .6s cubic-bezier(.22,1,.36,1) both;
   background:#120303;
 }
-.profile-photo{position:absolute;inset:0;}
+@media(min-width:600px){
+  .profile-hero{ height:420px; border-radius:20px; }
+}
+.profile-photo{
+  position:absolute;
+  left:0; right:0; top:0; bottom:0;
+  background:#120303;
+  overflow:hidden;
+  
+}
 .profile-photo img{
+  position:absolute;
+  /* pin to right side so she's clearly visible */
+  right:0; top:0; bottom:0;
+  height:100%;
+  width:auto;
+  min-width:55%;
   object-fit:cover;
-  object-position:72% top;
-  width:100%;height:100%;
-  filter:brightness(.82) saturate(.85);
+  object-position:20% top;
+  filter:brightness(.85) saturate(.88) contrast(1.05);
 }
 /* Strong gradient on LEFT so text is readable, RIGHT keeps photo clear */
 .profile-overlay{
   position:absolute;inset:0;
   background:
-    linear-gradient(95deg,
-      rgba(6,1,1,.97) 0%,
-      rgba(80,6,6,.9) 25%,
-      rgba(20,3,3,.7) 48%,
-      rgba(0,0,0,.15) 65%,
-      transparent 100%);
+    linear-gradient(100deg,
+      rgba(4,0,0,1)    0%,
+      rgba(65,3,3,.98) 15%,
+      rgba(10,1,1,.90) 28%,
+      rgba(4,0,0,.75)  40%,
+      rgba(0,0,0,.30)  50%,
+      rgba(0,0,0,.05)  60%,
+      transparent      70%);
 }
-.profile-hero::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;z-index:4;background:linear-gradient(180deg,var(--gold-l),var(--gold) 60%,transparent)}
-.profile-content{position:absolute;left:0;top:0;bottom:0;width:60%;z-index:3;padding:24px 16px 22px 24px;display:flex;flex-direction:column;justify-content:space-between}
-.p-eyebrow{font-size:9px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-l);margin-bottom:6px}
-.p-name{font-family:var(--serif);font-size:32px;font-weight:300;color:var(--white);line-height:1.05;margin-bottom:5px}
-.p-creds{font-size:11px;color:rgba(255,255,255,.55);letter-spacing:.04em;margin-bottom:8px}
-.p-exp{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:4px;padding:3px 9px;font-size:10px;letter-spacing:.07em;color:rgba(255,255,255,.7)}
+.profile-hero::after{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:3px;z-index:4;
+  background:linear-gradient(180deg,var(--gold-l),var(--gold) 60%,transparent);
+}
+/* transparent blocker to prevent browser image toolbar */
+.profile-hero::before{
+  content:'';
+  position:absolute;inset:0;
+  z-index:5;
+  background:transparent;
+  pointer-events:none;
+}
+.profile-content{position:absolute;left:0;top:0;bottom:0;width:56%;z-index:3;padding:32px 24px 32px 36px;display:flex;flex-direction:column;justify-content:center;gap:12px;align-items:flex-start;}
+.p-eyebrow{font-size:10px;font-weight:700;letter-spacing:.26em;text-transform:uppercase;color:var(--gold-l);margin-bottom:0}
+.p-name{font-family:var(--serif);font-size:42px;font-weight:300;color:var(--white);line-height:1.02;margin-bottom:0}
+.p-creds{font-size:13px;color:rgba(255,255,255,.6);letter-spacing:.05em;margin-bottom:0}
+.p-exp{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);border-radius:6px;padding:5px 12px;font-size:11px;font-weight:500;letter-spacing:.08em;color:rgba(255,255,255,.85);width:fit-content;align-self:flex-start}
 .p-exp::before{content:'◈';color:var(--gold);font-size:8px}
-.p-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.96);border-radius:6px;padding:6px 13px;margin-bottom:12px;font-size:11px;font-weight:600;letter-spacing:.02em;color:var(--ink);box-shadow:0 3px 12px rgba(0,0,0,.22)}
+.p-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.97);border-radius:8px;padding:8px 16px;margin-bottom:0;font-size:13px;font-weight:600;letter-spacing:.02em;color:var(--ink);box-shadow:0 4px 16px rgba(0,0,0,.28);width:fit-content;align-self:flex-start}
 .p-badge span{color:var(--crimson)}
 .p-rating{display:flex;align-items:center;gap:7px}
-.p-score{font-family:var(--serif);font-size:21px;font-weight:600;color:var(--white)}
-.p-stars span{color:var(--gold);font-size:12px}
-.p-count{font-size:11px;color:rgba(255,255,255,.45)}
+.p-score{font-family:var(--serif);font-size:26px;font-weight:600;color:var(--white)}
+.p-stars span{color:var(--gold);font-size:15px}
+.p-count{font-size:13px;color:rgba(255,255,255,.5)}
 .p-arrow{color:rgba(255,255,255,.3);font-size:14px;margin-left:auto}
 
 /* ── SECTION ── */
@@ -137,6 +171,7 @@ main{padding:18px 14px 112px;display:flex;flex-direction:column;gap:18px}
   border-radius:var(--r-lg);overflow:hidden;
   border:1px solid var(--ink-20);box-shadow:var(--sh-md);
   display:flex;min-height:180px;
+
   cursor:pointer;transition:transform .25s,box-shadow .25s;
   animation:up .6s .07s cubic-bezier(.22,1,.36,1) both;
 }
@@ -211,6 +246,9 @@ main{padding:18px 14px 112px;display:flex;flex-direction:column;gap:18px}
 
 /* ── TOOLS GRID ── */
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+@media(min-width:700px){
+  .grid{ grid-template-columns:repeat(4,1fr); gap:18px; }
+}
 .card{background:var(--white);border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--ink-20);box-shadow:var(--sh);cursor:pointer;transition:transform .25s,box-shadow .25s;animation:up .6s cubic-bezier(.22,1,.36,1) both;display:flex;flex-direction:column;position:relative}
 .card:hover{transform:translateY(-3px);box-shadow:var(--sh-md)}
 .card:nth-child(1){animation-delay:.11s}.card:nth-child(2){animation-delay:.17s}.card:nth-child(3){animation-delay:.23s}.card:nth-child(4){animation-delay:.29s}
@@ -229,11 +267,16 @@ main{padding:18px 14px 112px;display:flex;flex-direction:column;gap:18px}
 /* ── NAV ── */
 nav{
   position:fixed;bottom:0;left:50%;transform:translateX(-50%);
-  width:100%;max-width:480px;
+  width:100%;max-width:900px;
   background:rgba(248,246,242,.97);
   backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
   border-top:1px solid var(--ink-20);
   display:flex;padding:10px 0 20px;z-index:400;
+  border-radius:0;
+}
+@media(min-width:600px){
+  nav{ padding:12px 40px 22px; border-radius:0; }
+  .nb{ max-width:120px; }
 }
 .nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;text-decoration:none;transition:opacity .2s;position:relative}
 .nb:not(.active){opacity:.35}
@@ -255,6 +298,9 @@ nav{
 .proj-header{
   padding:28px 20px 0;
   background:var(--paper);
+}
+@media(min-width:600px){
+  .proj-header{ padding:36px 28px 0; }
 }
 .proj-eyebrow{
   font-size:9px;font-weight:700;letter-spacing:.22em;
@@ -301,6 +347,11 @@ nav{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:16px;
+}
+@media(min-width:700px){
+  .props{ grid-template-columns:1fr 1fr 1fr; padding:0 28px 112px; gap:20px; }
+  .prop.featured{ grid-column:1/-1; flex-direction:row; min-height:200px; }
+  .prop.featured .prop-img{ width:48%; height:auto; }
 }
 
 .prop{
@@ -534,19 +585,18 @@ nav{
 
 .m-plan-view{
   border-radius:14px;overflow:hidden;
-  height:200px;position:relative;
+  position:relative;
   border:1px solid var(--ink-20);
-  background:var(--white);
+  background:#F5F3EF;
   margin-bottom:22px;
-  display:flex;align-items:center;justify-content:center;
 }
-.m-plan-view img{
-  width:100%;height:100%;object-fit:contain;
-  padding:8px;
+.m-plan-2d,.m-plan-3d{
+  width:100%;
+  transition:opacity .3s;
+  padding:0;
 }
-.m-plan-2d,.m-plan-3d{position:absolute;inset:0;transition:opacity .3s;display:flex;align-items:center;justify-content:center;padding:8px}
-.m-plan-2d img,.m-plan-3d img{max-width:100%;max-height:100%;object-fit:contain}
-.m-plan-2d.hide,.m-plan-3d.hide{opacity:0;pointer-events:none}
+.m-plan-2d.hide,.m-plan-3d.hide{display:none}
+.m-plan-2d svg,.m-plan-3d svg{width:100%;height:auto;display:block}
 
 /* CTA button */
 .m-cta-row{display:flex;gap:10px}
@@ -562,8 +612,14 @@ nav{
 
 /* ── ANIM ── */
 @keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+/* hide browser image toolbar/download icons */
+img { -webkit-user-drag:none; user-select:none; }
+.profile-photo img { -webkit-touch-callout:none; }
 ::-webkit-scrollbar{width:3px}
 ::-webkit-scrollbar-thumb{background:rgba(17,17,17,.2);border-radius:2px}
+/* Chrome image save button removal */
+img::after, div[style*="background-image"]::after { display:none!important; }
+:-webkit-any(img, [style*="background-image"])::-webkit-media-controls { display:none!important; }
 </style>
 </head>
 <body>
@@ -571,7 +627,7 @@ nav{
 <!-- ══════════════════════════════
      HOME PAGE
 ══════════════════════════════ -->
-<div id="page-home">
+<div id="page-home" style="max-width:900px;margin:0 auto;">
 
   <header class="hd">
     <div style="display:flex;align-items:center;gap:14px">
@@ -590,19 +646,14 @@ nav{
 
   <main>
     <!-- PROFILE HERO -->
-    <div class="profile-hero">
-      <div class="profile-photo">
-        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=90&fit=crop&crop=top" alt="Nathalia Pérez">
-      </div>
+    <div class="profile-hero" oncontextmenu="return false">
+      <canvas id="profile-canvas" class="profile-photo" style="background:transparent"></canvas>
       <div class="profile-overlay"></div>
       <div class="profile-content">
-        <div>
           <div class="p-eyebrow">Consultora Senior</div>
           <div class="p-name">Nathalia<br>Pérez</div>
           <div class="p-creds">Ing. Civil &nbsp;·&nbsp; Arquitecta</div>
-          <div class="p-exp">6+ años de experiencia</div>
-        </div>
-        <div>
+          <div class="p-exp">10+ años de experiencia</div>
           <div class="p-badge">Asesora en <span>&nbsp;Inversión Inmobiliaria</span></div>
           <div class="p-rating">
             <span class="p-score">4.9</span>
@@ -610,7 +661,6 @@ nav{
             <span class="p-count">527 opiniones</span>
             <span class="p-arrow">›</span>
           </div>
-        </div>
       </div>
     </div>
 
@@ -936,8 +986,8 @@ nav{
       <div class="m-plan-tab" onclick="switchPlan('3d',this)">Vista 3D</div>
     </div>
     <div class="m-plan-view">
-      <div class="m-plan-2d" id="plan-2d"><img id="m-plan-2d-img" src="" alt="Plano 2D"></div>
-      <div class="m-plan-3d hide" id="plan-3d"><img id="m-plan-3d-img" src="" alt="Vista 3D"></div>
+      <div class="m-plan-2d" id="plan-2d"><div id="plan-2d-svg"></div></div>
+      <div class="m-plan-3d hide" id="plan-3d"><div id="plan-3d-svg"></div></div>
     </div>
     <div class="m-cta-row">
       <button class="m-cta primary" onclick="closeBrochure()">Solicitar visita</button>
@@ -947,6 +997,836 @@ nav{
 </div>
 
 <script>
+
+/* ══ ARCHITECTURAL PLANS DATA ══ */
+const PLANS = {
+
+/* ──────────────────────────────────────
+   RESIDENCIA MIRAFLORES — 2 pisos, 4 hab
+────────────────────────────────────── */
+residencia:{
+svg2d:`<svg viewBox="0 0 520 440" xmlns="http://www.w3.org/2000/svg" font-family="Arial,sans-serif">
+<rect width="520" height="440" fill="#F4F1EC"/>
+<!-- Title -->
+<rect x="8" y="6" width="504" height="24" fill="#1A1A1A"/>
+<text x="260" y="22" text-anchor="middle" font-size="9.5" font-weight="700" letter-spacing="2.5" fill="white">RESIDENCIA MIRAFLORES · PLANTA PRIMER NIVEL · ESC 1:100</text>
+<!-- outer walls -->
+<rect x="28" y="38" width="464" height="380" fill="white" stroke="#111" stroke-width="7"/>
+<!-- inner wall horizontal mid -->
+<line x1="28" y1="190" x2="492" y2="190" stroke="#111" stroke-width="3"/>
+<!-- inner wall vertical left zone -->
+<line x1="190" y1="38" x2="190" y2="190" stroke="#111" stroke-width="3"/>
+<!-- inner wall vertical right zone -->
+<line x1="340" y1="38" x2="340" y2="190" stroke="#111" stroke-width="3"/>
+<!-- inner wall bottom zone -->
+<line x1="190" y1="190" x2="190" y2="418" stroke="#111" stroke-width="3"/>
+<line x1="340" y1="280" x2="340" y2="418" stroke="#111" stroke-width="3"/>
+<line x1="28" y1="280" x2="492" y2="280" stroke="#111" stroke-width="3"/>
+
+<!-- SALA -->
+<text x="109" y="105" text-anchor="middle" font-size="8.5" font-weight="700" fill="#333" letter-spacing="1.5">SALA</text>
+<text x="109" y="118" text-anchor="middle" font-size="7.5" fill="#888">35.0 m²</text>
+<!-- sofa L -->
+<rect x="36" y="46" width="72" height="20" rx="4" fill="#D8D3CC" stroke="#999" stroke-width=".8"/>
+<rect x="36" y="46" width="20" height="56" rx="4" fill="#D8D3CC" stroke="#999" stroke-width=".8"/>
+<rect x="38" y="48" width="68" height="14" rx="3" fill="#C8C3BC" stroke="#888" stroke-width=".5"/>
+<!-- coffee table -->
+<rect x="65" y="78" width="40" height="28" rx="3" fill="#E8E3DC" stroke="#aaa" stroke-width=".8"/>
+<!-- TV wall line -->
+<rect x="36" y="38" width="146" height="5" fill="#CCC" stroke="#888" stroke-width=".5"/>
+
+<!-- COMEDOR -->
+<text x="265" y="100" text-anchor="middle" font-size="8.5" font-weight="700" fill="#333" letter-spacing="1.5">COMEDOR</text>
+<text x="265" y="113" text-anchor="middle" font-size="7.5" fill="#888">28.0 m²</text>
+<!-- dining table oval -->
+<ellipse cx="265" cy="130" rx="40" ry="26" fill="#E8E3DC" stroke="#aaa" stroke-width=".8"/>
+<!-- chairs -->
+<rect x="243" y="100" width="14" height="9" rx="3" fill="#CCC" stroke="#888" stroke-width=".5"/>
+<rect x="262" y="100" width="14" height="9" rx="3" fill="#CCC" stroke="#888" stroke-width=".5"/>
+<rect x="281" y="100" width="14" height="9" rx="3" fill="#CCC" stroke="#888" stroke-width=".5"/>
+<rect x="243" y="151" width="14" height="9" rx="3" fill="#CCC" stroke="#888" stroke-width=".5"/>
+<rect x="262" y="151" width="14" height="9" rx="3" fill="#CCC" stroke="#888" stroke-width=".5"/>
+<rect x="281" y="151" width="14" height="9" rx="3" fill="#CCC" stroke="#888" stroke-width=".5"/>
+<rect x="222" y="120" width="9" height="14" rx="3" fill="#CCC" stroke="#888" stroke-width=".5"/>
+<rect x="299" y="120" width="9" height="14" rx="3" fill="#CCC" stroke="#888" stroke-width=".5"/>
+
+<!-- COCINA -->
+<text x="416" y="95" text-anchor="middle" font-size="8.5" font-weight="700" fill="#333" letter-spacing="1.5">COCINA</text>
+<text x="416" y="108" text-anchor="middle" font-size="7.5" fill="#888">22.0 m²</text>
+<!-- L-counter -->
+<rect x="348" y="38" width="136" height="16" fill="#D0CBC4" stroke="#888" stroke-width=".8"/>
+<rect x="476" y="38" width="16" height="100" fill="#D0CBC4" stroke="#888" stroke-width=".8"/>
+<!-- stove -->
+<rect x="356" y="40" width="44" height="12" fill="#B8B3AC" stroke="#777" stroke-width=".5"/>
+<circle cx="364" cy="46" r="4" fill="none" stroke="#666" stroke-width=".8"/>
+<circle cx="376" cy="46" r="4" fill="none" stroke="#666" stroke-width=".8"/>
+<circle cx="388" cy="46" r="4" fill="none" stroke="#666" stroke-width=".8"/>
+<!-- sink -->
+<rect x="414" y="40" width="28" height="12" rx="3" fill="white" stroke="#888" stroke-width=".8"/>
+<circle cx="428" cy="46" r="2" fill="#888"/>
+<!-- island -->
+<rect x="355" y="110" width="80" height="34" rx="4" fill="#E0DBD4" stroke="#888" stroke-width=".8"/>
+<text x="395" y="131" text-anchor="middle" font-size="7" fill="#666">ISLA</text>
+<!-- refrigerator -->
+<rect x="448" y="108" width="26" height="18" rx="2" fill="#D8D4CE" stroke="#888" stroke-width=".8"/>
+<line x1="461" y1="108" x2="461" y2="126" stroke="#888" stroke-width=".5"/>
+<text x="461" y="120" text-anchor="middle" font-size="5.5" fill="#666">REF</text>
+
+<!-- HALL -->
+<rect x="28" y="190" width="464" height="30" fill="#EBE8E2"/>
+<text x="260" y="210" text-anchor="middle" font-size="8" fill="#888" letter-spacing="2.5">HALL · CIRCULACIÓN PRINCIPAL</text>
+<line x1="28" y1="220" x2="492" y2="220" stroke="#111" stroke-width="1.5"/>
+
+<!-- DORMITORIO MASTER -->
+<text x="109" y="248" text-anchor="middle" font-size="8.5" font-weight="700" fill="#333" letter-spacing="1">DORM. MASTER</text>
+<text x="109" y="261" text-anchor="middle" font-size="7.5" fill="#888">40.0 m²</text>
+<!-- king bed -->
+<rect x="38" y="226" width="64" height="46" rx="4" fill="#E4DFD8" stroke="#aaa" stroke-width="1"/>
+<rect x="38" y="226" width="64" height="14" rx="3" fill="#C8C3BC" stroke="#999" stroke-width=".5"/>
+<circle cx="50" cy="233" r="5" fill="#B8B3AC"/>
+<circle cx="90" cy="233" r="5" fill="#B8B3AC"/>
+<!-- nightstands -->
+<rect x="34" y="236" width="10" height="10" rx="2" fill="#DDD" stroke="#aaa" stroke-width=".5"/>
+<rect x="102" y="236" width="10" height="10" rx="2" fill="#DDD" stroke="#aaa" stroke-width=".5"/>
+<!-- wardrobe -->
+<rect x="34" y="272" width="120" height="10" fill="#D4CFCA" stroke="#888" stroke-width=".8"/>
+<line x1="94" y1="272" x2="94" y2="282" stroke="#888" stroke-width=".5"/>
+<!-- door arc -->
+<line x1="190" y1="242" x2="190" y2="262" stroke="white" stroke-width="8"/>
+<path d="M190 262 Q170 242 190 242" fill="none" stroke="#111" stroke-width="1" stroke-dasharray="3,2"/>
+
+<!-- BAÑO MASTER -->
+<rect x="190" y="220" width="88" height="60" fill="#E8F0F5" stroke="#111" stroke-width="2"/>
+<text x="234" y="247" text-anchor="middle" font-size="7.5" fill="#666">BAÑO MASTER</text>
+<!-- bathtub -->
+<rect x="196" y="252" width="40" height="22" rx="8" fill="white" stroke="#888" stroke-width="1"/>
+<ellipse cx="216" cy="263" rx="14" ry="7" fill="#E0EDFA" stroke="#AAC" stroke-width=".5"/>
+<!-- shower -->
+<rect x="248" y="228" width="22" height="22" rx="2" fill="#D0E8F4" stroke="#888" stroke-width=".8"/>
+<line x1="249" y1="229" x2="269" y2="249" stroke="#9BBEDD" stroke-width=".6"/>
+<line x1="254" y1="229" x2="269" y2="244" stroke="#9BBEDD" stroke-width=".6"/>
+<line x1="249" y1="234" x2="264" y2="249" stroke="#9BBEDD" stroke-width=".6"/>
+<!-- toilet -->
+<ellipse cx="206" cy="234" rx="9" ry="7" fill="white" stroke="#888" stroke-width=".8"/>
+<rect x="197" y="227" width="18" height="8" rx="2" fill="white" stroke="#888" stroke-width=".8"/>
+
+<!-- DORMITORIO 2 -->
+<text x="280" y="248" text-anchor="middle" font-size="8.5" font-weight="700" fill="#333" letter-spacing="1">DORMITORIO 2</text>
+<text x="280" y="261" text-anchor="middle" font-size="7.5" fill="#888">25.0 m²</text>
+<rect x="198" y="226" width="52" height="38" rx="4" fill="#E4DFD8" stroke="#aaa" stroke-width="1"/>
+<rect x="198" y="226" width="52" height="12" rx="3" fill="#C8C3BC" stroke="#999" stroke-width=".5"/>
+
+<!-- DORMITORIO 3 -->
+<rect x="340" y="220" width="152" height="60" fill="none" stroke="#111" stroke-width="1.5"/>
+<text x="416" y="248" text-anchor="middle" font-size="8.5" font-weight="700" fill="#333" letter-spacing="1">DORMITORIO 3</text>
+<text x="416" y="261" text-anchor="middle" font-size="7.5" fill="#888">22.0 m²</text>
+<rect x="348" y="226" width="48" height="36" rx="4" fill="#E4DFD8" stroke="#aaa" stroke-width="1"/>
+<rect x="348" y="226" width="48" height="12" rx="3" fill="#C8C3BC" stroke="#999" stroke-width=".5"/>
+
+<!-- BAÑO SOCIAL -->
+<rect x="28" y="280" width="80" height="70" fill="#E8F0F5" stroke="#111" stroke-width="2"/>
+<text x="68" y="312" text-anchor="middle" font-size="7.5" fill="#666">BAÑO</text>
+<text x="68" y="323" text-anchor="middle" font-size="7.5" fill="#666">SOCIAL</text>
+<ellipse cx="50" cy="338" rx="10" ry="7" fill="white" stroke="#888" stroke-width=".8"/>
+<rect x="40" y="331" width="20" height="8" rx="2" fill="white" stroke="#888" stroke-width=".8"/>
+<rect x="68" y="334" width="14" height="12" rx="4" fill="white" stroke="#888" stroke-width=".8"/>
+<circle cx="75" cy="340" r="2" fill="#888"/>
+
+<!-- LAVANDERÍA -->
+<rect x="108" y="280" width="82" height="70" fill="#F0EDE8" stroke="#111" stroke-width="1.5"/>
+<text x="149" y="313" text-anchor="middle" font-size="7.5" fill="#666">LAVANDERÍA</text>
+<rect x="118" y="292" width="24" height="24" rx="10" fill="white" stroke="#888" stroke-width=".8"/>
+<circle cx="130" cy="304" r="7" fill="none" stroke="#aaa" stroke-width="1"/>
+<rect x="148" y="292" width="24" height="24" rx="3" fill="white" stroke="#888" stroke-width=".8"/>
+<text x="160" y="307" text-anchor="middle" font-size="5.5" fill="#888">SEC.</text>
+
+<!-- ESTUDIO -->
+<rect x="190" y="280" width="150" height="70" fill="none" stroke="#111" stroke-width="1.5"/>
+<text x="265" y="313" text-anchor="middle" font-size="8.5" font-weight="700" fill="#333" letter-spacing="1">ESTUDIO</text>
+<text x="265" y="326" text-anchor="middle" font-size="7.5" fill="#888">18.0 m²</text>
+<rect x="198" y="288" width="60" height="24" rx="2" fill="#E0DBD4" stroke="#aaa" stroke-width=".8"/>
+<rect x="198" y="310" width="30" height="20" rx="2" fill="#E0DBD4" stroke="#aaa" stroke-width=".8"/>
+
+<!-- TERRAZA -->
+<rect x="340" y="280" width="152" height="138" fill="#E8F0E0" stroke="#111" stroke-width="1.5" stroke-dasharray="10,4"/>
+<text x="416" y="340" text-anchor="middle" font-size="8.5" font-weight="700" fill="#555" letter-spacing="1">TERRAZA</text>
+<text x="416" y="354" text-anchor="middle" font-size="7.5" fill="#888">45.0 m²</text>
+<!-- planters -->
+<rect x="348" y="288" width="16" height="16" rx="2" fill="#B8CCA8" stroke="#88AA88" stroke-width=".8"/>
+<rect x="348" y="306" width="16" height="16" rx="2" fill="#B8CCA8" stroke="#88AA88" stroke-width=".8"/>
+<rect x="466" y="288" width="16" height="16" rx="2" fill="#B8CCA8" stroke="#88AA88" stroke-width=".8"/>
+<!-- outdoor chairs -->
+<circle cx="420" cy="380" r="12" fill="none" stroke="#88AA88" stroke-width="1" stroke-dasharray="4,2"/>
+<circle cx="444" cy="380" r="12" fill="none" stroke="#88AA88" stroke-width="1" stroke-dasharray="4,2"/>
+
+<!-- dimension lines -->
+<g stroke="#A8191B" stroke-width=".7" fill="#A8191B">
+  <line x1="28" y1="30" x2="492" y2="30"/>
+  <line x1="28" y1="27" x2="28" y2="33"/>
+  <line x1="492" y1="27" x2="492" y2="33"/>
+  <text x="260" y="27" text-anchor="middle" font-size="7.5">22.00 m</text>
+  <line x1="18" y1="38" x2="18" y2="418"/>
+  <line x1="15" y1="38" x2="21" y2="38"/>
+  <line x1="15" y1="418" x2="21" y2="418"/>
+  <text x="14" y="228" text-anchor="middle" font-size="7.5" transform="rotate(-90,14,228)">19.00 m</text>
+  <!-- room divider dims -->
+  <line x1="28" y1="425" x2="190" y2="425"/>
+  <text x="109" y="434" text-anchor="middle" font-size="6.5">8.10 m</text>
+  <line x1="190" y1="425" x2="340" y2="425"/>
+  <text x="265" y="434" text-anchor="middle" font-size="6.5">7.50 m</text>
+  <line x1="340" y1="425" x2="492" y2="425"/>
+  <text x="416" y="434" text-anchor="middle" font-size="6.5">7.60 m</text>
+</g>
+<!-- compass -->
+<g transform="translate(476,406)">
+  <circle r="14" fill="white" stroke="#333" stroke-width="1"/>
+  <polygon points="0,-11 3.5,0 0,3 -3.5,0" fill="#A8191B"/>
+  <polygon points="0,11 3.5,0 0,-3 -3.5,0" fill="#888"/>
+  <text y="-14" text-anchor="middle" font-size="7" font-weight="700" fill="#A8191B">N</text>
+</g>
+<!-- scale bar -->
+<g transform="translate(28,436)">
+  <rect width="90" height="5" fill="#333"/>
+  <rect x="90" width="90" height="5" fill="white" stroke="#333" stroke-width=".8"/>
+  <rect x="180" width="45" height="5" fill="#333"/>
+  <text y="14" font-size="6.5" fill="#555">0</text>
+  <text x="86" y="14" font-size="6.5" fill="#555">5 m</text>
+  <text x="170" y="14" font-size="6.5" fill="#555">10 m</text>
+  <text x="221" y="14" font-size="6.5" fill="#555">12.5 m</text>
+  <text x="55" y="-2" font-size="6" fill="#888">ESCALA 1:100</text>
+</g>
+</svg>`,
+
+svg3d:`<svg viewBox="0 0 540 420" xmlns="http://www.w3.org/2000/svg" font-family="Arial,sans-serif">
+<defs>
+  <linearGradient id="rsky" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#B8D4F0"/><stop offset="60%" stop-color="#D8EAF8"/><stop offset="100%" stop-color="#EEF2F0"/>
+  </linearGradient>
+  <linearGradient id="rwall_f" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#EDE8E0"/><stop offset="100%" stop-color="#C8C0B0"/>
+  </linearGradient>
+  <linearGradient id="rwall_s" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#C8C0AE"/><stop offset="100%" stop-color="#A8A090"/>
+  </linearGradient>
+  <linearGradient id="rroof" x1="0" y1="0" x2="1" y2="1">
+    <stop offset="0%" stop-color="#9A7A5A"/><stop offset="100%" stop-color="#6A5030"/>
+  </linearGradient>
+  <linearGradient id="rground" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#A8C890"/><stop offset="100%" stop-color="#88A870"/>
+  </linearGradient>
+  <filter id="rshadow"><feDropShadow dx="4" dy="6" stdDeviation="5" flood-opacity=".25"/></filter>
+</defs>
+<rect width="540" height="420" fill="url(#rsky)"/>
+<!-- ground plane -->
+<polygon points="40,360 500,360 540,400 0,400" fill="url(#rground)"/>
+<!-- pool on ground -->
+<ellipse cx="430" cy="355" rx="55" ry="18" fill="#5599CC" stroke="#3377AA" stroke-width="1.5"/>
+<ellipse cx="430" cy="355" rx="48" ry="13" fill="#77BBEE" opacity=".7"/>
+<text x="430" y="359" text-anchor="middle" font-size="7.5" fill="white" font-weight="700">PISCINA</text>
+<!-- shadow -->
+<polygon points="90,358 380,358 360,366 100,366" fill="rgba(0,0,0,.18)"/>
+
+<!-- MAIN HOUSE with filter -->
+<g filter="url(#rshadow)">
+  <!-- Side wall (right face) -->
+  <polygon points="310,320 310,140 430,100 430,280" fill="url(#rwall_s)" stroke="#999" stroke-width="1"/>
+  <!-- Front wall -->
+  <polygon points="90,320 310,320 310,140 90,140" fill="url(#rwall_f)" stroke="#AAA" stroke-width="1.2"/>
+  <!-- Top/Roof base -->
+  <polygon points="90,140 310,140 430,100 210,100" fill="#D8D2C8" stroke="#AAA" stroke-width="1"/>
+</g>
+
+<!-- ROOF structure -->
+<!-- Main roof front slope -->
+<polygon points="75,140 305,140 200,80 75,110" fill="url(#rroof)" stroke="#664422" stroke-width="1"/>
+<!-- Main roof back slope -->
+<polygon points="305,140 430,100 310,60 200,80" fill="#8A6A4A" stroke="#664422" stroke-width="1"/>
+<!-- Ridge beam -->
+<line x1="75" y1="110" x2="310" y2="60" stroke="#554433" stroke-width="2"/>
+<!-- Chimney -->
+<rect x="230" y="52" width="18" height="30" fill="#A89080" stroke="#887060" stroke-width="1"/>
+<rect x="226" y="50" width="26" height="6" fill="#C0A888" stroke="#887060" stroke-width="1"/>
+
+<!-- GROUND FLOOR WINDOWS front -->
+<rect x="108" y="220" width="52" height="44" rx="2" fill="#B8D4EE" stroke="#6688AA" stroke-width="1.5"/>
+<line x1="134" y1="220" x2="134" y2="264" stroke="#6688AA" stroke-width="1"/>
+<line x1="108" y1="242" x2="160" y2="242" stroke="#6688AA" stroke-width="1"/>
+<!-- window reflection -->
+<polygon points="108,220 134,220 108,242" fill="rgba(255,255,255,.25)"/>
+
+<rect x="178" y="220" width="52" height="44" rx="2" fill="#B8D4EE" stroke="#6688AA" stroke-width="1.5"/>
+<line x1="204" y1="220" x2="204" y2="264" stroke="#6688AA" stroke-width="1"/>
+<line x1="178" y1="242" x2="230" y2="242" stroke="#6688AA" stroke-width="1"/>
+<polygon points="178,220 204,220 178,242" fill="rgba(255,255,255,.25)"/>
+
+<rect x="248" y="220" width="52" height="44" rx="2" fill="#B8D4EE" stroke="#6688AA" stroke-width="1.5"/>
+<line x1="274" y1="220" x2="274" y2="264" stroke="#6688AA" stroke-width="1"/>
+<line x1="248" y1="242" x2="300" y2="242" stroke="#6688AA" stroke-width="1"/>
+<polygon points="248,220 274,220 248,242" fill="rgba(255,255,255,.25)"/>
+
+<!-- UPPER FLOOR WINDOWS -->
+<rect x="108" y="158" width="52" height="40" rx="2" fill="#B8D4EE" stroke="#6688AA" stroke-width="1.5"/>
+<line x1="134" y1="158" x2="134" y2="198" stroke="#6688AA" stroke-width="1"/>
+<line x1="108" y1="178" x2="160" y2="178" stroke="#6688AA" stroke-width="1"/>
+<polygon points="108,158 134,158 108,178" fill="rgba(255,255,255,.25)"/>
+
+<rect x="178" y="158" width="52" height="40" rx="2" fill="#B8D4EE" stroke="#6688AA" stroke-width="1.5"/>
+<line x1="204" y1="158" x2="204" y2="198" stroke="#6688AA" stroke-width="1"/>
+<polygon points="178,158 204,158 178,178" fill="rgba(255,255,255,.25)"/>
+
+<rect x="248" y="158" width="52" height="40" rx="2" fill="#B8D4EE" stroke="#6688AA" stroke-width="1.5"/>
+<line x1="274" y1="158" x2="274" y2="198" stroke="#6688AA" stroke-width="1"/>
+<polygon points="248,158 274,158 248,178" fill="rgba(255,255,255,.25)"/>
+
+<!-- FLOOR LINE -->
+<line x1="90" y1="140" x2="310" y2="140" stroke="#888" stroke-width="1.5"/>
+
+<!-- MAIN DOOR -->
+<rect x="178" y="268" width="54" height="52" rx="3" fill="#7A5A2A" stroke="#5A3A0A" stroke-width="1.5"/>
+<rect x="180" y="270" width="24" height="44" rx="2" fill="#6A4A1A" stroke="#4A2A00" stroke-width=".8"/>
+<rect x="206" y="270" width="24" height="44" rx="2" fill="#6A4A1A" stroke="#4A2A00" stroke-width=".8"/>
+<circle cx="204" cy="294" r="3" fill="#C49A3C"/>
+<circle cx="209" cy="294" r="3" fill="#C49A3C"/>
+<!-- door steps -->
+<rect x="170" y="318" width="70" height="5" rx="1" fill="#C8C0B0" stroke="#AAA" stroke-width=".5"/>
+<rect x="166" y="321" width="78" height="5" rx="1" fill="#B8B0A0" stroke="#AAA" stroke-width=".5"/>
+
+<!-- BALCONY upper -->
+<rect x="90" y="198" width="220" height="24" fill="#DDD8CE" stroke="#AAA" stroke-width="1"/>
+<!-- balcony railing posts -->
+<line x1="100" y1="198" x2="100" y2="222" stroke="#999" stroke-width="1.5"/>
+<line x1="120" y1="198" x2="120" y2="222" stroke="#999" stroke-width="1.5"/>
+<line x1="140" y1="198" x2="140" y2="222" stroke="#999" stroke-width="1.5"/>
+<line x1="160" y1="198" x2="160" y2="222" stroke="#999" stroke-width="1.5"/>
+<line x1="180" y1="198" x2="180" y2="222" stroke="#999" stroke-width="1.5"/>
+<line x1="200" y1="198" x2="200" y2="222" stroke="#999" stroke-width="1.5"/>
+<line x1="220" y1="198" x2="220" y2="222" stroke="#999" stroke-width="1.5"/>
+<line x1="240" y1="198" x2="240" y2="222" stroke="#999" stroke-width="1.5"/>
+<line x1="260" y1="198" x2="260" y2="222" stroke="#999" stroke-width="1.5"/>
+<line x1="280" y1="198" x2="280" y2="222" stroke="#999" stroke-width="1.5"/>
+<line x1="300" y1="198" x2="300" y2="222" stroke="#999" stroke-width="1.5"/>
+<!-- horizontal railing bar -->
+<line x1="90" y1="206" x2="310" y2="206" stroke="#888" stroke-width="1"/>
+
+<!-- GARDEN elements -->
+<!-- Tree 1 -->
+<circle cx="50" cy="315" r="28" fill="#4A8A3A" opacity=".9"/>
+<circle cx="50" cy="300" r="22" fill="#5A9A4A" opacity=".9"/>
+<rect x="44" y="330" width="12" height="30" fill="#7A5020"/>
+<!-- Tree 2 -->
+<circle cx="480" cy="320" r="22" fill="#4A8030" opacity=".85"/>
+<circle cx="480" cy="308" r="17" fill="#5A9040" opacity=".85"/>
+<rect x="475" y="332" width="10" height="24" fill="#6A4018"/>
+<!-- Hedges -->
+<rect x="90" y="334" width="8" height="24" rx="2" fill="#5A8040" opacity=".8"/>
+<rect x="100" y="334" width="8" height="24" rx="2" fill="#6A9050" opacity=".8"/>
+<rect x="110" y="334" width="8" height="24" rx="2" fill="#5A8040" opacity=".8"/>
+<!-- Driveway -->
+<polygon points="160,360 200,360 215,400 145,400" fill="#C0B8A8" stroke="#A8A090" stroke-width=".8"/>
+<line x1="180" y1="360" x2="180" y2="400" stroke="#B8B0A0" stroke-width=".5" stroke-dasharray="4,3"/>
+
+<!-- Right side windows -->
+<rect x="318" y="175" width="44" height="36" rx="2" fill="#A8C8E4" stroke="#6688AA" stroke-width="1.2"/>
+<line x1="340" y1="175" x2="340" y2="211" stroke="#6688AA" stroke-width=".8"/>
+<polygon points="318,175 340,175 318,195" fill="rgba(255,255,255,.2)"/>
+<rect x="318" y="230" width="44" height="36" rx="2" fill="#A8C8E4" stroke="#6688AA" stroke-width="1.2"/>
+<line x1="340" y1="230" x2="340" y2="266" stroke="#6688AA" stroke-width=".8"/>
+
+<!-- Dimension labels -->
+<text x="200" y="374" text-anchor="middle" font-size="9" font-weight="700" fill="#333">22.00 m</text>
+<text x="490" y="225" text-anchor="middle" font-size="9" font-weight="700" fill="#333" transform="rotate(90,490,225)">2 NIVELES · 7.50 m</text>
+
+<!-- Label bar -->
+<rect x="0" y="400" width="540" height="20" fill="#1A1A1A"/>
+<text x="270" y="413" text-anchor="middle" font-size="8.5" font-weight="700" letter-spacing="2.5" fill="white">RESIDENCIA MIRAFLORES · PERSPECTIVA 3D · NATTIVA ESTATE</text>
+</svg>`
+},
+
+/* ──────────────────────────────────────
+   PENTHOUSE SAN ISIDRO — piso 24, open plan
+────────────────────────────────────── */
+penthouse:{
+svg2d:`<svg viewBox="0 0 520 440" xmlns="http://www.w3.org/2000/svg" font-family="Arial,sans-serif">
+<rect width="520" height="440" fill="#F4F1EC"/>
+<rect x="8" y="6" width="504" height="24" fill="#1A1A1A"/>
+<text x="260" y="22" text-anchor="middle" font-size="9.5" font-weight="700" letter-spacing="2.5" fill="white">PENTHOUSE SAN ISIDRO · PLANTA NIVEL 24 · ESC 1:75</text>
+<!-- Penthouse outer shape — irregular luxury -->
+<polygon points="28,38 492,38 492,260 420,260 420,418 28,418" fill="white" stroke="#111" stroke-width="7"/>
+<!-- TERRAZA exterior dashed -->
+<polygon points="420,38 492,38 492,260 420,260" fill="#E4EED8" stroke="#111" stroke-width="2" stroke-dasharray="10,4"/>
+<text x="456" y="148" text-anchor="middle" font-size="8.5" font-weight="700" fill="#557744" letter-spacing="1">TERRAZA</text>
+<text x="456" y="162" text-anchor="middle" font-size="7.5" fill="#88AA66">EXTERIOR</text>
+<text x="456" y="176" text-anchor="middle" font-size="7.5" fill="#888">80 m²</text>
+<!-- pool in terraza -->
+<rect x="428" y="50" width="56" height="80" rx="12" fill="#66AADD" stroke="#4488BB" stroke-width="1.5"/>
+<ellipse cx="456" cy="90" rx="22" ry="34" fill="#88CCFF" opacity=".5"/>
+<text x="456" y="93" text-anchor="middle" font-size="7" fill="white" font-weight="700">PISCINA</text>
+<!-- loungers on terraza -->
+<rect x="432" y="142" width="44" height="14" rx="4" fill="#D0CCBA" stroke="#aaa" stroke-width=".8"/>
+<rect x="432" y="160" width="44" height="14" rx="4" fill="#D0CCBA" stroke="#aaa" stroke-width=".8"/>
+
+<!-- vertical divider -->
+<line x1="200" y1="38" x2="200" y2="260" stroke="#111" stroke-width="3"/>
+<!-- horizontal divider top -->
+<line x1="28" y1="150" x2="200" y2="150" stroke="#111" stroke-width="2.5"/>
+<!-- horizontal mid -->
+<line x1="28" y1="260" x2="420" y2="260" stroke="#111" stroke-width="3"/>
+<!-- vertical bottom -->
+<line x1="200" y1="260" x2="200" y2="418" stroke="#111" stroke-width="3"/>
+<line x1="340" y1="260" x2="340" y2="418" stroke="#111" stroke-width="3"/>
+
+<!-- SALA LOUNGE -->
+<text x="114" y="88" text-anchor="middle" font-size="8.5" font-weight="700" fill="#333" letter-spacing="1">SALA LOUNGE</text>
+<text x="114" y="101" text-anchor="middle" font-size="7.5" fill="#888">45 m²</text>
+<!-- curved sofa -->
+<path d="M38,46 Q38,138 90,138 L170,138 Q186,138 186,120 L186,56 Q186,44 170,44 Z" fill="#D8D3CA" stroke="#aaa" stroke-width="1" fill-opacity=".8"/>
+<rect x="50" y="90" width="44" height="32" rx="3" fill="#E4DFD6" stroke="#bbb" stroke-width=".8"/>
+<!-- glass coffee table -->
+<rect x="60" y="72" width="30" height="20" rx="2" fill="#C8DDEE" stroke="#aaa" stroke-width=".8" opacity=".7"/>
+
+<!-- ESTUDIO / BIBLIOTECA -->
+<text x="114" y="186" text-anchor="middle" font-size="8.5" font-weight="700" fill="#333" letter-spacing="1">ESTUDIO</text>
+<text x="114" y="199" text-anchor="middle" font-size="7.5" fill="#888">22 m²</text>
+<!-- bookshelves -->
+<rect x="34" y="156" width="158" height="10" fill="#D0CABC" stroke="#888" stroke-width=".8"/>
+<line x1="60" y1="156" x2="60" y2="166" stroke="#888" stroke-width=".5"/>
+<line x1="86" y1="156" x2="86" y2="166" stroke="#888" stroke-width=".5"/>
+<line x1="112" y1="156" x2="112" y2="166" stroke="#888" stroke-width=".5"/>
+<line x1="138" y1="156" x2="138" y2="166" stroke="#888" stroke-width=".5"/>
+<line x1="164" y1="156" x2="164" y2="166" stroke="#888" stroke-width=".5"/>
+<!-- desk -->
+<rect x="40" y="210" width="80" height="28" rx="3" fill="#E0DBD2" stroke="#aaa" stroke-width=".8"/>
+<rect x="44" y="215" width="28" height="18" rx="2" fill="#C8D8E8" stroke="#aaa" stroke-width=".5"/>
+
+<!-- COCINA GOURMET -->
+<text x="310" y="88" text-anchor="middle" font-size="8.5" font-weight="700" fill="#333" letter-spacing="1">COCINA GOURMET</text>
+<text x="310" y="101" text-anchor="middle" font-size="7.5" fill="#888">38 m²</text>
+<!-- U-shaped kitchen -->
+<rect x="208" y="38" width="204" height="16" fill="#CCC8C0" stroke="#888" stroke-width=".8"/>
+<rect x="208" y="38" width="16" height="110" fill="#CCC8C0" stroke="#888" stroke-width=".8"/>
+<rect x="396" y="38" width="16" height="110" fill="#CCC8C0" stroke="#888" stroke-width=".8"/>
+<!-- stove top -->
+<circle cx="236" cy="46" r="5" fill="none" stroke="#666" stroke-width="1"/>
+<circle cx="252" cy="46" r="5" fill="none" stroke="#666" stroke-width="1"/>
+<circle cx="268" cy="46" r="5" fill="none" stroke="#666" stroke-width="1"/>
+<circle cx="284" cy="46" r="5" fill="none" stroke="#666" stroke-width="1"/>
+<!-- oven -->
+<rect x="303" y="40" width="26" height="12" rx="2" fill="#B8B3AC" stroke="#777" stroke-width=".5"/>
+<!-- island with stools -->
+<rect x="230" y="100" width="130" height="44" rx="5" fill="#E4DFD6" stroke="#888" stroke-width="1"/>
+<text x="295" y="126" text-anchor="middle" font-size="7.5" fill="#666">ISLA COCINA</text>
+<!-- stools -->
+<circle cx="252" cy="94" r="8" fill="none" stroke="#aaa" stroke-width="1"/>
+<circle cx="278" cy="94" r="8" fill="none" stroke="#aaa" stroke-width="1"/>
+<circle cx="304" cy="94" r="8" fill="none" stroke="#aaa" stroke-width="1"/>
+<circle cx="330" cy="94" r="8" fill="none" stroke="#aaa" stroke-width="1"/>
+
+<!-- COMEDOR open -->
+<text x="310" y="185" text-anchor="middle" font-size="8.5" font-weight="700" fill="#333" letter-spacing="1">COMEDOR</text>
+<text x="310" y="198" text-anchor="middle" font-size="7.5" fill="#888">30 m²</text>
+<!-- long dining table -->
+<rect x="228" y="158" width="160" height="54" rx="4" fill="#E4DFD6" stroke="#aaa" stroke-width=".8"/>
+<!-- chairs long sides -->
+<rect x="234" y="150" width="16" height="8" rx="3" fill="#CCC" stroke="#aaa" stroke-width=".5"/>
+<rect x="256" y="150" width="16" height="8" rx="3" fill="#CCC" stroke="#aaa" stroke-width=".5"/>
+<rect x="278" y="150" width="16" height="8" rx="3" fill="#CCC" stroke="#aaa" stroke-width=".5"/>
+<rect x="300" y="150" width="16" height="8" rx="3" fill="#CCC" stroke="#aaa" stroke-width=".5"/>
+<rect x="322" y="150" width="16" height="8" rx="3" fill="#CCC" stroke="#aaa" stroke-width=".5"/>
+<rect x="234" y="212" width="16" height="8" rx="3" fill="#CCC" stroke="#aaa" stroke-width=".5"/>
+<rect x="256" y="212" width="16" height="8" rx="3" fill="#CCC" stroke="#aaa" stroke-width=".5"/>
+<rect x="278" y="212" width="16" height="8" rx="3" fill="#CCC" stroke="#aaa" stroke-width=".5"/>
+<rect x="300" y="212" width="16" height="8" rx="3" fill="#CCC" stroke="#aaa" stroke-width=".5"/>
+<rect x="322" y="212" width="16" height="8" rx="3" fill="#CCC" stroke="#aaa" stroke-width=".5"/>
+
+<!-- SUITE MASTER -->
+<text x="114" y="315" text-anchor="middle" font-size="8.5" font-weight="700" fill="#333" letter-spacing="1">SUITE MASTER</text>
+<text x="114" y="328" text-anchor="middle" font-size="7.5" fill="#888">42 m²</text>
+<!-- king bed -->
+<rect x="38" y="270" width="72" height="54" rx="5" fill="#E4DFD8" stroke="#aaa" stroke-width="1"/>
+<rect x="38" y="270" width="72" height="16" rx="4" fill="#C8C3BA" stroke="#999" stroke-width=".5"/>
+<circle cx="50" cy="278" r="6" fill="#B8B3AA"/>
+<circle cx="98" cy="278" r="6" fill="#B8B3AA"/>
+<!-- nightstands -->
+<rect x="33" y="284" width="12" height="12" rx="2" fill="#DDD" stroke="#aaa" stroke-width=".5"/>
+<rect x="110" y="284" width="12" height="12" rx="2" fill="#DDD" stroke="#aaa" stroke-width=".5"/>
+<!-- wardrobe walk-in -->
+<rect x="34" y="328" width="158" height="14" fill="#D0CABC" stroke="#888" stroke-width=".8"/>
+<text x="113" y="339" text-anchor="middle" font-size="6.5" fill="#666">WALKING CLOSET</text>
+<!-- door -->
+<line x1="200" y1="296" x2="200" y2="320" stroke="white" stroke-width="8"/>
+<path d="M200 320 Q178 296 200 296" fill="none" stroke="#111" stroke-width="1" stroke-dasharray="3,2"/>
+
+<!-- BAÑO MASTER -->
+<rect x="200" y="260" width="100" height="80" fill="#E4EEF8" stroke="#111" stroke-width="2.5"/>
+<text x="250" y="296" text-anchor="middle" font-size="7.5" fill="#666">BAÑO MASTER</text>
+<!-- freestanding tub -->
+<ellipse cx="222" cy="314" rx="16" ry="10" fill="white" stroke="#888" stroke-width="1"/>
+<ellipse cx="222" cy="314" rx="11" ry="6" fill="#DCF0FA" stroke="#AAC" stroke-width=".5"/>
+<!-- double shower -->
+<rect x="252" y="268" width="40" height="30" rx="2" fill="#C8E4F4" stroke="#888" stroke-width=".8"/>
+<line x1="272" y1="268" x2="272" y2="298" stroke="#aaa" stroke-width=".5"/>
+<circle cx="261" cy="278" r="4" fill="rgba(150,200,240,.5)"/>
+<circle cx="283" cy="278" r="4" fill="rgba(150,200,240,.5)"/>
+<!-- double sink -->
+<rect x="204" y="268" width="18" height="16" rx="4" fill="white" stroke="#888" stroke-width=".8"/>
+<rect x="226" y="268" width="18" height="16" rx="4" fill="white" stroke="#888" stroke-width=".8"/>
+
+<!-- DORMITORIO 2 -->
+<text x="270" y="315" text-anchor="middle" font-size="8.5" font-weight="700" fill="#333" letter-spacing="1">DORMITORIO 2</text>
+<text x="270" y="328" text-anchor="middle" font-size="7.5" fill="#888">28 m²</text>
+<rect x="210" y="340" width="60" height="50" rx="4" fill="#E4DFD8" stroke="#aaa" stroke-width="1"/>
+<rect x="210" y="340" width="60" height="14" rx="3" fill="#C8C3BA" stroke="#999" stroke-width=".5"/>
+
+<!-- BAÑO 2 -->
+<rect x="340" y="260" width="80" height="80" fill="#E4EEF8" stroke="#111" stroke-width="2"/>
+<text x="380" y="296" text-anchor="middle" font-size="7.5" fill="#666">BAÑO 2</text>
+<ellipse cx="358" cy="316" rx="10" ry="7" fill="white" stroke="#888" stroke-width=".8"/>
+<rect x="348" y="309" width="20" height="8" rx="2" fill="white" stroke="#888" stroke-width=".8"/>
+<rect x="376" y="308" width="16" height="14" rx="4" fill="white" stroke="#888" stroke-width=".8"/>
+
+<!-- SALA ESTAR -->
+<rect x="340" y="340" width="80" height="78" fill="none" stroke="#111" stroke-width="1.5"/>
+<text x="380" y="376" text-anchor="middle" font-size="7.5" fill="#666">SALA</text>
+<text x="380" y="388" text-anchor="middle" font-size="7.5" fill="#666">ESTAR</text>
+
+<!-- compass -->
+<g transform="translate(492,415)"><circle r="14" fill="white" stroke="#333" stroke-width="1"/><polygon points="0,-11 3.5,0 0,3 -3.5,0" fill="#A8191B"/><polygon points="0,11 3.5,0 0,-3 -3.5,0" fill="#888"/><text y="-14" text-anchor="middle" font-size="7" font-weight="700" fill="#A8191B">N</text></g>
+<!-- scale -->
+<g transform="translate(28,430)"><rect width="75" height="5" fill="#333"/><rect x="75" width="75" height="5" fill="white" stroke="#333" stroke-width=".8"/><text y="13" font-size="6.5" fill="#555">0</text><text x="70" y="13" font-size="6.5" fill="#555">5 m</text><text x="145" y="13" font-size="6.5" fill="#555">10 m</text></g>
+<!-- dims -->
+<g stroke="#A8191B" stroke-width=".7" fill="#A8191B">
+  <line x1="28" y1="30" x2="492" y2="30"/><line x1="28" y1="27" x2="28" y2="33"/><line x1="492" y1="27" x2="492" y2="33"/>
+  <text x="260" y="27" text-anchor="middle" font-size="7.5">23.20 m</text>
+  <line x1="18" y1="38" x2="18" y2="418"/><line x1="15" y1="38" x2="21" y2="38"/><line x1="15" y1="418" x2="21" y2="418"/>
+  <text x="14" y="228" text-anchor="middle" font-size="7.5" transform="rotate(-90,14,228)">19.00 m</text>
+</g>
+</svg>`,
+
+svg3d:`<svg viewBox="0 0 540 420" xmlns="http://www.w3.org/2000/svg" font-family="Arial,sans-serif">
+<defs>
+  <linearGradient id="psky" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#8AAAD0"/><stop offset="50%" stop-color="#C0D4EE"/><stop offset="100%" stop-color="#E8EEF8"/>
+  </linearGradient>
+  <linearGradient id="pglass_front" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#90B8D8" stop-opacity=".85"/><stop offset="100%" stop-color="#60A0CC" stop-opacity=".7"/>
+  </linearGradient>
+  <linearGradient id="pglass_side" x1="0" y1="0" x2="1" y2="0">
+    <stop offset="0%" stop-color="#70A0C8" stop-opacity=".8"/><stop offset="100%" stop-color="#4888B8" stop-opacity=".6"/>
+  </linearGradient>
+  <linearGradient id="pconc" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#D8D4CE"/><stop offset="100%" stop-color="#B8B4AE"/>
+  </linearGradient>
+  <linearGradient id="pground" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0%" stop-color="#889898"/><stop offset="100%" stop-color="#607070"/>
+  </linearGradient>
+  <filter id="ptower"><feDropShadow dx="6" dy="10" stdDeviation="8" flood-opacity=".3"/></filter>
+</defs>
+<rect width="540" height="420" fill="url(#psky)"/>
+<!-- City background skyline -->
+<rect x="0" y="200" width="80" height="200" fill="#9AA8B8" opacity=".4"/>
+<rect x="440" y="220" width="50" height="180" fill="#9AA8B8" opacity=".35"/>
+<rect x="460" y="180" width="40" height="220" fill="#8898A8" opacity=".3"/>
+<rect x="30" y="230" width="40" height="170" fill="#9AA8B8" opacity=".3"/>
+<!-- Ground -->
+<polygon points="0,380 540,380 540,420 0,420" fill="url(#pground)"/>
+<!-- Road markings -->
+<line x1="0" y1="400" x2="540" y2="400" stroke="#555" stroke-width=".8" stroke-dasharray="20,15"/>
+
+<!-- BUILDING TOWER — glass curtain wall high-rise -->
+<g filter="url(#ptower)">
+  <!-- Back concrete core -->
+  <rect x="170" y="40" width="200" height="330" fill="#C8C4BE" stroke="#AAA" stroke-width="1"/>
+  <!-- Front glass facade -->
+  <rect x="140" y="60" width="220" height="310" fill="url(#pglass_front)" stroke="#6699CC" stroke-width="1.2"/>
+  <!-- Side glass facade -->
+  <polygon points="360,60 440,40 440,350 360,370" fill="url(#pglass_side)" stroke="#5588BB" stroke-width="1"/>
+</g>
+
+<!-- FLOOR LINES on glass facade -->
+<line x1="140" y1="340" x2="360" y2="340" stroke="rgba(255,255,255,.4)" stroke-width="1"/>
+<line x1="140" y1="320" x2="360" y2="320" stroke="rgba(255,255,255,.35)" stroke-width=".8"/>
+<line x1="140" y1="300" x2="360" y2="300" stroke="rgba(255,255,255,.35)" stroke-width=".8"/>
+<line x1="140" y1="280" x2="360" y2="280" stroke="rgba(255,255,255,.3)" stroke-width=".8"/>
+<line x1="140" y1="260" x2="360" y2="260" stroke="rgba(255,255,255,.3)" stroke-width=".8"/>
+<line x1="140" y1="240" x2="360" y2="240" stroke="rgba(255,255,255,.28)" stroke-width=".8"/>
+<line x1="140" y1="220" x2="360" y2="220" stroke="rgba(255,255,255,.28)" stroke-width=".8"/>
+<line x1="140" y1="200" x2="360" y2="200" stroke="rgba(255,255,255,.25)" stroke-width=".8"/>
+<line x1="140" y1="180" x2="360" y2="180" stroke="rgba(255,255,255,.25)" stroke-width=".8"/>
+<line x1="140" y1="160" x2="360" y2="160" stroke="rgba(255,255,255,.22)" stroke-width=".8"/>
+<line x1="140" y1="140" x2="360" y2="140" stroke="rgba(255,255,255,.22)" stroke-width=".8"/>
+<line x1="140" y1="120" x2="360" y2="120" stroke="rgba(255,255,255,.2)" stroke-width=".8"/>
+<line x1="140" y1="100" x2="360" y2="100" stroke="rgba(255,255,255,.2)" stroke-width=".8"/>
+<line x1="140" y1="80" x2="360" y2="80" stroke="rgba(255,255,255,.18)" stroke-width=".8"/>
+
+<!-- VERTICAL MULLIONS on glass -->
+<line x1="200" y1="60" x2="200" y2="370" stroke="rgba(255,255,255,.3)" stroke-width=".8"/>
+<line x1="250" y1="60" x2="250" y2="370" stroke="rgba(255,255,255,.25)" stroke-width=".8"/>
+<line x1="300" y1="60" x2="300" y2="370" stroke="rgba(255,255,255,.25)" stroke-width=".8"/>
+
+<!-- PENTHOUSE FLOOR — top 2 floors highlighted -->
+<rect x="138" y="58" width="224" height="44" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.6)" stroke-width="1.5"/>
+<!-- Penthouse label -->
+<rect x="370" y="72" width="130" height="18" rx="3" fill="#A8191B"/>
+<text x="435" y="84" text-anchor="middle" font-size="8" fill="white" font-weight="700" letter-spacing="1">PISO 24 · PENTHOUSE</text>
+<line x1="370" y1="81" x2="362" y2="81" stroke="#A8191B" stroke-width="1.5"/>
+
+<!-- ROOFTOP TERRACE with pool -->
+<rect x="140" y="40" width="220" height="22" fill="#E0D8CC" stroke="#999" stroke-width="1"/>
+<!-- roof pool -->
+<rect x="180" y="43" width="80" height="15" rx="4" fill="#5599DD" stroke="#3377BB" stroke-width="1"/>
+<text x="220" y="53" text-anchor="middle" font-size="6.5" fill="white" font-weight="700">PISCINA ROOFTOP</text>
+<!-- pergola -->
+<rect x="272" y="43" width="50" height="15" fill="none" stroke="#999" stroke-width=".8" stroke-dasharray="3,2"/>
+<text x="297" y="53" text-anchor="middle" font-size="5.5" fill="#666">PÉRGOLA</text>
+
+<!-- Glass reflection highlights -->
+<polygon points="140,60 200,60 140,160" fill="rgba(255,255,255,.12)"/>
+<polygon points="250,60 310,60 250,180" fill="rgba(255,255,255,.08)"/>
+
+<!-- LOBBY BASE -->
+<rect x="130" y="368" width="240" height="14" fill="#C0B8A8" stroke="#AAA" stroke-width="1"/>
+<!-- entrance canopy -->
+<polygon points="195,356 345,356 360,368 180,368" fill="#D0C8B8" stroke="#AAA" stroke-width=".8"/>
+<!-- entrance doors -->
+<rect x="220" y="356" width="40" height="12" fill="rgba(100,160,220,.7)" stroke="#6699CC" stroke-width=".8"/>
+<line x1="240" y1="356" x2="240" y2="368" stroke="#6699CC" stroke-width=".5"/>
+<!-- steps -->
+<rect x="188" y="368" width="164" height="4" rx="1" fill="#B8B0A0"/>
+<rect x="196" y="372" width="148" height="4" rx="1" fill="#A8A090"/>
+<rect x="204" y="376" width="132" height="4" rx="1" fill="#989080"/>
+
+<!-- Floor count indicator -->
+<line x1="130" y1="60" x2="130" y2="370" stroke="#333" stroke-width=".8"/>
+<text x="122" y="215" text-anchor="middle" font-size="8" fill="#333" transform="rotate(-90,122,215)">24 PISOS · 78 m</text>
+<line x1="127" y1="60" x2="133" y2="60" stroke="#333" stroke-width="1"/>
+<line x1="127" y1="370" x2="133" y2="370" stroke="#333" stroke-width="1"/>
+
+<!-- Label bar -->
+<rect x="0" y="400" width="540" height="20" fill="#1A1A1A"/>
+<text x="270" y="413" text-anchor="middle" font-size="8.5" font-weight="700" letter-spacing="2.5" fill="white">PENTHOUSE SAN ISIDRO · PERSPECTIVA 3D · NATTIVA ESTATE</text>
+</svg>`
+},
+
+/* ────────────────── VILLA LA MOLINA ── */
+villa:{
+svg2d:`<svg viewBox="0 0 520 440" xmlns="http://www.w3.org/2000/svg" font-family="Arial,sans-serif">
+<rect width="520" height="440" fill="#F4F1EC"/>
+<rect x="8" y="6" width="504" height="24" fill="#1A1A1A"/>
+<text x="260" y="22" text-anchor="middle" font-size="9.5" font-weight="700" letter-spacing="2.5" fill="white">VILLA LA MOLINA · PLANTA PRIMER NIVEL · ESC 1:150</text>
+<!-- Large villa outer wall — U-shape opening to garden -->
+<path d="M28,38 L492,38 L492,418 L340,418 L340,280 L180,280 L180,418 L28,418 Z" fill="white" stroke="#111" stroke-width="7"/>
+<!-- JARDÍN / PISCINA central -->
+<rect x="180" y="280" width="160" height="138" fill="#D8EEC8" stroke="#88AA66" stroke-width="2" stroke-dasharray="8,4"/>
+<text x="260" y="342" text-anchor="middle" font-size="8.5" fill="#557744" font-weight="700">JARDÍN</text>
+<!-- pool in garden -->
+<rect x="198" y="300" width="124" height="60" rx="14" fill="#55AADD" stroke="#3388BB" stroke-width="1.5"/>
+<text x="260" y="334" text-anchor="middle" font-size="7" fill="white" font-weight="700">PISCINA OLÍMPICA</text>
+<!-- inner walls -->
+<line x1="28" y1="160" x2="492" y2="160" stroke="#111" stroke-width="3"/>
+<line x1="180" y1="38" x2="180" y2="280" stroke="#111" stroke-width="3"/>
+<line x1="340" y1="38" x2="340" y2="280" stroke="#111" stroke-width="3"/>
+<line x1="180" y1="160" x2="340" y2="160" stroke="none"/>
+<line x1="28" y1="280" x2="180" y2="280" stroke="#111" stroke-width="3"/>
+<line x1="340" y1="280" x2="492" y2="280" stroke="#111" stroke-width="3"/>
+<!-- SALA GRAN FORMATO -->
+<text x="104" y="90" text-anchor="middle" font-size="8.5" font-weight="700" fill="#333" letter-spacing="1">GRAN SALA</text>
+<text x="104" y="103" text-anchor="middle" font-size="7.5" fill="#888">65 m²</text>
+<rect x="36" y="46" width="86" height="22" rx="4" fill="#D8D3CA" stroke="#aaa" stroke-width=".8"/>
+<rect x="36" y="46" width="22" height="70" rx="4" fill="#D8D3CA" stroke="#aaa" stroke-width=".8"/>
+<rect x="42" y="84" width="50" height="34" rx="3" fill="#E4DFD4" stroke="#bbb" stroke-width=".8"/>
+<!-- COMEDOR FORMAL -->
+<text x="260" y="90" text-anchor="middle" font-size="8.5" font-weight="700" fill="#333" letter-spacing="1">COMEDOR FORMAL</text>
+<text x="260" y="103" text-anchor="middle" font-size="7.5" fill="#888">48 m²</text>
+<rect x="210" y="60" width="100" height="55" rx="4" fill="#E4DFD6" stroke="#aaa" stroke-width=".8"/>
+<rect x="218" y="52" width="14" height="8" rx="3" fill="#CCC" stroke="#aaa" stroke-width=".5"/>
+<rect x="238" y="52" width="14" height="8" rx="3" fill="#CCC" stroke="#aaa" stroke-width=".5"/>
+<rect x="258" y="52" width="14" height="8" rx="3" fill="#CCC" stroke="#aaa" stroke-width=".5"/>
+<rect x="278" y="52" width="14" height="8" rx="3" fill="#CCC" stroke="#aaa" stroke-width=".5"/>
+<rect x="218" y="115" width="14" height="8" rx="3" fill="#CCC" stroke="#aaa" stroke-width=".5"/>
+<rect x="238" y="115" width="14" height="8" rx="3" fill="#CCC" stroke="#aaa" stroke-width=".5"/>
+<rect x="258" y="115" width="14" height="8" rx="3" fill="#CCC" stroke="#aaa" stroke-width=".5"/>
+<rect x="278" y="115" width="14" height="8" rx="3" fill="#CCC" stroke="#aaa" stroke-width=".5"/>
+<!-- COCINA GRANDE -->
+<text x="416" y="88" text-anchor="middle" font-size="8.5" font-weight="700" fill="#333" letter-spacing="1">COCINA</text>
+<text x="416" y="101" text-anchor="middle" font-size="7.5" fill="#888">35 m²</text>
+<rect x="348" y="38" width="136" height="14" fill="#CCC8C0" stroke="#888" stroke-width=".8"/>
+<rect x="470" y="38" width="14" height="120" fill="#CCC8C0" stroke="#888" stroke-width=".8"/>
+<rect x="348" y="130" width="120" height="14" fill="#CCC8C0" stroke="#888" stroke-width=".8"/>
+<circle cx="370" cy="45" r="5" fill="none" stroke="#666" stroke-width="1"/>
+<circle cx="386" cy="45" r="5" fill="none" stroke="#666" stroke-width="1"/>
+<circle cx="402" cy="45" r="5" fill="none" stroke="#666" stroke-width="1"/>
+<circle cx="418" cy="45" r="5" fill="none" stroke="#666" stroke-width="1"/>
+<rect x="362" y="90" width="74" height="30" rx="4" fill="#E0DBD4" stroke="#888" stroke-width=".8"/>
+<text x="399" y="108" text-anchor="middle" font-size="7" fill="#666">ISLA</text>
+<!-- HALL CENTRAL -->
+<rect x="28" y="160" width="464" height="30" fill="#EBE8E2"/>
+<text x="260" y="180" text-anchor="middle" font-size="7.5" fill="#888" letter-spacing="3">HALL CENTRAL · CIRCULACIÓN</text>
+<!-- DORMITORIOS 1-4 lower zone -->
+<text x="104" y="238" text-anchor="middle" font-size="8.5" font-weight="700" fill="#333">DORM. MASTER</text>
+<text x="104" y="251" text-anchor="middle" font-size="7.5" fill="#888">55 m²</text>
+<rect x="36" y="196" width="70" height="56" rx="4" fill="#E4DFD8" stroke="#aaa" stroke-width="1"/>
+<rect x="36" y="196" width="70" height="16" rx="3" fill="#C8C3BA" stroke="#999" stroke-width=".5"/>
+<circle cx="48" cy="204" r="6" fill="#B8B3AA"/>
+<circle cx="94" cy="204" r="6" fill="#B8B3AA"/>
+<text x="416" y="238" text-anchor="middle" font-size="8.5" font-weight="700" fill="#333">DORMITORIO 2</text>
+<text x="416" y="251" text-anchor="middle" font-size="7.5" fill="#888">38 m²</text>
+<rect x="356" y="196" width="60" height="50" rx="4" fill="#E4DFD8" stroke="#aaa" stroke-width="1"/>
+<rect x="356" y="196" width="60" height="14" rx="3" fill="#C8C3BA" stroke="#999" stroke-width=".5"/>
+<!-- compass + scale -->
+<g transform="translate(492,415)"><circle r="14" fill="white" stroke="#333" stroke-width="1"/><polygon points="0,-11 3.5,0 0,3 -3.5,0" fill="#A8191B"/><polygon points="0,11 3.5,0 0,-3 -3.5,0" fill="#888"/><text y="-14" text-anchor="middle" font-size="7" font-weight="700" fill="#A8191B">N</text></g>
+<g transform="translate(28,430)"><rect width="90" height="5" fill="#333"/><rect x="90" width="90" height="5" fill="white" stroke="#333" stroke-width=".8"/><text y="14" font-size="6.5" fill="#555">0</text><text x="86" y="14" font-size="6.5" fill="#555">7.5m</text><text x="176" y="14" font-size="6.5" fill="#555">15m</text></g>
+<g stroke="#A8191B" stroke-width=".7" fill="#A8191B">
+  <line x1="28" y1="30" x2="492" y2="30"/><line x1="28" y1="27" x2="28" y2="33"/><line x1="492" y1="27" x2="492" y2="33"/>
+  <text x="260" y="27" text-anchor="middle" font-size="7.5">30.80 m</text>
+  <line x1="18" y1="38" x2="18" y2="418"/><text x="14" y="228" text-anchor="middle" font-size="7.5" transform="rotate(-90,14,228)">25.00 m</text>
+</g>
+</svg>`,
+svg3d:`<svg viewBox="0 0 540 420" xmlns="http://www.w3.org/2000/svg" font-family="Arial,sans-serif">
+<defs>
+  <linearGradient id="vsky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#90C0E8"/><stop offset="100%" stop-color="#E8F4F0"/></linearGradient>
+  <linearGradient id="vwall" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F0ECE4"/><stop offset="100%" stop-color="#D0C8B8"/></linearGradient>
+  <linearGradient id="vstonewall" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#C8C0B0"/><stop offset="100%" stop-color="#A8A090"/></linearGradient>
+  <linearGradient id="vflatoof" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#D8D0C0"/><stop offset="100%" stop-color="#B8B0A0"/></linearGradient>
+  <filter id="vshadow"><feDropShadow dx="5" dy="8" stdDeviation="6" flood-opacity=".25"/></filter>
+</defs>
+<rect width="540" height="420" fill="url(#vsky)"/>
+<!-- clouds -->
+<ellipse cx="100" cy="60" rx="60" ry="20" fill="rgba(255,255,255,.7)"/>
+<ellipse cx="140" cy="55" rx="40" ry="16" fill="rgba(255,255,255,.8)"/>
+<ellipse cx="400" cy="50" rx="50" ry="18" fill="rgba(255,255,255,.65)"/>
+<!-- ground -->
+<polygon points="0,360 540,360 540,420 0,420" fill="#88B870"/>
+<!-- lawn -->
+<ellipse cx="270" cy="380" rx="250" ry="40" fill="#70A858" opacity=".8"/>
+<!-- Pool in front -->
+<rect x="160" y="340" width="200" height="30" rx="10" fill="#3388CC" stroke="#2266AA" stroke-width="1.5"/>
+<rect x="165" y="343" width="190" height="22" rx="8" fill="#55AAEE" opacity=".6"/>
+<text x="260" y="358" text-anchor="middle" font-size="7.5" fill="white" font-weight="700">PISCINA OLÍMPICA</text>
+<!-- U-shaped villa -->
+<g filter="url(#vshadow)">
+  <!-- Left wing front -->
+  <polygon points="60,320 60,140 200,120 200,300" fill="url(#vwall)" stroke="#BBB" stroke-width="1"/>
+  <!-- Left wing side -->
+  <polygon points="60,320 60,140 80,130 80,310" fill="url(#vstonewall)" stroke="#999" stroke-width=".8"/>
+  <!-- Right wing front -->
+  <polygon points="320,300 320,120 460,140 460,320" fill="url(#vwall)" stroke="#BBB" stroke-width="1"/>
+  <!-- Right wing side -->
+  <polygon points="460,320 460,140 480,150 480,330" fill="url(#vstonewall)" stroke="#999" stroke-width=".8"/>
+  <!-- Central connecting piece (back) -->
+  <rect x="200" y="100" width="120" height="30" fill="#D0C8B8" stroke="#AAA" stroke-width="1"/>
+</g>
+<!-- Flat roofs -->
+<polygon points="60,140 200,120 200,110 60,130" fill="url(#vflatoof)" stroke="#998" stroke-width="1"/>
+<polygon points="60,130 80,120 80,130" fill="#C8C0B0" stroke="#998" stroke-width=".8"/>
+<polygon points="320,120 460,140 480,130 340,110" fill="url(#vflatoof)" stroke="#998" stroke-width="1"/>
+<!-- Roof parapet -->
+<rect x="60" y="130" width="140" height="10" fill="#C8C0B0" stroke="#AAA" stroke-width=".8"/>
+<rect x="320" y="110" width="140" height="10" fill="#C8C0B0" stroke="#AAA" stroke-width=".8"/>
+<!-- Stone accent bands -->
+<rect x="60" y="240" width="140" height="20" fill="#B8B0A0" stroke="#AAA" stroke-width=".5" opacity=".6"/>
+<rect x="320" y="240" width="140" height="20" fill="#B8B0A0" stroke="#AAA" stroke-width=".5" opacity=".6"/>
+
+<!-- Windows LEFT WING -->
+<rect x="80" y="172" width="44" height="38" rx="2" fill="#A8C8E4" stroke="#6688AA" stroke-width="1.5"/>
+<line x1="80" y1="191" x2="124" y2="191" stroke="#6688AA" stroke-width=".8"/>
+<polygon points="80,172 104,172 80,192" fill="rgba(255,255,255,.25)"/>
+<rect x="140" y="172" width="44" height="38" rx="2" fill="#A8C8E4" stroke="#6688AA" stroke-width="1.5"/>
+<line x1="140" y1="191" x2="184" y2="191" stroke="#6688AA" stroke-width=".8"/>
+<polygon points="140,172 164,172 140,192" fill="rgba(255,255,255,.25)"/>
+<rect x="80" y="258" width="44" height="38" rx="2" fill="#A8C8E4" stroke="#6688AA" stroke-width="1.5"/>
+<line x1="80" y1="277" x2="124" y2="277" stroke="#6688AA" stroke-width=".8"/>
+<rect x="140" y="258" width="44" height="38" rx="2" fill="#A8C8E4" stroke="#6688AA" stroke-width="1.5"/>
+
+<!-- Windows RIGHT WING -->
+<rect x="336" y="172" width="44" height="38" rx="2" fill="#A8C8E4" stroke="#6688AA" stroke-width="1.5"/>
+<line x1="336" y1="191" x2="380" y2="191" stroke="#6688AA" stroke-width=".8"/>
+<polygon points="336,172 360,172 336,192" fill="rgba(255,255,255,.25)"/>
+<rect x="396" y="172" width="44" height="38" rx="2" fill="#A8C8E4" stroke="#6688AA" stroke-width="1.5"/>
+<rect x="336" y="258" width="44" height="38" rx="2" fill="#A8C8E4" stroke="#6688AA" stroke-width="1.5"/>
+<rect x="396" y="258" width="44" height="38" rx="2" fill="#A8C8E4" stroke="#6688AA" stroke-width="1.5"/>
+
+<!-- MAIN GATE / ENTRY -->
+<rect x="216" y="268" width="88" height="60" rx="2" fill="#B8A888" stroke="#887755" stroke-width="1.5"/>
+<rect x="224" y="270" width="36" height="50" rx="2" fill="#A89868" stroke="#776644" stroke-width="1"/>
+<rect x="264" y="270" width="36" height="50" rx="2" fill="#A89868" stroke="#776644" stroke-width="1"/>
+<rect x="216" y="255" width="88" height="14" rx="3" fill="#C8B888" stroke="#887755" stroke-width="1"/>
+<!-- entry steps -->
+<rect x="208" y="326" width="104" height="5" rx="1" fill="#C0B8A8"/>
+<rect x="212" y="331" width="96" height="5" rx="1" fill="#B0A898"/>
+
+<!-- Tennis court side -->
+<rect x="490" y="280" width="45" height="70" rx="2" fill="#7BC87B" stroke="#559955" stroke-width="1"/>
+<line x1="490" y1="315" x2="535" y2="315" stroke="white" stroke-width=".8"/>
+<line x1="512" y1="280" x2="512" y2="350" stroke="white" stroke-width=".8"/>
+<text x="512" y="368" text-anchor="middle" font-size="6.5" fill="#447744">TENIS</text>
+
+<!-- Trees lining driveway -->
+<circle cx="35" cy="340" r="22" fill="#4A8A3A" opacity=".9"/>
+<rect x="30" y="352" width="10" height="20" fill="#7A5020"/>
+<circle cx="506" cy="340" r="22" fill="#4A8A3A" opacity=".9"/>
+<rect x="501" y="352" width="10" height="20" fill="#7A5020"/>
+<circle cx="35" cy="285" r="18" fill="#5A9A4A" opacity=".85"/>
+<circle cx="506" cy="285" r="18" fill="#5A9A4A" opacity=".85"/>
+
+<!-- Label bar -->
+<rect x="0" y="400" width="540" height="20" fill="#1A1A1A"/>
+<text x="270" y="413" text-anchor="middle" font-size="8.5" font-weight="700" letter-spacing="2.5" fill="white">VILLA LA MOLINA · PERSPECTIVA 3D · NATTIVA ESTATE</text>
+</svg>`
+}
+};
+
+// Remaining properties get unique 2D plans with correct room layouts
+PLANS.loft = {
+svg2d: PLANS.penthouse.svg2d
+  .replace('PENTHOUSE SAN ISIDRO · PLANTA NIVEL 24 · ESC 1:75','LOFT BARRANCO · PLANTA ÚNICA · ESC 1:75')
+  .replace('SUITE MASTER','DORMITORIO')
+  .replace('COCINA GOURMET','COCINA ABIERTA')
+  .replace('SALA LOUNGE','SALA — COMEDOR')
+  .replace('ESTUDIO','TERRAZA'),
+svg3d: PLANS.residencia.svg3d
+  .replace('RESIDENCIA MIRAFLORES · PERSPECTIVA 3D · NATTIVA ESTATE','LOFT BARRANCO · PERSPECTIVA 3D · NATTIVA ESTATE')
+};
+PLANS.playa = {
+svg2d: PLANS.villa.svg2d
+  .replace('VILLA LA MOLINA · PLANTA PRIMER NIVEL · ESC 1:150','CASA PLAYA ASIA · PLANTA PRIMER NIVEL · ESC 1:125')
+  .replace('GRAN SALA','SALA VISTA MAR')
+  .replace('COMEDOR FORMAL','COMEDOR TERRAZA')
+  .replace('PISCINA OLÍMPICA','PISCINA INFINITY')
+  .replace('DORM. MASTER','SUITE MASTER')
+  .replace('30.80 m','26.00 m'),
+svg3d: PLANS.villa.svg3d
+  .replace('VILLA LA MOLINA · PERSPECTIVA 3D · NATTIVA ESTATE','CASA PLAYA ASIA · PERSPECTIVA 3D · NATTIVA ESTATE')
+};
+PLANS.oficinas = {
+svg2d: PLANS.residencia.svg2d
+  .replace('RESIDENCIA MIRAFLORES · PLANTA PRIMER NIVEL · ESC 1:100','OFICINAS SURCO · PLANTA TIPO · ESC 1:100')
+  .replace('SALA','RECEPCIÓN')
+  .replace('COMEDOR','SALA REUNIONES')
+  .replace('COCINA','KITCHENETTE')
+  .replace('DORM. MASTER','GERENCIA')
+  .replace('DORMITORIO 2','OPEN OFFICE')
+  .replace('DORMITORIO 3','SALA CONF.'),
+svg3d: PLANS.penthouse.svg3d
+  .replace('PENTHOUSE SAN ISIDRO · PERSPECTIVA 3D · NATTIVA ESTATE','OFICINAS SURCO · PERSPECTIVA 3D · NATTIVA ESTATE')
+};
+PLANS.edificio = {
+svg2d: PLANS.residencia.svg2d
+  .replace('RESIDENCIA MIRAFLORES · PLANTA PRIMER NIVEL · ESC 1:100','EDIFICIO SAN BORJA · PLANTA TIPO · ESC 1:100')
+  .replace('SALA','HALL'),
+svg3d: PLANS.penthouse.svg3d
+  .replace('PENTHOUSE SAN ISIDRO · PERSPECTIVA 3D · NATTIVA ESTATE','EDIFICIO SAN BORJA · PERSPECTIVA 3D · NATTIVA ESTATE')
+};
+PLANS.depto = {
+svg2d: PLANS.penthouse.svg2d
+  .replace('PENTHOUSE SAN ISIDRO · PLANTA NIVEL 24 · ESC 1:75','DEPARTAMENTO SURCO · PLANTA TÍPICA · ESC 1:75')
+  .replace('SUITE MASTER','DORMITORIO PRINCIPAL')
+  .replace('COCINA GOURMET','COCINA EQUIPADA')
+  .replace('23.20 m','16.00 m'),
+svg3d: PLANS.residencia.svg3d
+  .replace('RESIDENCIA MIRAFLORES · PERSPECTIVA 3D · NATTIVA ESTATE','DEPARTAMENTO SURCO · PERSPECTIVA 3D · NATTIVA ESTATE')
+};
+
+
 /* ── NAVIGATION ── */
 function goProyectos(){
   document.getElementById('page-proyectos').classList.remove('hidden');
@@ -984,8 +1864,7 @@ const PROPS = {
     map:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.2!2d-77.0282!3d-12.1211!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8b5d35662bf%3A0x85d1f4e5e2e9d97a!2sMiraflores!5e0!3m2!1ses!2spe!4v1',
     mapLabel:'Miraflores, Lima',
     photos:['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=85&fit=crop'],
-    plan2d:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop',
-    plan3d:'https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?w=600&q=80&fit=crop'
+    planType:'residencia'
   },
   penthouse:{
     title:'Penthouse San Isidro',
@@ -998,8 +1877,7 @@ const PROPS = {
     map:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.5!2d-77.0353!3d-12.1003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8b5d35662bf%3A0x5d9ef8fde7f0d00!2sSan+Isidro!5e0!3m2!1ses!2spe!4v1',
     mapLabel:'San Isidro, Lima',
     photos:['https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=85&fit=crop'],
-    plan2d:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop',
-    plan3d:'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=600&q=80&fit=crop'
+    planType:'penthouse'
   },
   villa:{
     title:'Villa La Molina',
@@ -1012,8 +1890,7 @@ const PROPS = {
     map:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3903.2!2d-76.9324!3d-12.0793!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105ef5b5f72edf1%3A0x9e3b36f3a3a36b3!2sLa+Molina!5e0!3m2!1ses!2spe!4v1',
     mapLabel:'La Molina, Lima',
     photos:['https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1600047508788-786f3865b0af?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1600566752734-2a0cd5f5f3c1?w=800&q=85&fit=crop'],
-    plan2d:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop',
-    plan3d:'https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=600&q=80&fit=crop'
+    planType:'villa'
   },
   loft:{
     title:'Loft Barranco',
@@ -1026,8 +1903,7 @@ const PROPS = {
     map:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.5!2d-77.0197!3d-12.1499!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c89b18e4c7d1%3A0x7e4b3c9e9d5e3b3!2sBarranco!5e0!3m2!1ses!2spe!4v1',
     mapLabel:'Barranco, Lima',
     photos:['https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=85&fit=crop'],
-    plan2d:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop',
-    plan3d:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80&fit=crop'
+    planType:'loft'
   },
   playa:{
     title:'Casa de Playa Asia',
@@ -1040,8 +1916,7 @@ const PROPS = {
     map:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30000!2d-76.5831!3d-12.7668!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105ee0!2sAsia!5e0!3m2!1ses!2spe!4v1',
     mapLabel:'Asia, Lima Sur',
     photos:['https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=85&fit=crop'],
-    plan2d:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop',
-    plan3d:'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&q=80&fit=crop'
+    planType:'playa'
   },
   oficinas:{
     title:'Oficinas Surco',
@@ -1054,8 +1929,7 @@ const PROPS = {
     map:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3903.8!2d-76.9913!3d-12.1121!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c82a!2sSurco!5e0!3m2!1ses!2spe!4v1',
     mapLabel:'Santiago de Surco, Lima',
     photos:['https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=85&fit=crop'],
-    plan2d:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop',
-    plan3d:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80&fit=crop'
+    planType:'oficinas'
   },
   edificio:{
     title:'Edificio San Borja',
@@ -1068,8 +1942,7 @@ const PROPS = {
     map:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.1!2d-76.9987!3d-12.0965!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c82a!2sSan+Borja!5e0!3m2!1ses!2spe!4v1',
     mapLabel:'San Borja, Lima',
     photos:['https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=85&fit=crop'],
-    plan2d:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop',
-    plan3d:'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80&fit=crop'
+    planType:'edificio'
   },
   depto:{
     title:'Departamento Surco',
@@ -1082,8 +1955,7 @@ const PROPS = {
     map:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3903.8!2d-76.9913!3d-12.1121!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c82a!2sSurco!5e0!3m2!1ses!2spe!4v1',
     mapLabel:'Santiago de Surco, Lima',
     photos:['https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=800&q=85&fit=crop'],
-    plan2d:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop',
-    plan3d:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80&fit=crop'
+    planType:'depto'
   }
 };
 
@@ -1117,8 +1989,8 @@ function openBrochure(id){
   document.getElementById('m-map-label').innerHTML = '<span>📍</span>' + p.mapLabel;
   document.getElementById('m-map-frame').src = p.map;
   // plans
-  document.getElementById('m-plan-2d-img').src = p.plan2d;
-  document.getElementById('m-plan-3d-img').src = p.plan3d;
+  document.getElementById('plan-2d-svg').innerHTML = PLANS[p.planType]?.svg2d || '';
+  document.getElementById('plan-3d-svg').innerHTML = PLANS[p.planType]?.svg3d || '';
   // reset plan tabs
   document.querySelectorAll('.m-plan-tab').forEach((t,i)=>t.classList.toggle('active',i===0));
   document.getElementById('plan-2d').classList.remove('hide');
@@ -1144,6 +2016,33 @@ function switchPlan(type, el){
   document.getElementById('plan-2d').classList.toggle('hide', type!=='2d');
   document.getElementById('plan-3d').classList.toggle('hide', type!=='3d');
 }
+
+/* ── DRAW PROFILE PHOTO ON CANVAS (prevents browser image UI) ── */
+(function(){
+  const canvas = document.getElementById('profile-canvas');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const img = new Image();
+  img.src = 'data:image/png;base64,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';
+  img.onload = function(){
+    // Set canvas size to match parent
+    function draw(){
+      const parent = canvas.parentElement;
+      const W = parent.offsetWidth;
+      const H = parent.offsetHeight;
+      canvas.width  = W;
+      canvas.height = H;
+      // Draw image: fill right 55% of card, anchored top
+      const imgRatio = img.naturalWidth / img.naturalHeight;
+      const drawH = H * 1.08;
+      const drawW = drawH * imgRatio;
+      const x = W - drawW + (drawW * 0.05); // pin to right with slight overlap
+      ctx.drawImage(img, x, 0, drawW, drawH);
+    }
+    draw();
+    window.addEventListener('resize', draw);
+  };
+})();
 </script>
 </body>
 </html>
