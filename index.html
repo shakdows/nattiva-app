@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nattiva Estate — Plataforma Inmobiliaria</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --crimson:#A8191B;--crimson-d:#7C1012;
+  --gold:#C49A3C;--gold-l:#DEB96A;
+  --ink:#111111;--ink-60:rgba(17,17,17,.6);--ink-20:rgba(17,17,17,.12);
+  --paper:#F8F6F2;--white:#FFFFFF;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'Jost',sans-serif;
+  --r:16px;--r-lg:22px;
+  --sh:0 2px 16px rgba(0,0,0,.07);
+  --sh-md:0 8px 32px rgba(0,0,0,.12);
+  --sh-lg:0 20px 60px rgba(0,0,0,.18);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+button{font-family:var(--sans);cursor:pointer;border:none;background:none}
+img{display:block;width:100%;height:100%;object-fit:cover}
+
+/* ── APP SHELL ── */
+.app{position:relative;max-width:480px;margin:0 auto;overflow:hidden}
+
+/* ── PAGES ── */
+.page{
+  min-height:100vh;
+  transition:transform .4s cubic-bezier(.4,0,.2,1), opacity .35s ease;
+  will-change:transform;
+}
+.page.hidden{
+  position:fixed;top:0;left:50%;
+  transform:translateX(-50%) translateX(100%);
+  width:100%;max-width:480px;
+  opacity:0;pointer-events:none;
+  z-index:200;
+}
+.page.visible{
+  position:fixed;top:0;left:50%;
+  transform:translateX(-50%) translateX(0);
+  width:100%;max-width:480px;
+  opacity:1;pointer-events:all;
+  z-index:200;
+  background:var(--paper);
+  overflow-y:auto;
+  height:100vh;
+}
+
+/* ── HEADER ── */
+.hd{
+  position:sticky;top:0;z-index:300;
+  background:rgba(248,246,242,.95);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--ink-20);
+  height:58px;padding:0 20px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.burger{display:flex;flex-direction:column;gap:5px;cursor:pointer;padding:4px}
+.burger span{display:block;height:1.5px;background:var(--ink);border-radius:2px}
+.burger span:nth-child(2){width:14px}
+.logo{font-family:var(--serif);font-size:22px;font-weight:300;letter-spacing:.04em;display:flex;align-items:baseline;gap:3px}
+.logo-mark{color:var(--crimson);font-weight:600;font-style:italic}
+.logo-sep{color:var(--gold);font-size:10px;margin:0 4px;vertical-align:2px}
+.logo-sub{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-60);font-weight:400}
+.notif{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;position:relative;transition:background .2s}
+.notif:hover{background:var(--ink-20)}
+.notif svg{width:18px;height:18px;stroke:var(--ink);stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.notif-dot{position:absolute;top:8px;right:8px;width:7px;height:7px;border-radius:50%;background:var(--crimson);border:1.5px solid var(--paper)}
+
+/* back button for sub-pages */
+.back-btn{
+  display:flex;align-items:center;gap:8px;
+  font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-60);cursor:pointer;padding:4px 0;
+  transition:color .2s;
+}
+.back-btn:hover{color:var(--crimson)}
+.back-btn svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── MAIN HOME ── */
+main{padding:18px 14px 112px;display:flex;flex-direction:column;gap:18px}
+
+/* ── PROFILE HERO ── */
+.profile-hero{
+  border-radius:var(--r-lg);overflow:hidden;
+  height:270px;position:relative;
+  box-shadow:var(--sh-lg);
+  animation:up .6s cubic-bezier(.22,1,.36,1) both;
+  background:#120303;
+}
+.profile-photo{position:absolute;inset:0;}
+.profile-photo img{
+  object-fit:cover;
+  object-position:72% top;
+  width:100%;height:100%;
+  filter:brightness(.82) saturate(.85);
+}
+/* Strong gradient on LEFT so text is readable, RIGHT keeps photo clear */
+.profile-overlay{
+  position:absolute;inset:0;
+  background:
+    linear-gradient(95deg,
+      rgba(6,1,1,.97) 0%,
+      rgba(80,6,6,.9) 25%,
+      rgba(20,3,3,.7) 48%,
+      rgba(0,0,0,.15) 65%,
+      transparent 100%);
+}
+.profile-hero::after{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;z-index:4;background:linear-gradient(180deg,var(--gold-l),var(--gold) 60%,transparent)}
+.profile-content{position:absolute;left:0;top:0;bottom:0;width:60%;z-index:3;padding:24px 16px 22px 24px;display:flex;flex-direction:column;justify-content:space-between}
+.p-eyebrow{font-size:9px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--gold-l);margin-bottom:6px}
+.p-name{font-family:var(--serif);font-size:32px;font-weight:300;color:var(--white);line-height:1.05;margin-bottom:5px}
+.p-creds{font-size:11px;color:rgba(255,255,255,.55);letter-spacing:.04em;margin-bottom:8px}
+.p-exp{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:4px;padding:3px 9px;font-size:10px;letter-spacing:.07em;color:rgba(255,255,255,.7)}
+.p-exp::before{content:'◈';color:var(--gold);font-size:8px}
+.p-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.96);border-radius:6px;padding:6px 13px;margin-bottom:12px;font-size:11px;font-weight:600;letter-spacing:.02em;color:var(--ink);box-shadow:0 3px 12px rgba(0,0,0,.22)}
+.p-badge span{color:var(--crimson)}
+.p-rating{display:flex;align-items:center;gap:7px}
+.p-score{font-family:var(--serif);font-size:21px;font-weight:600;color:var(--white)}
+.p-stars span{color:var(--gold);font-size:12px}
+.p-count{font-size:11px;color:rgba(255,255,255,.45)}
+.p-arrow{color:rgba(255,255,255,.3);font-size:14px;margin-left:auto}
+
+/* ── SECTION ── */
+.sec{margin-bottom:11px;display:flex;justify-content:space-between;align-items:baseline}
+.sec-t{font-family:var(--serif);font-size:22px;font-weight:400}
+.sec-a{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--crimson);border-bottom:1px solid rgba(168,25,27,.28);padding-bottom:1px}
+
+/* ── COTIZADOR ── */
+.cot{
+  border-radius:var(--r-lg);overflow:hidden;
+  border:1px solid var(--ink-20);box-shadow:var(--sh-md);
+  display:flex;min-height:180px;
+  cursor:pointer;transition:transform .25s,box-shadow .25s;
+  animation:up .6s .07s cubic-bezier(.22,1,.36,1) both;
+}
+.cot:hover{transform:translateY(-2px);box-shadow:var(--sh-lg)}
+/* LEFT: full photo */
+.cot-img{
+  width:55%;position:relative;flex-shrink:0;overflow:hidden;
+  background:#0a1018;
+}
+.cot-img img{
+  object-position:center center;
+  filter:brightness(.88) saturate(.9);
+  transition:transform .5s ease;
+}
+.cot:hover .cot-img img{transform:scale(1.04)}
+.cot-badge{
+  position:absolute;top:12px;right:12px;z-index:2;
+  background:var(--crimson);color:var(--white);
+  border-radius:7px;padding:5px 10px;
+  font-size:11px;font-weight:700;line-height:1.3;text-align:center;
+  box-shadow:0 3px 10px rgba(168,25,27,.5);
+}
+/* RIGHT: dark panel like image 2 */
+.cot-body{
+  flex:1;
+  background:#111111;
+  padding:24px 20px;
+  display:flex;flex-direction:column;justify-content:center;gap:8px;
+  position:relative;overflow:hidden;
+}
+/* subtle red glow in corner */
+.cot-body::before{
+  content:'';position:absolute;bottom:-30px;right:-30px;
+  width:120px;height:120px;border-radius:50%;
+  background:radial-gradient(circle,rgba(168,25,27,.35) 0%,transparent 70%);
+}
+.cot-eyebrow{
+  font-size:8px;font-weight:700;letter-spacing:.2em;
+  text-transform:uppercase;color:var(--crimson);
+  display:flex;align-items:center;gap:6px;
+}
+.cot-eyebrow::before{content:'';display:block;width:18px;height:1px;background:var(--crimson)}
+.cot-num{
+  font-family:var(--serif);
+  font-size:13px;font-weight:300;
+  line-height:1.2;color:rgba(255,255,255,.9);
+  letter-spacing:.01em;
+}
+.cot-num strong{
+  display:block;
+  font-size:28px;font-weight:600;
+  color:var(--white);line-height:1;margin-bottom:2px;
+}
+.cot-num strong em{color:var(--crimson);font-style:normal}
+.cot-tag{
+  display:inline-flex;align-items:center;gap:5px;
+  font-size:8px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--gold);margin-top:2px;
+}
+.cot-tag::before{content:'—';letter-spacing:0}
+.cot-cta{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:8px;
+  background:var(--crimson);color:var(--white);
+  border-radius:8px;padding:9px 16px;
+  font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  width:fit-content;
+  transition:background .2s;
+}
+.cot-cta:hover{background:var(--crimson-d)}
+.cot-cta svg{width:14px;height:14px;stroke:currentColor;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* ── TOOLS GRID ── */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.card{background:var(--white);border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--ink-20);box-shadow:var(--sh);cursor:pointer;transition:transform .25s,box-shadow .25s;animation:up .6s cubic-bezier(.22,1,.36,1) both;display:flex;flex-direction:column;position:relative}
+.card:hover{transform:translateY(-3px);box-shadow:var(--sh-md)}
+.card:nth-child(1){animation-delay:.11s}.card:nth-child(2){animation-delay:.17s}.card:nth-child(3){animation-delay:.23s}.card:nth-child(4){animation-delay:.29s}
+.new-tag{position:absolute;top:9px;right:9px;z-index:5;background:var(--ink);color:var(--white);font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-radius:4px;padding:3px 7px}
+.card-img{height:116px;position:relative;overflow:hidden;flex-shrink:0}
+.card-img::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;z-index:2;background:linear-gradient(90deg,transparent,var(--gold) 50%,transparent);opacity:.55}
+.card-img img{filter:brightness(.88) saturate(.9)}
+.card-img-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(0,0,0,.45) 0%,rgba(0,0,0,.05) 60%)}
+.card-body{padding:11px 13px 14px;flex:1;display:flex;flex-direction:column;gap:9px}
+.card-lbl{font-family:var(--serif);font-size:15px;font-weight:400;line-height:1.2;color:var(--ink)}
+.btn{display:block;width:100%;background:var(--crimson);color:var(--white);border-radius:8px;padding:9px 0;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;text-align:center;transition:background .2s,transform .1s}
+.btn:hover{background:var(--crimson-d);transform:scale(.985)}
+.btn.gold-btn{background:var(--gold);color:var(--ink)}
+.btn.gold-btn:hover{background:#a88030;color:var(--white)}
+
+/* ── NAV ── */
+nav{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+  width:100%;max-width:480px;
+  background:rgba(248,246,242,.97);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  border-top:1px solid var(--ink-20);
+  display:flex;padding:10px 0 20px;z-index:400;
+}
+.nb{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px;cursor:pointer;text-decoration:none;transition:opacity .2s;position:relative}
+.nb:not(.active){opacity:.35}
+.nb:hover:not(.active){opacity:.6}
+.nb.active::before{content:'';position:absolute;top:-10px;width:18px;height:2px;border-radius:1px;background:var(--crimson)}
+.nb-ico{width:20px;height:20px;display:flex;align-items:center;justify-content:center}
+.nb-ico svg{width:19px;height:19px;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.nb.active .nb-ico svg{stroke:var(--crimson)}
+.nb:not(.active) .nb-ico svg{stroke:var(--ink)}
+.nb-lbl{font-size:9px;font-weight:600;letter-spacing:.08em;text-transform:uppercase}
+.nb.active .nb-lbl{color:var(--crimson)}
+.nb:not(.active) .nb-lbl{color:var(--ink)}
+
+/* ════════════════════════════════
+   PROYECTOS PAGE
+════════════════════════════════ */
+#page-proyectos{background:var(--paper)}
+
+.proj-header{
+  padding:28px 20px 0;
+  background:var(--paper);
+}
+.proj-eyebrow{
+  font-size:9px;font-weight:700;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--crimson);margin-bottom:8px;
+  display:flex;align-items:center;gap:8px;
+}
+.proj-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--crimson)}
+.proj-title{
+  font-family:var(--serif);
+  font-size:36px;font-weight:300;line-height:1.05;
+  margin-bottom:12px;
+}
+.proj-title strong{color:var(--crimson);font-weight:600}
+.proj-desc{
+  font-size:12px;color:var(--ink-60);line-height:1.7;
+  max-width:320px;margin-bottom:22px;
+}
+
+/* Filter tabs */
+.filters{
+  display:flex;gap:8px;margin-bottom:24px;
+  overflow-x:auto;padding-bottom:2px;
+  scrollbar-width:none;
+}
+.filters::-webkit-scrollbar{display:none}
+.filt{
+  flex-shrink:0;
+  padding:8px 18px;border-radius:50px;
+  font-size:11px;font-weight:600;letter-spacing:.06em;
+  cursor:pointer;transition:all .22s;
+  border:1.5px solid var(--ink-20);
+  color:var(--ink-60);background:var(--white);
+}
+.filt.active{
+  background:var(--crimson);color:var(--white);
+  border-color:var(--crimson);
+  box-shadow:0 4px 14px rgba(168,25,27,.35);
+}
+.filt:hover:not(.active){border-color:var(--crimson);color:var(--crimson)}
+
+/* Properties grid */
+.props{
+  padding:0 14px 112px;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px;
+}
+
+.prop{
+  border-radius:var(--r-lg);
+  overflow:hidden;
+  background:var(--white);
+  box-shadow:var(--sh-md);
+  border:1px solid var(--ink-20);
+  cursor:pointer;
+  transition:transform .28s cubic-bezier(.22,1,.36,1),box-shadow .28s;
+  animation:up .5s cubic-bezier(.22,1,.36,1) both;
+  position:relative;
+  display:flex;flex-direction:column;
+}
+.prop:hover{transform:translateY(-5px);box-shadow:var(--sh-lg)}
+.prop:nth-child(1){animation-delay:.04s}
+.prop:nth-child(2){animation-delay:.09s}
+.prop:nth-child(3){animation-delay:.14s}
+.prop:nth-child(4){animation-delay:.19s}
+.prop:nth-child(5){animation-delay:.24s}
+.prop:nth-child(6){animation-delay:.29s}
+
+/* FEATURED: first card spans full width - big horizontal */
+.prop.featured{
+  grid-column:1/-1;
+  flex-direction:row;
+  min-height:190px;
+}
+.prop.featured .prop-img{width:50%;height:auto;flex-shrink:0}
+.prop.featured .prop-body{padding:20px 18px;justify-content:space-between}
+.prop.featured .prop-name{font-family:var(--serif);font-size:22px;font-weight:400;line-height:1.15}
+.prop.featured .prop-price-big{
+  font-family:var(--serif);font-size:20px;font-weight:600;
+  color:var(--crimson);margin-bottom:4px;
+}
+
+.prop-img{
+  height:155px;
+  position:relative;overflow:hidden;flex-shrink:0;
+}
+.prop-img img{transition:transform .45s ease;width:100%;height:100%;object-fit:cover}
+.prop:hover .prop-img img{transform:scale(1.06)}
+
+/* price tag */
+.prop-price{
+  position:absolute;top:10px;left:10px;z-index:2;
+  background:var(--crimson);color:var(--white);
+  font-size:10px;font-weight:700;letter-spacing:.03em;
+  border-radius:6px;padding:4px 9px;
+  box-shadow:0 3px 10px rgba(168,25,27,.5);
+}
+/* status tag */
+.prop-status{
+  position:absolute;top:10px;right:10px;z-index:2;
+  font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  border-radius:5px;padding:4px 8px;
+}
+.prop-status.venta{background:rgba(0,0,0,.72);color:var(--white)}
+.prop-status.alquiler{background:rgba(196,154,60,.95);color:var(--ink)}
+.prop-status.inversion{background:rgba(17,17,17,.85);color:var(--gold-l)}
+
+.prop-img-ov{
+  position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(0,0,0,.6) 0%,transparent 50%);
+  z-index:1;
+}
+.prop-body{padding:12px 13px 14px;flex:1;display:flex;flex-direction:column;gap:7px}
+.prop-name{font-family:var(--serif);font-size:15px;font-weight:400;line-height:1.2;color:var(--ink)}
+.prop-meta{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+.prop-tag{
+  font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--ink-60);background:var(--paper);
+  border-radius:4px;padding:2px 7px;
+}
+.prop-cta{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  width:100%;
+  background:var(--crimson);color:var(--white);
+  border-radius:8px;padding:9px 0;
+  font-size:9px;font-weight:700;letter-spacing:.1em;
+  text-transform:uppercase;text-align:center;
+  transition:all .2s;margin-top:auto;
+  border:none;cursor:pointer;
+}
+.prop-cta:hover{background:var(--crimson-d)}
+.prop-cta svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round}
+
+/* hidden class for filter */
+.prop.hide{display:none}
+
+/* ══ BROCHURE MODAL ══════════════════════ */
+.modal-backdrop{
+  position:fixed;inset:0;z-index:600;
+  background:rgba(0,0,0,.7);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  opacity:0;pointer-events:none;
+  transition:opacity .3s ease;
+}
+.modal-backdrop.open{opacity:1;pointer-events:all}
+
+.modal{
+  position:fixed;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);
+  width:100%;max-width:480px;
+  height:92vh;
+  background:var(--paper);
+  border-radius:24px 24px 0 0;
+  z-index:700;
+  overflow-y:auto;
+  transition:transform .4s cubic-bezier(.22,1,.36,1);
+  scrollbar-width:none;
+}
+.modal::-webkit-scrollbar{display:none}
+.modal.open{transform:translateX(-50%) translateY(0)}
+
+/* drag handle */
+.modal-handle{
+  width:40px;height:4px;border-radius:2px;
+  background:var(--ink-20);
+  margin:12px auto 0;
+}
+
+/* photo gallery strip */
+.m-gallery{
+  position:relative;height:240px;overflow:hidden;
+}
+.m-gallery-main{width:100%;height:100%;object-fit:cover}
+.m-gallery-thumbs{
+  position:absolute;bottom:12px;left:12px;right:12px;
+  display:flex;gap:6px;
+  overflow-x:auto;scrollbar-width:none;
+}
+.m-gallery-thumbs::-webkit-scrollbar{display:none}
+.m-thumb{
+  width:52px;height:38px;border-radius:6px;overflow:hidden;flex-shrink:0;
+  border:2px solid rgba(255,255,255,.4);cursor:pointer;transition:border-color .2s;
+}
+.m-thumb.active{border-color:var(--crimson)}
+.m-thumb img{width:100%;height:100%;object-fit:cover}
+/* price overlay on photo */
+.m-price-overlay{
+  position:absolute;top:16px;left:16px;z-index:2;
+  background:var(--crimson);color:var(--white);
+  font-size:16px;font-weight:700;letter-spacing:.02em;
+  border-radius:8px;padding:6px 14px;
+  box-shadow:0 4px 16px rgba(168,25,27,.5);
+  font-family:var(--serif);
+}
+.m-status-overlay{
+  position:absolute;top:16px;right:16px;z-index:2;
+  font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  border-radius:6px;padding:5px 10px;
+  background:rgba(0,0,0,.7);color:var(--white);
+}
+
+/* content */
+.m-body{padding:20px 20px 24px}
+.m-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px}
+.m-title{font-family:var(--serif);font-size:26px;font-weight:400;line-height:1.1}
+.m-close{
+  width:32px;height:32px;border-radius:50%;
+  background:var(--ink-10);border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  flex-shrink:0;margin-top:2px;transition:background .2s;
+}
+.m-close:hover{background:rgba(168,25,27,.12)}
+.m-close svg{width:16px;height:16px;stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round}
+
+/* stats row */
+.m-stats{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:8px;margin-bottom:20px;
+}
+.m-stat{
+  background:var(--white);border-radius:10px;padding:10px 8px;
+  text-align:center;border:1px solid var(--ink-20);
+}
+.m-stat-val{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--ink);line-height:1}
+.m-stat-lbl{font-size:8px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-60);margin-top:3px}
+
+/* section label */
+.m-sec-lbl{
+  font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--crimson);margin-bottom:10px;
+  display:flex;align-items:center;gap:7px;
+}
+.m-sec-lbl::before{content:'';display:block;width:20px;height:1px;background:var(--crimson)}
+
+/* description */
+.m-desc{font-size:12px;color:var(--ink-60);line-height:1.75;margin-bottom:20px}
+
+/* features list */
+.m-features{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:8px;margin-bottom:22px;
+}
+.m-feat{
+  display:flex;align-items:center;gap:7px;
+  font-size:11px;font-weight:500;color:var(--ink);
+}
+.m-feat-dot{width:6px;height:6px;border-radius:50%;background:var(--crimson);flex-shrink:0}
+
+/* map */
+.m-map{
+  border-radius:14px;overflow:hidden;
+  height:170px;position:relative;
+  margin-bottom:20px;
+  border:1px solid var(--ink-20);
+  background:#e8e0d8;
+}
+.m-map iframe{width:100%;height:100%;border:none}
+.m-map-label{
+  position:absolute;top:10px;left:10px;z-index:2;
+  background:var(--white);border-radius:6px;padding:4px 10px;
+  font-size:10px;font-weight:700;letter-spacing:.06em;
+  color:var(--ink);box-shadow:0 2px 8px rgba(0,0,0,.12);
+  display:flex;align-items:center;gap:5px;
+}
+.m-map-label::before{content:'📍';font-size:10px}
+
+/* floor plan tabs */
+.m-plan-tabs{display:flex;gap:8px;margin-bottom:12px}
+.m-plan-tab{
+  flex:1;padding:7px 0;border-radius:8px;
+  font-size:10px;font-weight:600;letter-spacing:.06em;
+  cursor:pointer;transition:all .2s;
+  border:1.5px solid var(--ink-20);
+  color:var(--ink-60);background:var(--white);
+  text-align:center;
+}
+.m-plan-tab.active{background:var(--ink);color:var(--white);border-color:var(--ink)}
+
+.m-plan-view{
+  border-radius:14px;overflow:hidden;
+  height:200px;position:relative;
+  border:1px solid var(--ink-20);
+  background:var(--white);
+  margin-bottom:22px;
+  display:flex;align-items:center;justify-content:center;
+}
+.m-plan-view img{
+  width:100%;height:100%;object-fit:contain;
+  padding:8px;
+}
+.m-plan-2d,.m-plan-3d{position:absolute;inset:0;transition:opacity .3s;display:flex;align-items:center;justify-content:center;padding:8px}
+.m-plan-2d img,.m-plan-3d img{max-width:100%;max-height:100%;object-fit:contain}
+.m-plan-2d.hide,.m-plan-3d.hide{opacity:0;pointer-events:none}
+
+/* CTA button */
+.m-cta-row{display:flex;gap:10px}
+.m-cta{
+  flex:1;padding:13px 0;border-radius:10px;
+  font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  text-align:center;cursor:pointer;transition:all .2s;border:none;
+}
+.m-cta.primary{background:var(--crimson);color:var(--white)}
+.m-cta.primary:hover{background:var(--crimson-d)}
+.m-cta.secondary{background:var(--white);color:var(--ink);border:1.5px solid var(--ink-20)}
+.m-cta.secondary:hover{border-color:var(--crimson);color:var(--crimson)}
+
+/* ── ANIM ── */
+@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-thumb{background:rgba(17,17,17,.2);border-radius:2px}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════
+     HOME PAGE
+══════════════════════════════ -->
+<div id="page-home">
+
+  <header class="hd">
+    <div style="display:flex;align-items:center;gap:14px">
+      <div class="burger"><span></span><span></span><span></span></div>
+      <div class="logo">
+        <span class="logo-mark">nattiva</span>
+        <span class="logo-sep">◆</span>
+        <span class="logo-sub">estate</span>
+      </div>
+    </div>
+    <button class="notif" aria-label="Notificaciones">
+      <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span class="notif-dot"></span>
+    </button>
+  </header>
+
+  <main>
+    <!-- PROFILE HERO -->
+    <div class="profile-hero">
+      <div class="profile-photo">
+        <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=900&q=90&fit=crop&crop=top" alt="Nathalia Pérez">
+      </div>
+      <div class="profile-overlay"></div>
+      <div class="profile-content">
+        <div>
+          <div class="p-eyebrow">Consultora Senior</div>
+          <div class="p-name">Nathalia<br>Pérez</div>
+          <div class="p-creds">Ing. Civil &nbsp;·&nbsp; Arquitecta</div>
+          <div class="p-exp">6+ años de experiencia</div>
+        </div>
+        <div>
+          <div class="p-badge">Asesora en <span>&nbsp;Inversión Inmobiliaria</span></div>
+          <div class="p-rating">
+            <span class="p-score">4.9</span>
+            <div class="p-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+            <span class="p-count">527 opiniones</span>
+            <span class="p-arrow">›</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- COTIZADOR -->
+    <div>
+      <div class="sec">
+        <span class="sec-t">Cotizador</span>
+        <a href="#" class="sec-a">Ver mi perfil</a>
+      </div>
+      <div class="cot">
+        <div class="cot-img">
+          <img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=85&fit=crop" alt="Proyectos">
+          <div class="cot-badge">200+<br>Disponibles</div>
+        </div>
+        <div class="cot-body">
+          <div class="cot-eyebrow">Nattiva Estates</div>
+          <div class="cot-num">
+            <strong><em>+200</em> proyectos</strong>
+            disponibles en Perú
+          </div>
+          <div class="cot-tag">6 años de experiencia</div>
+          <a href="#" class="cot-cta" onclick="goProyectos();return false">
+            Ver propiedades
+            <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- HERRAMIENTAS -->
+    <div>
+      <div class="sec"><span class="sec-t">Herramientas</span></div>
+      <div class="grid">
+        <div class="card">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=500&q=80&fit=crop" alt="Calculadora">
+            <div class="card-img-overlay"></div>
+          </div>
+          <div class="card-body">
+            <div class="card-lbl">Calculadora<br>Hipotecaria</div>
+            <a href="https://calculadora-nattiva-pro.vercel.app/" target="_blank" class="btn">Calcular</a>
+          </div>
+        </div>
+        <div class="card">
+          <span class="new-tag">Nuevo</span>
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=500&q=80&fit=crop" alt="Capacitaciones">
+            <div class="card-img-overlay"></div>
+          </div>
+          <div class="card-body">
+            <div class="card-lbl">Capacita-<br>ciones</div>
+            <a href="#" class="btn">Acceder</a>
+          </div>
+        </div>
+        <div class="card">
+          <span class="new-tag">Nuevo</span>
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=500&q=80&fit=crop" alt="CRM">
+            <div class="card-img-overlay"></div>
+          </div>
+          <div class="card-body">
+            <div class="card-lbl">CRM<br>Tus Clientes</div>
+            <a href="#" class="btn">Gestionar</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-img">
+            <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=500&q=80&fit=crop" alt="Mensajería">
+            <div class="card-img-overlay"></div>
+          </div>
+          <div class="card-body">
+            <div class="card-lbl">CRM<br>Mensajería</div>
+            <a href="#" class="btn gold-btn">Ver alertas</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+</div><!-- /home -->
+
+
+<!-- ══════════════════════════════
+     PROYECTOS PAGE
+══════════════════════════════ -->
+<div id="page-proyectos" class="page hidden">
+
+  <header class="hd">
+    <button class="back-btn" onclick="goHome()">
+      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+      Inicio
+    </button>
+    <div class="logo">
+      <span class="logo-mark">nattiva</span>
+      <span class="logo-sep">◆</span>
+      <span class="logo-sub">estate</span>
+    </div>
+    <button class="notif" aria-label="Notificaciones">
+      <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+      <span class="notif-dot"></span>
+    </button>
+  </header>
+
+  <!-- HERO SECTION HEADER -->
+  <div class="proj-header" style="padding:28px 20px 0">
+    <div class="proj-eyebrow">Portafolio Exclusivo</div>
+    <div class="proj-title">Propiedades<br><strong>Destacadas</strong></div>
+    <div class="proj-desc">Descubra nuestra selección exclusiva de inmuebles. Una curaduría de espacios que definen el nuevo estándar del lujo y la inversión inmobiliaria en Perú.</div>
+
+    <!-- FILTER TABS -->
+    <div class="filters" id="filters">
+      <button class="filt active" data-filter="todos" onclick="filterProps('todos',this)">Todos</button>
+      <button class="filt" data-filter="venta" onclick="filterProps('venta',this)">Venta</button>
+      <button class="filt" data-filter="alquiler" onclick="filterProps('alquiler',this)">Alquiler</button>
+      <button class="filt" data-filter="inversion" onclick="filterProps('inversion',this)">Inversión</button>
+    </div>
+  </div>
+
+  <!-- PROPERTIES GRID -->
+  <div class="props" id="props-grid">
+
+    <!-- FEATURED -->
+    <div class="prop featured" data-cat="venta" onclick="openBrochure('miraflores')">
+      <div class="prop-img">
+        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=85&fit=crop" alt="Residencia Miraflores">
+        <div class="prop-price">$459,000 USD</div>
+        <div class="prop-status venta">Venta</div>
+        <div class="prop-img-ov"></div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-price-big">$459,000 USD</div>
+        <div class="prop-name">Residencia Miraflores</div>
+        <div class="prop-meta">
+          <span class="prop-tag">4 hab.</span>
+          <span class="prop-tag">320 m²</span>
+          <span class="prop-tag">Miraflores</span>
+        </div>
+        <button class="prop-cta">Ver brochure <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      </div>
+    </div>
+
+    <!-- card 2 -->
+    <div class="prop" data-cat="venta" onclick="openBrochure('penthouse')">
+      <div class="prop-img">
+        <img src="https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=85&fit=crop" alt="Penthouse San Isidro">
+        <div class="prop-price">$820,000 USD</div>
+        <div class="prop-status venta">Venta</div>
+        <div class="prop-img-ov"></div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-name">Penthouse San Isidro</div>
+        <div class="prop-meta">
+          <span class="prop-tag">3 hab.</span>
+          <span class="prop-tag">210 m²</span>
+        </div>
+        <button class="prop-cta">Ver brochure <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      </div>
+    </div>
+
+    <!-- card 3 -->
+    <div class="prop" data-cat="venta" onclick="openBrochure('villa')">
+      <div class="prop-img">
+        <img src="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=600&q=85&fit=crop" alt="Villa La Molina">
+        <div class="prop-price">$1,200,000 USD</div>
+        <div class="prop-status venta">Exclusiva</div>
+        <div class="prop-img-ov"></div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-name">Villa La Molina</div>
+        <div class="prop-meta">
+          <span class="prop-tag">6 hab.</span>
+          <span class="prop-tag">850 m²</span>
+        </div>
+        <button class="prop-cta">Ver brochure <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      </div>
+    </div>
+
+    <!-- card 4 -->
+    <div class="prop" data-cat="alquiler" onclick="openBrochure('loft')">
+      <div class="prop-img">
+        <img src="https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=600&q=85&fit=crop" alt="Loft Barranco">
+        <div class="prop-price">$2,500/mes</div>
+        <div class="prop-status alquiler">Alquiler</div>
+        <div class="prop-img-ov"></div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-name">Loft Barranco</div>
+        <div class="prop-meta">
+          <span class="prop-tag">2 hab.</span>
+          <span class="prop-tag">120 m²</span>
+        </div>
+        <button class="prop-cta">Ver brochure <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      </div>
+    </div>
+
+    <!-- card 5 -->
+    <div class="prop" data-cat="alquiler" onclick="openBrochure('playa')">
+      <div class="prop-img">
+        <img src="https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=600&q=85&fit=crop" alt="Casa de Playa Asia">
+        <div class="prop-price">$550,000 USD</div>
+        <div class="prop-status alquiler">Temporada</div>
+        <div class="prop-img-ov"></div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-name">Casa Playa Asia</div>
+        <div class="prop-meta">
+          <span class="prop-tag">5 hab.</span>
+          <span class="prop-tag">Playa</span>
+        </div>
+        <button class="prop-cta">Ver brochure <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      </div>
+    </div>
+
+    <!-- card 6 -->
+    <div class="prop" data-cat="inversion" onclick="openBrochure('oficinas')">
+      <div class="prop-img">
+        <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?w=600&q=85&fit=crop" alt="Oficinas Surco">
+        <div class="prop-price">$320,000 USD</div>
+        <div class="prop-status inversion">Inversión</div>
+        <div class="prop-img-ov"></div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-name">Oficinas Surco</div>
+        <div class="prop-meta">
+          <span class="prop-tag">Comercial</span>
+          <span class="prop-tag">480 m²</span>
+        </div>
+        <button class="prop-cta">Ver brochure <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      </div>
+    </div>
+
+    <!-- card 7 -->
+    <div class="prop" data-cat="inversion" onclick="openBrochure('edificio')">
+      <div class="prop-img">
+        <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=85&fit=crop" alt="Edificio San Borja">
+        <div class="prop-price">$1,850,000 USD</div>
+        <div class="prop-status inversion">Inversión</div>
+        <div class="prop-img-ov"></div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-name">Edificio San Borja</div>
+        <div class="prop-meta">
+          <span class="prop-tag">12 pisos</span>
+          <span class="prop-tag">Rentable</span>
+        </div>
+        <button class="prop-cta">Ver brochure <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      </div>
+    </div>
+
+    <!-- card 8 -->
+    <div class="prop" data-cat="alquiler" onclick="openBrochure('depto')">
+      <div class="prop-img">
+        <img src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=600&q=85&fit=crop" alt="Departamento Surco">
+        <div class="prop-price">$1,800/mes</div>
+        <div class="prop-status alquiler">Alquiler</div>
+        <div class="prop-img-ov"></div>
+      </div>
+      <div class="prop-body">
+        <div class="prop-name">Depto. Surco</div>
+        <div class="prop-meta">
+          <span class="prop-tag">2 hab.</span>
+          <span class="prop-tag">95 m²</span>
+        </div>
+        <button class="prop-cta">Ver brochure <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></button>
+      </div>
+    </div>
+
+  </div><!-- /props -->
+
+</div><!-- /proyectos -->
+
+
+<!-- ══ NAV (global, always on top) ══ -->
+<nav id="main-nav">
+  <a href="#" class="nb active" id="nav-home" onclick="goHome();return false">
+    <div class="nb-ico"><svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg></div>
+    <span class="nb-lbl">Inicio</span>
+  </a>
+  <a href="#" class="nb" id="nav-proj" onclick="goProyectos();return false">
+    <div class="nb-ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+    <span class="nb-lbl">Proyectos</span>
+  </a>
+  <a href="#" class="nb">
+    <div class="nb-ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+    <span class="nb-lbl">Clientes</span>
+  </a>
+  <a href="#" class="nb">
+    <div class="nb-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></div>
+    <span class="nb-lbl">Más</span>
+  </a>
+</nav>
+
+<!-- ══ BROCHURE MODAL ══ -->
+<div class="modal-backdrop" id="modal-backdrop" onclick="closeBrochure()"></div>
+<div class="modal" id="modal-brochure">
+  <div class="modal-handle"></div>
+  <div class="m-gallery">
+    <img id="m-main-photo" class="m-gallery-main" src="" alt="">
+    <div class="m-price-overlay" id="m-price"></div>
+    <div class="m-status-overlay" id="m-status"></div>
+    <div class="m-gallery-thumbs" id="m-thumbs"></div>
+  </div>
+  <div class="m-body">
+    <div class="m-header">
+      <div class="m-title" id="m-title"></div>
+      <button class="m-close" onclick="closeBrochure()">
+        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="m-stats" id="m-stats"></div>
+    <div class="m-sec-lbl">Descripción</div>
+    <div class="m-desc" id="m-desc"></div>
+    <div class="m-sec-lbl">Características</div>
+    <div class="m-features" id="m-features"></div>
+    <div class="m-sec-lbl">Ubicación</div>
+    <div class="m-map">
+      <div class="m-map-label" id="m-map-label"></div>
+      <iframe id="m-map-frame" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+    <div class="m-sec-lbl">Planos</div>
+    <div class="m-plan-tabs">
+      <div class="m-plan-tab active" onclick="switchPlan('2d',this)">Plano 2D</div>
+      <div class="m-plan-tab" onclick="switchPlan('3d',this)">Vista 3D</div>
+    </div>
+    <div class="m-plan-view">
+      <div class="m-plan-2d" id="plan-2d"><img id="m-plan-2d-img" src="" alt="Plano 2D"></div>
+      <div class="m-plan-3d hide" id="plan-3d"><img id="m-plan-3d-img" src="" alt="Vista 3D"></div>
+    </div>
+    <div class="m-cta-row">
+      <button class="m-cta primary" onclick="closeBrochure()">Solicitar visita</button>
+      <button class="m-cta secondary" onclick="closeBrochure()">Compartir</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── NAVIGATION ── */
+function goProyectos(){
+  document.getElementById('page-proyectos').classList.remove('hidden');
+  document.getElementById('page-proyectos').classList.add('visible');
+  document.getElementById('nav-home').classList.remove('active');
+  document.getElementById('nav-proj').classList.add('active');
+  document.getElementById('page-proyectos').scrollTop = 0;
+}
+function goHome(){
+  document.getElementById('page-proyectos').classList.remove('visible');
+  document.getElementById('page-proyectos').classList.add('hidden');
+  document.getElementById('nav-proj').classList.remove('active');
+  document.getElementById('nav-home').classList.add('active');
+}
+function filterProps(cat, btn){
+  document.querySelectorAll('.filt').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.prop').forEach(p=>{
+    p.classList.toggle('hide', cat!=='todos' && p.dataset.cat!==cat);
+  });
+  const feat = document.querySelector('.prop.featured');
+  if(feat) feat.classList.toggle('hide', cat!=='todos' && cat!=='venta');
+}
+
+/* ── PROPERTY DATA ── */
+const PROPS = {
+  miraflores:{
+    title:'Residencia Miraflores',
+    price:'$459,000 USD',
+    status:'Venta',
+    statusClass:'venta',
+    desc:'Elegante residencia moderna en el corazón de Miraflores. Diseño contemporáneo con acabados de primera calidad, amplias terrazas con vista al mar y jardines privados. Ideal para familia o inversión premium.',
+    stats:[{v:'4',l:'Habitaciones'},{v:'3',l:'Baños'},{v:'320',l:'m² total'},{v:'2019',l:'Año'}],
+    features:['Cocina italiana','Sala de cine','Jacuzzi exterior','Seguridad 24/7','Estacionamiento x2','Vista al mar','Terraza privada','Jardín'],
+    map:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.2!2d-77.0282!3d-12.1211!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8b5d35662bf%3A0x85d1f4e5e2e9d97a!2sMiraflores!5e0!3m2!1ses!2spe!4v1',
+    mapLabel:'Miraflores, Lima',
+    photos:['https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=85&fit=crop'],
+    plan2d:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop',
+    plan3d:'https://images.unsplash.com/photo-1480074568708-e7b720bb3f09?w=600&q=80&fit=crop'
+  },
+  penthouse:{
+    title:'Penthouse San Isidro',
+    price:'$820,000 USD',
+    status:'Venta',
+    statusClass:'venta',
+    desc:'Exclusivo penthouse en el distrito financiero de San Isidro. Piso 24, vistas panorámicas de 360° a Lima. Diseño minimalista japonés, materiales importados y domótica integral.',
+    stats:[{v:'3',l:'Habitaciones'},{v:'4',l:'Baños'},{v:'210',l:'m² total'},{v:'24°',l:'Piso'}],
+    features:['Piscina privada','Rooftop exclusivo','Domótica smart','Vista panorámica','Concierge 24h','Spa privado','Bodega de vinos','Doble altura'],
+    map:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.5!2d-77.0353!3d-12.1003!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c8b5d35662bf%3A0x5d9ef8fde7f0d00!2sSan+Isidro!5e0!3m2!1ses!2spe!4v1',
+    mapLabel:'San Isidro, Lima',
+    photos:['https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=85&fit=crop'],
+    plan2d:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop',
+    plan3d:'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=600&q=80&fit=crop'
+  },
+  villa:{
+    title:'Villa La Molina',
+    price:'$1,200,000 USD',
+    status:'Venta Exclusiva',
+    statusClass:'venta',
+    desc:'Imponente villa de lujo en La Molina con diseño neoclásico europeo. Gran piscina olímpica, cancha de tenis privada, casa de huéspedes independiente y seguridad perimetral total.',
+    stats:[{v:'6',l:'Habitaciones'},{v:'6',l:'Baños'},{v:'850',l:'m² total'},{v:'1200',l:'m² terreno'}],
+    features:['Piscina olímpica','Cancha de tenis','Casa huéspedes','Cine privado','Caballeriza','Generador','Pozo de agua','Helipuerto'],
+    map:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3903.2!2d-76.9324!3d-12.0793!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105ef5b5f72edf1%3A0x9e3b36f3a3a36b3!2sLa+Molina!5e0!3m2!1ses!2spe!4v1',
+    mapLabel:'La Molina, Lima',
+    photos:['https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1600047508788-786f3865b0af?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1600566752734-2a0cd5f5f3c1?w=800&q=85&fit=crop'],
+    plan2d:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop',
+    plan3d:'https://images.unsplash.com/photo-1416331108676-a22ccb276e35?w=600&q=80&fit=crop'
+  },
+  loft:{
+    title:'Loft Barranco',
+    price:'$2,500 USD/mes',
+    status:'Alquiler',
+    statusClass:'alquiler',
+    desc:'Loft industrial artístico en el bohemio distrito de Barranco. Techos de 4 metros, vigas de acero expuestas, ventanales del piso al techo y terraza con vista al Pacífico.',
+    stats:[{v:'2',l:'Habitaciones'},{v:'2',l:'Baños'},{v:'120',l:'m² total'},{v:'4m',l:'Altura'}],
+    features:['Cocina gourmet','Terraza Pacífico','Estilo industrial','Fibra óptica','Lobby boutique','A/C central','Mascotas ok','Amoblado'],
+    map:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.5!2d-77.0197!3d-12.1499!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c89b18e4c7d1%3A0x7e4b3c9e9d5e3b3!2sBarranco!5e0!3m2!1ses!2spe!4v1',
+    mapLabel:'Barranco, Lima',
+    photos:['https://images.unsplash.com/photo-1560185127-6ed189bf02f4?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=85&fit=crop'],
+    plan2d:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop',
+    plan3d:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80&fit=crop'
+  },
+  playa:{
+    title:'Casa de Playa Asia',
+    price:'$550,000 USD',
+    status:'Temporada',
+    statusClass:'alquiler',
+    desc:'Impresionante casa de playa en Asia km 97. Acceso directo a la orilla, terraza frente al mar, piscina desbordante y diseño contemporáneo con materiales naturales.',
+    stats:[{v:'5',l:'Habitaciones'},{v:'4',l:'Baños'},{v:'380',l:'m² total'},{v:'Asia',l:'Playa'}],
+    features:['Acceso directo playa','Piscina desbordante','Barbacoa exterior','Kayaks incluidos','Terraza 360°','Sala de juegos','Wi-Fi premium','Personal incluido'],
+    map:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d30000!2d-76.5831!3d-12.7668!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105ee0!2sAsia!5e0!3m2!1ses!2spe!4v1',
+    mapLabel:'Asia, Lima Sur',
+    photos:['https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1571003123894-1f0594d2b5d9?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=85&fit=crop'],
+    plan2d:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop',
+    plan3d:'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=600&q=80&fit=crop'
+  },
+  oficinas:{
+    title:'Oficinas Surco',
+    price:'$320,000 USD',
+    status:'Inversión',
+    statusClass:'inversion',
+    desc:'Piso completo de oficinas clase A en Surco Corporate. Planta libre de 480 m², 3 estacionamientos por piso, certificación LEED Gold y rendimiento estimado del 8% anual.',
+    stats:[{v:'480',l:'m² total'},{v:'3',l:'Estac.'},{v:'8%',l:'Rendimiento'},{v:'LEED',l:'Certificación'}],
+    features:['Planta libre','Losa técnica','LEED Gold','Fibra óptica 1GB','Generador propio','Lobby premium','Cafetería','Auditorio'],
+    map:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3903.8!2d-76.9913!3d-12.1121!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c82a!2sSurco!5e0!3m2!1ses!2spe!4v1',
+    mapLabel:'Santiago de Surco, Lima',
+    photos:['https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800&q=85&fit=crop'],
+    plan2d:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop',
+    plan3d:'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=600&q=80&fit=crop'
+  },
+  edificio:{
+    title:'Edificio San Borja',
+    price:'$1,850,000 USD',
+    status:'Inversión',
+    statusClass:'inversion',
+    desc:'Edificio multifamiliar de 12 pisos en San Borja con 24 unidades. Rendimiento neto anual del 9.5%, administración incluida. Oportunidad única de portafolio inmobiliario.',
+    stats:[{v:'12',l:'Pisos'},{v:'24',l:'Unidades'},{v:'9.5%',l:'Rentabilidad'},{v:'2021',l:'Año'}],
+    features:['24 departamentos','Gym equipado','Piscina común','Control de acceso','Lobby ejecutivo','Áreas comunes','Cisternas propias','Administración'],
+    map:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3902.1!2d-76.9987!3d-12.0965!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c82a!2sSan+Borja!5e0!3m2!1ses!2spe!4v1',
+    mapLabel:'San Borja, Lima',
+    photos:['https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=85&fit=crop'],
+    plan2d:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop',
+    plan3d:'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&q=80&fit=crop'
+  },
+  depto:{
+    title:'Departamento Surco',
+    price:'$1,800 USD/mes',
+    status:'Alquiler',
+    statusClass:'alquiler',
+    desc:'Departamento moderno completamente amoblado en condominio privado de Surco. Seguridad 24h, áreas verdes y acceso a clubhouse con piscina y gym.',
+    stats:[{v:'2',l:'Habitaciones'},{v:'2',l:'Baños'},{v:'95',l:'m² total'},{v:'8vo',l:'Piso'}],
+    features:['Totalmente amoblado','Piscina común','Gym','Seguridad 24h','Estacionamiento','Depósito','Pet friendly','Balcón'],
+    map:'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3903.8!2d-76.9913!3d-12.1121!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c82a!2sSurco!5e0!3m2!1ses!2spe!4v1',
+    mapLabel:'Santiago de Surco, Lima',
+    photos:['https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&q=85&fit=crop','https://images.unsplash.com/photo-1560185007-cde436f6a4d0?w=800&q=85&fit=crop'],
+    plan2d:'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&q=80&fit=crop',
+    plan3d:'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&q=80&fit=crop'
+  }
+};
+
+/* ── MODAL LOGIC ── */
+function openBrochure(id){
+  const p = PROPS[id];
+  if(!p) return;
+  // photo gallery
+  const main = document.getElementById('m-main-photo');
+  main.src = p.photos[0];
+  document.getElementById('m-price').textContent = p.price;
+  document.getElementById('m-status').textContent = p.status;
+  // thumbs
+  const thumbs = document.getElementById('m-thumbs');
+  thumbs.innerHTML = p.photos.map((ph,i)=>
+    `<div class="m-thumb${i===0?' active':''}" onclick="switchPhoto('${ph}',this)"><img src="${ph}" loading="lazy"></div>`
+  ).join('');
+  // title
+  document.getElementById('m-title').textContent = p.title;
+  // stats
+  document.getElementById('m-stats').innerHTML = p.stats.map(s=>
+    `<div class="m-stat"><div class="m-stat-val">${s.v}</div><div class="m-stat-lbl">${s.l}</div></div>`
+  ).join('');
+  // desc
+  document.getElementById('m-desc').textContent = p.desc;
+  // features
+  document.getElementById('m-features').innerHTML = p.features.map(f=>
+    `<div class="m-feat"><span class="m-feat-dot"></span>${f}</div>`
+  ).join('');
+  // map
+  document.getElementById('m-map-label').innerHTML = '<span>📍</span>' + p.mapLabel;
+  document.getElementById('m-map-frame').src = p.map;
+  // plans
+  document.getElementById('m-plan-2d-img').src = p.plan2d;
+  document.getElementById('m-plan-3d-img').src = p.plan3d;
+  // reset plan tabs
+  document.querySelectorAll('.m-plan-tab').forEach((t,i)=>t.classList.toggle('active',i===0));
+  document.getElementById('plan-2d').classList.remove('hide');
+  document.getElementById('plan-3d').classList.add('hide');
+  // open
+  document.getElementById('modal-backdrop').classList.add('open');
+  document.getElementById('modal-brochure').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeBrochure(){
+  document.getElementById('modal-backdrop').classList.remove('open');
+  document.getElementById('modal-brochure').classList.remove('open');
+  document.body.style.overflow='';
+}
+function switchPhoto(src, el){
+  document.getElementById('m-main-photo').src = src;
+  document.querySelectorAll('.m-thumb').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+function switchPlan(type, el){
+  document.querySelectorAll('.m-plan-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('plan-2d').classList.toggle('hide', type!=='2d');
+  document.getElementById('plan-3d').classList.toggle('hide', type!=='3d');
+}
+</script>
+</body>
+</html>
