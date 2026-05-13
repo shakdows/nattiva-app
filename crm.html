@@ -3,831 +3,355 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CRM Nattiva — Gestión de Clientes</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<title>CRM Nattiva</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --crimson:#A8191B;--crimson-d:#7C1012;
-  --gold:#C49A3C;--gold-l:#DEB96A;
-  --ink:#111111;--ink-60:rgba(17,17,17,.6);--ink-20:rgba(17,17,17,.1);
-  --paper:#F8F6F2;--white:#FFFFFF;--green:#2E7D32;
-  --serif:'Cormorant Garamond',Georgia,serif;
-  --sans:'Jost',sans-serif;
-  --sh:0 2px 16px rgba(0,0,0,.07);
-  --sh-md:0 8px 32px rgba(0,0,0,.12);
-}
+:root{--red:#A8191B;--red-d:#7C1012;--gold:#C49A3C;--ink:#111;--ink-60:rgba(17,17,17,.6);--ink-20:rgba(17,17,17,.1);--paper:#F8F6F2;--white:#fff;--serif:'Cormorant Garamond',serif;--sans:'Jost',sans-serif;--sh:0 2px 16px rgba(0,0,0,.07);--sh-md:0 8px 32px rgba(0,0,0,.12);}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--sans);background:var(--paper);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased}
-a{text-decoration:none;color:inherit}
-button{font-family:var(--sans);cursor:pointer;border:none;background:none}
-input,select,textarea{font-family:var(--sans)}
+body{font-family:var(--sans);background:var(--paper);color:var(--ink);min-height:100vh;}
+button{font-family:var(--sans);cursor:pointer;border:none;background:none;}
+input,select,textarea{font-family:var(--sans);}
 
-/* ── HEADER ── */
-header{
-  position:sticky;top:0;z-index:300;
-  background:rgba(248,246,242,.96);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--ink-20);
-  height:62px;
-}
-.hd{max-width:1280px;margin:0 auto;padding:0 28px;height:62px;display:flex;align-items:center;justify-content:space-between;}
-.back-btn{display:flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-60);cursor:pointer;transition:color .2s}
-.back-btn:hover{color:var(--crimson)}
-.back-btn svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.hd-title{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--ink)}
-.hd-title span{color:var(--crimson);font-weight:600}
+header{position:sticky;top:0;z-index:100;background:rgba(248,246,242,.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--ink-20);height:58px;}
+.hd{max-width:900px;margin:0 auto;padding:0 20px;height:58px;display:flex;align-items:center;justify-content:space-between;}
+.back{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-60);cursor:pointer;text-decoration:none;}
+.back svg{width:15px;height:15px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.hd-t{font-family:var(--serif);font-size:20px;font-weight:400;}
+.hd-t span{color:var(--red);font-weight:600;}
 
-/* ── TABS ── */
-.tabs-wrap{max-width:1280px;margin:0 auto;padding:24px 28px 0;}
-.tabs{display:flex;gap:4px;background:var(--white);border-radius:12px;padding:4px;border:1px solid var(--ink-20);width:fit-content;box-shadow:var(--sh);}
-.tab{padding:10px 28px;border-radius:9px;font-size:12px;font-weight:600;letter-spacing:.06em;cursor:pointer;transition:all .2s;color:var(--ink-60);}
-.tab.active{background:var(--crimson);color:var(--white);box-shadow:0 4px 12px rgba(168,25,27,.3);}
-.tab:hover:not(.active){background:var(--ink-20);color:var(--ink);}
+.wrap{max-width:900px;margin:0 auto;padding:20px 20px 80px;}
 
-/* ── VIEWS ── */
-.view{display:none;max-width:1280px;margin:0 auto;padding:24px 28px 100px;}
-.view.active{display:block;}
+/* TABS */
+.tabs{display:flex;gap:4px;background:var(--white);border-radius:10px;padding:4px;border:1px solid var(--ink-20);width:fit-content;margin-bottom:24px;box-shadow:var(--sh);}
+.tab{padding:9px 24px;border-radius:7px;font-size:12px;font-weight:600;letter-spacing:.05em;cursor:pointer;color:var(--ink-60);transition:all .2s;}
+.tab.active{background:var(--red);color:var(--white);box-shadow:0 3px 10px rgba(168,25,27,.3);}
 
-/* ── FORM VIEW ── */
-.form-header{margin-bottom:28px;}
-.form-header h2{font-family:var(--serif);font-size:32px;font-weight:400;margin-bottom:6px;}
-.form-header h2 strong{color:var(--crimson);font-weight:600;}
-.form-header p{font-size:13px;color:var(--ink-60);}
+/* FORM */
+.card{background:var(--white);border-radius:18px;border:1px solid var(--ink-20);box-shadow:var(--sh-md);padding:28px;}
+.sec-lbl{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--red);display:flex;align-items:center;gap:7px;margin-bottom:16px;}
+.sec-lbl::before{content:'';width:18px;height:1px;background:var(--red);}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:24px;}
+@media(max-width:600px){.grid{grid-template-columns:1fr;}}
+.field{display:flex;flex-direction:column;gap:5px;}
+.field label{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-60);}
+.field input,.field select,.field textarea{width:100%;border:1.5px solid var(--ink-20);background:#FAFAF8;color:var(--ink);border-radius:9px;padding:11px 13px;font-size:14px;outline:none;transition:all .2s;}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--red);background:var(--white);}
+.field textarea{resize:vertical;min-height:70px;}
+.field.full{grid-column:1/-1;}
 
-.form-card{background:var(--white);border-radius:20px;border:1px solid var(--ink-20);box-shadow:var(--sh-md);overflow:hidden;}
-.form-section{padding:28px 32px;border-bottom:1px solid var(--ink-20);}
-.form-section:last-child{border-bottom:none;}
-.section-label{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--crimson);display:flex;align-items:center;gap:8px;margin-bottom:18px;}
-.section-label::before{content:'';display:block;width:20px;height:1px;background:var(--crimson);}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-.form-grid.three{grid-template-columns:1fr 1fr 1fr;}
-.form-grid.full{grid-template-columns:1fr;}
-@media(max-width:768px){.form-grid,.form-grid.three{grid-template-columns:1fr;}}
+/* PILLS */
+.pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
+.pill{padding:7px 16px;border-radius:50px;font-size:11px;font-weight:600;cursor:pointer;border:1.5px solid var(--ink-20);color:var(--ink-60);background:var(--white);transition:all .2s;user-select:none;}
+.pill.on{background:var(--red);color:var(--white);border-color:var(--red);}
 
-.field{display:flex;flex-direction:column;gap:6px;}
-.field label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-60);}
-.field input,.field select,.field textarea{
-  width:100%;border:1.5px solid var(--ink-20);background:#FAFAF8;
-  color:var(--ink);border-radius:10px;padding:12px 14px;
-  font-size:14px;outline:none;transition:all .2s;
-}
-.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--crimson);background:var(--white);box-shadow:0 0 0 3px rgba(168,25,27,.08);}
-.field textarea{resize:vertical;min-height:80px;}
-.field select{cursor:pointer;}
+/* SUBMIT */
+.btn-save{width:100%;background:var(--red);color:var(--white);border:none;border-radius:10px;padding:14px;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s;margin-top:8px;}
+.btn-save:hover{background:var(--red-d);}
 
-/* Opciones de intención como pills */
-.pills{display:flex;flex-wrap:wrap;gap:8px;}
-.pill{
-  padding:8px 18px;border-radius:50px;font-size:11px;font-weight:600;
-  cursor:pointer;transition:all .2s;border:1.5px solid var(--ink-20);
-  color:var(--ink-60);background:var(--white);user-select:none;
-}
-.pill.active{background:var(--crimson);color:var(--white);border-color:var(--crimson);box-shadow:0 3px 10px rgba(168,25,27,.3);}
-.pill:hover:not(.active){border-color:var(--crimson);color:var(--crimson);}
-.pill.gold.active{background:var(--gold);color:var(--ink);border-color:var(--gold);}
+/* VIS */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px;align-items:center;}
+.search{flex:1;min-width:180px;position:relative;}
+.search input{width:100%;border:1.5px solid var(--ink-20);background:var(--white);border-radius:9px;padding:10px 13px 10px 36px;font-size:13px;outline:none;}
+.search input:focus{border-color:var(--red);}
+.search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:15px;height:15px;stroke:var(--ink-60);stroke-width:2;fill:none;}
+.fsel{border:1.5px solid var(--ink-20);background:var(--white);border-radius:9px;padding:10px 13px;font-size:12px;font-weight:600;color:var(--ink-60);cursor:pointer;outline:none;}
+.cnt{font-size:12px;font-weight:600;color:var(--ink-60);white-space:nowrap;}
+.cnt b{color:var(--red);font-size:15px;}
 
-/* Slider de presupuesto */
-.budget-wrap{position:relative;}
-.budget-display{
-  font-family:var(--serif);font-size:28px;font-weight:600;
-  color:var(--crimson);text-align:center;margin-bottom:8px;
-}
-input[type=range]{width:100%;height:6px;border-radius:3px;outline:none;appearance:none;background:linear-gradient(to right,var(--crimson) 0%,var(--ink-20) 0%);cursor:pointer;border:none;padding:0;}
-input[type=range]::-webkit-slider-thumb{appearance:none;width:20px;height:20px;border-radius:50%;background:var(--crimson);box-shadow:0 2px 6px rgba(168,25,27,.4);}
-.budget-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--ink-60);margin-top:6px;}
+.cgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+@media(max-width:800px){.cgrid{grid-template-columns:1fr 1fr;}}
+@media(max-width:500px){.cgrid{grid-template-columns:1fr;}}
 
-/* Submit button */
-.submit-wrap{padding:24px 32px;background:linear-gradient(to right,#FAFAF8,var(--white));border-top:1px solid var(--ink-20);}
-.submit-btn{
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  width:100%;background:var(--crimson);color:var(--white);
-  border-radius:12px;padding:16px 0;
-  font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  transition:background .2s,transform .1s;border:none;cursor:pointer;
-}
-.submit-btn:hover{background:var(--crimson-d);transform:scale(.99);}
-.submit-btn svg{width:18px;height:18px;stroke:currentColor;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round;}
+.cc{background:var(--white);border-radius:14px;border:1px solid var(--ink-20);box-shadow:var(--sh);overflow:hidden;cursor:pointer;transition:transform .2s,box-shadow .2s;}
+.cc:hover{transform:translateY(-3px);box-shadow:var(--sh-md);}
+.cc-bar{height:4px;}
+.cc-body{padding:14px 16px;}
+.cc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+.av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:var(--white);}
+.est-tag{font-size:8px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border-radius:4px;padding:3px 7px;}
+.cc-name{font-family:var(--serif);font-size:16px;margin-bottom:2px;}
+.cc-tel{font-size:11px;color:var(--ink-60);margin-bottom:6px;}
+.cc-budget{font-family:var(--serif);font-size:17px;font-weight:600;color:var(--red);}
+.cc-footer{padding:9px 16px;border-top:1px solid var(--ink-20);background:#FAFAF8;display:flex;justify-content:space-between;align-items:center;}
+.cc-int{font-size:10px;color:var(--ink-60);}
+.cc-more{font-size:10px;font-weight:700;color:var(--red);background:none;border:none;cursor:pointer;}
 
-/* Success toast */
-.toast{
-  position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(100px);
-  background:#1B5E20;color:var(--white);
-  border-radius:12px;padding:14px 24px;
-  font-size:13px;font-weight:600;
-  box-shadow:0 8px 32px rgba(0,0,0,.2);
-  transition:transform .4s cubic-bezier(.22,1,.36,1);
-  z-index:999;display:flex;align-items:center;gap:8px;white-space:nowrap;
-}
-.toast.show{transform:translateX(-50%) translateY(0);}
+.empty{text-align:center;padding:50px;grid-column:1/-1;color:var(--ink-60);font-size:14px;}
 
-/* ── VISUALIZAR VIEW ── */
-.vis-toolbar{
-  display:flex;align-items:center;gap:12px;flex-wrap:wrap;
-  margin-bottom:20px;
-}
-.search-box{
-  flex:1;min-width:200px;position:relative;
-}
-.search-box input{
-  width:100%;border:1.5px solid var(--ink-20);background:var(--white);
-  border-radius:10px;padding:10px 14px 10px 38px;
-  font-size:13px;color:var(--ink);outline:none;transition:border-color .2s;
-}
-.search-box input:focus{border-color:var(--crimson);}
-.search-box svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;stroke:var(--ink-60);stroke-width:2;fill:none;}
-.filter-select{
-  border:1.5px solid var(--ink-20);background:var(--white);
-  border-radius:10px;padding:10px 14px;
-  font-size:12px;font-weight:600;color:var(--ink-60);
-  cursor:pointer;outline:none;transition:border-color .2s;
-}
-.filter-select:focus{border-color:var(--crimson);}
-.vis-count{
-  font-size:12px;font-weight:600;color:var(--ink-60);
-  white-space:nowrap;
-}
-.vis-count span{color:var(--crimson);font-size:16px;font-weight:700;}
+/* MODAL */
+.mbg{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .3s;}
+.mbg.on{opacity:1;pointer-events:all;}
+.mbox{position:fixed;top:50%;left:50%;transform:translate(-50%,-44%);width:92%;max-width:540px;max-height:85vh;background:var(--paper);border-radius:20px;z-index:700;overflow-y:auto;opacity:0;pointer-events:none;transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .3s;scrollbar-width:none;}
+.mbox::-webkit-scrollbar{display:none;}
+.mbox.on{transform:translate(-50%,-50%);opacity:1;pointer-events:all;}
+@media(max-width:500px){.mbox{top:auto;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);border-radius:20px 20px 0 0;max-height:88vh;width:100%;max-width:none;}.mbox.on{transform:translateX(-50%) translateY(0);}}
+.mhandle{width:36px;height:4px;border-radius:2px;background:var(--ink-20);margin:12px auto 0;}
+.mbody{padding:18px 22px 24px;}
+.mrow{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.mf{background:var(--white);border-radius:9px;padding:10px 12px;border:1px solid var(--ink-20);}
+.mf-l{font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-60);margin-bottom:2px;}
+.mf-v{font-size:13px;font-weight:600;color:var(--ink);}
+.macts{display:flex;gap:10px;margin-top:16px;}
+.mact{flex:1;padding:12px;border-radius:9px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;text-align:center;cursor:pointer;border:none;transition:all .2s;}
+.mact.wa{background:#25D366;color:var(--white);}
+.mact.del{background:var(--white);color:#C62828;border:1.5px solid #C62828;}
+.mact.del:hover{background:#C62828;color:var(--white);}
 
-/* Client cards grid */
-.clients-grid{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:16px;
-}
-@media(max-width:1024px){.clients-grid{grid-template-columns:1fr 1fr;}}
-@media(max-width:640px){.clients-grid{grid-template-columns:1fr;}}
-
-.client-card{
-  background:var(--white);border-radius:16px;
-  border:1px solid var(--ink-20);box-shadow:var(--sh);
-  overflow:hidden;cursor:pointer;
-  transition:transform .2s,box-shadow .2s;
-  position:relative;
-}
-.client-card:hover{transform:translateY(-3px);box-shadow:var(--sh-md);}
-.cc-top{
-  height:5px;
-}
-.cc-body{padding:16px 18px 14px;}
-.cc-row1{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.cc-avatar{
-  width:40px;height:40px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:16px;font-weight:700;color:var(--white);flex-shrink:0;
-}
-.cc-intent{
-  font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
-  border-radius:4px;padding:3px 8px;
-}
-.cc-name{font-family:var(--serif);font-size:17px;font-weight:400;margin-bottom:3px;}
-.cc-meta{font-size:11px;color:var(--ink-60);margin-bottom:8px;}
-.cc-tags{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;}
-.cc-tag{font-size:8px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:var(--paper);border-radius:4px;padding:2px 7px;color:var(--ink-60);}
-.cc-budget{font-family:var(--serif);font-size:18px;font-weight:600;color:var(--crimson);}
-.cc-date{font-size:10px;color:var(--ink-60);}
-.cc-footer{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:10px 18px;border-top:1px solid var(--ink-20);
-  background:#FAFAF8;
-}
-.cc-action{
-  font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--crimson);cursor:pointer;background:none;border:none;
-}
-
-/* Empty state */
-.empty-state{
-  text-align:center;padding:60px 20px;
-  grid-column:1/-1;
-}
-.empty-state svg{width:48px;height:48px;stroke:var(--ink-20);stroke-width:1.5;fill:none;margin:0 auto 16px;display:block;}
-.empty-state p{font-size:14px;color:var(--ink-60);}
-
-/* Modal de detalle cliente */
-.client-modal-backdrop{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.6);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity .3s;}
-.client-modal-backdrop.open{opacity:1;pointer-events:all;}
-.client-modal{
-  position:fixed;top:50%;left:50%;
-  transform:translate(-50%,-44%);
-  width:92%;max-width:600px;max-height:88vh;
-  background:var(--paper);border-radius:22px;
-  z-index:700;overflow-y:auto;
-  opacity:0;pointer-events:none;
-  transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .3s;
-  scrollbar-width:none;
-}
-.client-modal::-webkit-scrollbar{display:none;}
-.client-modal.open{transform:translate(-50%,-50%);opacity:1;pointer-events:all;}
-@media(max-width:640px){
-  .client-modal{top:auto;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);border-radius:22px 22px 0 0;max-height:90vh;width:100%;max-width:none;}
-  .client-modal.open{transform:translateX(-50%) translateY(0);}
-}
-.cm-handle{width:40px;height:4px;border-radius:2px;background:var(--ink-20);margin:12px auto 0;}
-.cm-header{
-  padding:20px 24px 0;display:flex;align-items:flex-start;justify-content:space-between;
-}
-.cm-close{width:32px;height:32px;border-radius:50%;background:var(--ink-20);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s;border:none;}
-.cm-close:hover{background:rgba(168,25,27,.15);}
-.cm-close svg{width:14px;height:14px;stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round;}
-.cm-body{padding:16px 24px 28px;}
-.cm-section{margin-bottom:20px;}
-.cm-sec-label{font-size:9px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--crimson);display:flex;align-items:center;gap:6px;margin-bottom:10px;}
-.cm-sec-label::before{content:'';display:block;width:16px;height:1px;background:var(--crimson);}
-.cm-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-.cm-field{background:var(--white);border-radius:10px;padding:10px 14px;border:1px solid var(--ink-20);}
-.cm-field-label{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-60);margin-bottom:3px;}
-.cm-field-value{font-size:14px;font-weight:600;color:var(--ink);}
-.cm-actions{display:flex;gap:10px;margin-top:20px;}
-.cm-btn{flex:1;padding:12px 0;border-radius:10px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;text-align:center;cursor:pointer;border:none;transition:all .2s;}
-.cm-btn.primary{background:var(--crimson);color:var(--white);}
-.cm-btn.primary:hover{background:var(--crimson-d);}
-.cm-btn.danger{background:var(--white);color:#C62828;border:1.5px solid #C62828;}
-.cm-btn.danger:hover{background:#C62828;color:var(--white);}
+/* TOAST */
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(80px);background:#1B5E20;color:var(--white);border-radius:10px;padding:12px 22px;font-size:13px;font-weight:600;box-shadow:0 6px 24px rgba(0,0,0,.2);transition:transform .4s cubic-bezier(.22,1,.36,1);z-index:999;}
+.toast.on{transform:translateX(-50%) translateY(0);}
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <div class="hd">
-    <button class="back-btn" onclick="history.back()">
-      <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-      Volver
-    </button>
-    <div class="hd-title">CRM <span>Nattiva</span> · Gestión de Clientes</div>
-    <div style="width:80px;"></div>
+    <a href="index.html" class="back"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>Volver</a>
+    <div class="hd-t">CRM <span>Nattiva</span></div>
+    <div style="width:60px"></div>
   </div>
 </header>
 
-<!-- TABS -->
-<div class="tabs-wrap">
+<div class="wrap">
   <div class="tabs">
-    <div class="tab active" onclick="switchTab('form')">➕ Nuevo Cliente</div>
-    <div class="tab" onclick="switchTab('vis')">👥 Ver Clientes</div>
-  </div>
-</div>
-
-<!-- ══ FORM VIEW ══ -->
-<div class="view active" id="view-form">
-  <div class="form-header" style="margin-top:24px;">
-    <h2>Registrar <strong>Nuevo Cliente</strong></h2>
-    <p>Completa los datos del cliente para guardarlos en el CRM</p>
+    <div class="tab active" onclick="tab('form',this)">➕ Nuevo Cliente</div>
+    <div class="tab" onclick="tab('vis',this)">👥 Ver Clientes</div>
   </div>
 
-  <div class="form-card">
-
-    <!-- DATOS PERSONALES -->
-    <div class="form-section">
-      <div class="section-label">Datos Personales</div>
-      <div class="form-grid">
-        <div class="field">
-          <label>Nombre completo *</label>
-          <input type="text" id="f-nombre" placeholder="Ej: María García López">
-        </div>
-        <div class="field">
-          <label>DNI / Pasaporte</label>
-          <input type="text" id="f-dni" placeholder="Ej: 45678901">
-        </div>
-        <div class="field">
-          <label>Teléfono / WhatsApp *</label>
-          <input type="tel" id="f-telefono" placeholder="Ej: +51 987 654 321">
-        </div>
-        <div class="field">
-          <label>Correo electrónico</label>
-          <input type="email" id="f-email" placeholder="Ej: maria@email.com">
-        </div>
-        <div class="field">
-          <label>Edad</label>
-          <select id="f-edad">
-            <option value="">Seleccionar...</option>
-            <option>18–25 años</option>
-            <option>26–35 años</option>
-            <option>36–45 años</option>
-            <option>46–55 años</option>
-            <option>56–65 años</option>
-            <option>Más de 65</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Distrito / Ciudad</label>
-          <input type="text" id="f-distrito" placeholder="Ej: Miraflores, Lima">
-        </div>
+  <!-- FORM -->
+  <div id="v-form">
+    <div class="card">
+      <!-- Datos básicos -->
+      <div class="sec-lbl">Datos del cliente</div>
+      <div class="grid">
+        <div class="field"><label>Nombre *</label><input id="f-nom" type="text" placeholder="Nombre completo"></div>
+        <div class="field"><label>Teléfono / WhatsApp *</label><input id="f-tel" type="tel" placeholder="+51 987 654 321"></div>
+        <div class="field"><label>Email</label><input id="f-email" type="email" placeholder="correo@email.com"></div>
+        <div class="field"><label>Distrito</label><input id="f-dist" type="text" placeholder="Ej: Miraflores"></div>
       </div>
-    </div>
 
-    <!-- INTENCIÓN -->
-    <div class="form-section">
-      <div class="section-label">¿Qué desea hacer?</div>
-      <div class="pills" id="pills-intencion">
-        <div class="pill" onclick="togglePill(this,'intencion')">🏠 Comprar</div>
-        <div class="pill" onclick="togglePill(this,'intencion')">💰 Invertir</div>
-        <div class="pill" onclick="togglePill(this,'intencion')">🔑 Alquilar</div>
-        <div class="pill" onclick="togglePill(this,'intencion')">📋 Vender</div>
-        <div class="pill" onclick="togglePill(this,'intencion')">🏗️ Proyecto en planos</div>
-        <div class="pill" onclick="togglePill(this,'intencion')">🏢 Oficinas / Comercial</div>
+      <!-- Intención -->
+      <div class="sec-lbl">¿Qué desea?</div>
+      <div class="pills" id="p-int">
+        <div class="pill" onclick="this.classList.toggle('on')">🏠 Comprar</div>
+        <div class="pill" onclick="this.classList.toggle('on')">💰 Invertir</div>
+        <div class="pill" onclick="this.classList.toggle('on')">🔑 Alquilar</div>
+        <div class="pill" onclick="this.classList.toggle('on')">📋 Vender</div>
       </div>
-    </div>
 
-    <!-- PROYECTO DE INTERÉS -->
-    <div class="form-section">
-      <div class="section-label">Proyecto / Inmueble de interés</div>
-      <div class="form-grid">
-        <div class="field">
-          <label>Tipo de inmueble</label>
+      <!-- Inmueble -->
+      <div class="sec-lbl">Inmueble buscado</div>
+      <div class="grid">
+        <div class="field"><label>Tipo</label>
           <select id="f-tipo">
             <option value="">Seleccionar...</option>
-            <option>Departamento</option>
-            <option>Casa</option>
-            <option>Penthouse</option>
-            <option>Loft</option>
-            <option>Oficina</option>
-            <option>Local comercial</option>
-            <option>Terreno</option>
-            <option>Edificio completo</option>
+            <option>Departamento</option><option>Casa</option>
+            <option>Penthouse</option><option>Oficina</option><option>Terreno</option>
           </select>
         </div>
-        <div class="field">
-          <label>Zona / Distrito preferido</label>
-          <input type="text" id="f-zona" placeholder="Ej: San Isidro, Miraflores">
-        </div>
-        <div class="field">
-          <label>Proyecto específico</label>
-          <input type="text" id="f-proyecto" placeholder="Ej: Residencia Miraflores">
-        </div>
-        <div class="field">
-          <label>N° de habitaciones</label>
-          <select id="f-habitaciones">
-            <option value="">Indiferente</option>
-            <option>1 habitación</option>
-            <option>2 habitaciones</option>
-            <option>3 habitaciones</option>
-            <option>4 habitaciones</option>
-            <option>5 o más</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Metraje deseado</label>
-          <select id="f-metraje">
-            <option value="">Indiferente</option>
-            <option>Hasta 60 m²</option>
-            <option>60 – 100 m²</option>
-            <option>100 – 150 m²</option>
-            <option>150 – 250 m²</option>
-            <option>Más de 250 m²</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>¿Necesita estacionamiento?</label>
-          <select id="f-estac">
-            <option value="">Indiferente</option>
-            <option>Sí, 1 cochera</option>
-            <option>Sí, 2 cocheras</option>
-            <option>No necesario</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <!-- PRESUPUESTO -->
-    <div class="form-section">
-      <div class="section-label">Capacidad de Inversión</div>
-      <div class="form-grid">
-        <div class="field" style="grid-column:1/-1;">
-          <label>Presupuesto disponible (USD)</label>
-          <div class="budget-display" id="budget-display">$ 250,000</div>
-          <input type="range" id="f-presupuesto" min="50000" max="2000000" step="10000" value="250000"
-            oninput="updateBudget(this.value)">
-          <div class="budget-labels"><span>$ 50K</span><span>$ 500K</span><span>$ 1M</span><span>$ 2M+</span></div>
-        </div>
-        <div class="field">
-          <label>Forma de pago</label>
-          <select id="f-pago">
+        <div class="field"><label>Zona preferida</label><input id="f-zona" type="text" placeholder="Ej: San Isidro"></div>
+        <div class="field"><label>Presupuesto (USD)</label>
+          <select id="f-pres">
             <option value="">Seleccionar...</option>
-            <option>Contado</option>
-            <option>Crédito hipotecario</option>
-            <option>Cuotas directas</option>
-            <option>Fondo propio + crédito</option>
-            <option>Inversionista</option>
+            <option>Hasta $100K</option><option>$100K – $250K</option>
+            <option>$250K – $500K</option><option>$500K – $1M</option><option>Más de $1M</option>
           </select>
         </div>
-        <div class="field">
-          <label>Moneda preferida</label>
-          <select id="f-moneda">
-            <option>USD — Dólares</option>
-            <option>PEN — Soles</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <!-- CARACTERÍSTICAS DESEADAS -->
-    <div class="form-section">
-      <div class="section-label">Características deseadas</div>
-      <div class="pills" id="pills-features">
-        <div class="pill gold" onclick="togglePill(this,'features')">🏊 Piscina</div>
-        <div class="pill gold" onclick="togglePill(this,'features')">🏋️ Gimnasio</div>
-        <div class="pill gold" onclick="togglePill(this,'features')">🌊 Vista al mar</div>
-        <div class="pill gold" onclick="togglePill(this,'features')">🌆 Vista a la ciudad</div>
-        <div class="pill gold" onclick="togglePill(this,'features')">🌿 Jardín / Terraza</div>
-        <div class="pill gold" onclick="togglePill(this,'features')">🔒 Seguridad 24h</div>
-        <div class="pill gold" onclick="togglePill(this,'features')">🐾 Pet friendly</div>
-        <div class="pill gold" onclick="togglePill(this,'features')">♿ Accesibilidad</div>
-        <div class="pill gold" onclick="togglePill(this,'features')">🛗 Ascensor</div>
-        <div class="pill gold" onclick="togglePill(this,'features')">📶 Fibra óptica</div>
-      </div>
-    </div>
-
-    <!-- URGENCIA Y NOTAS -->
-    <div class="form-section">
-      <div class="section-label">Urgencia y Estado</div>
-      <div class="form-grid">
-        <div class="field">
-          <label>Urgencia de compra</label>
-          <select id="f-urgencia">
+        <div class="field"><label>Urgencia</label>
+          <select id="f-urg">
             <option value="">Seleccionar...</option>
-            <option>Inmediata (este mes)</option>
-            <option>Corto plazo (1–3 meses)</option>
-            <option>Mediano plazo (3–6 meses)</option>
-            <option>Largo plazo (+6 meses)</option>
-            <option>Solo explorando</option>
+            <option>Inmediata</option><option>1–3 meses</option>
+            <option>3–6 meses</option><option>+6 meses</option>
           </select>
         </div>
-        <div class="field">
-          <label>Estado del cliente</label>
-          <select id="f-estado">
+      </div>
+
+      <!-- Estado y notas -->
+      <div class="sec-lbl">Estado y notas</div>
+      <div class="grid">
+        <div class="field"><label>Estado del cliente</label>
+          <select id="f-est">
             <option value="prospect">🔵 Prospecto</option>
-            <option value="hot">🔴 Cliente caliente</option>
+            <option value="hot">🔴 Caliente</option>
             <option value="process">🟡 En proceso</option>
             <option value="closed">🟢 Cerrado</option>
-            <option value="cold">⚫ Frío</option>
           </select>
         </div>
-        <div class="field">
-          <label>Cómo nos conoció</label>
-          <select id="f-fuente">
-            <option value="">Seleccionar...</option>
-            <option>Referido</option>
-            <option>Redes sociales</option>
-            <option>Página web Nattiva</option>
-            <option>WhatsApp</option>
-            <option>Evento / Feria</option>
-            <option>Llamada en frío</option>
-            <option>Google</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Fecha de visita</label>
-          <input type="date" id="f-fecha">
-        </div>
-        <div class="field" style="grid-column:1/-1;">
-          <label>Notas adicionales</label>
-          <textarea id="f-notas" placeholder="Observaciones, preferencias especiales, comentarios del cliente..."></textarea>
-        </div>
+        <div class="field"><label>Fecha de visita</label><input id="f-fecha" type="date"></div>
+        <div class="field full"><label>Notas</label><textarea id="f-notas" placeholder="Observaciones del cliente..."></textarea></div>
       </div>
-    </div>
 
-    <!-- SUBMIT -->
-    <div class="submit-wrap">
-      <button class="submit-btn" onclick="guardarCliente()">
-        <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
-        Guardar cliente en CRM
-      </button>
+      <button class="btn-save" onclick="save()">💾 Guardar cliente</button>
     </div>
+  </div>
+
+  <!-- VIS -->
+  <div id="v-vis" style="display:none;">
+    <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+      <h2 style="font-family:var(--serif);font-size:28px;font-weight:400;">Mis <strong style="color:var(--red);font-weight:600;">Clientes</strong></h2>
+      <button onclick="tab('form',null)" style="background:var(--red);color:white;border:none;border-radius:8px;padding:9px 18px;font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;cursor:pointer;">+ Nuevo</button>
+    </div>
+    <div class="toolbar">
+      <div class="search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" id="s-q" placeholder="Buscar nombre, teléfono..." oninput="render()">
+      </div>
+      <select class="fsel" id="s-int" onchange="render()">
+        <option value="">Todas las intenciones</option>
+        <option>Comprar</option><option>Invertir</option><option>Alquilar</option><option>Vender</option>
+      </select>
+      <select class="fsel" id="s-est" onchange="render()">
+        <option value="">Todos los estados</option>
+        <option value="hot">🔴 Caliente</option>
+        <option value="prospect">🔵 Prospecto</option>
+        <option value="process">🟡 En proceso</option>
+        <option value="closed">🟢 Cerrado</option>
+      </select>
+      <div class="cnt">Total: <b id="cnt">0</b></div>
+    </div>
+    <div class="cgrid" id="cgrid"></div>
   </div>
 </div>
 
-<!-- ══ VISUALIZAR VIEW ══ -->
-<div class="view" id="view-vis">
-  <div style="margin-top:24px;margin-bottom:20px;display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:12px;">
-    <div>
-      <h2 style="font-family:var(--serif);font-size:32px;font-weight:400;">Mis <strong style="color:var(--crimson);font-weight:600;">Clientes</strong></h2>
-      <p style="font-size:13px;color:var(--ink-60);margin-top:4px;">Gestiona y filtra tu cartera de clientes</p>
-    </div>
-    <button onclick="switchTab('form')" style="display:flex;align-items:center;gap:7px;background:var(--crimson);color:white;border:none;border-radius:10px;padding:11px 20px;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      Nuevo cliente
-    </button>
-  </div>
-
-  <!-- Toolbar filtros -->
-  <div class="vis-toolbar">
-    <div class="search-box">
-      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input type="text" id="search-input" placeholder="Buscar por nombre, teléfono, proyecto..." oninput="filterClients()">
-    </div>
-    <select class="filter-select" id="filter-intencion" onchange="filterClients()">
-      <option value="">Todas las intenciones</option>
-      <option value="Comprar">🏠 Comprar</option>
-      <option value="Invertir">💰 Invertir</option>
-      <option value="Alquilar">🔑 Alquilar</option>
-      <option value="Vender">📋 Vender</option>
-    </select>
-    <select class="filter-select" id="filter-estado" onchange="filterClients()">
-      <option value="">Todos los estados</option>
-      <option value="hot">🔴 Caliente</option>
-      <option value="prospect">🔵 Prospecto</option>
-      <option value="process">🟡 En proceso</option>
-      <option value="closed">🟢 Cerrado</option>
-      <option value="cold">⚫ Frío</option>
-    </select>
-    <select class="filter-select" id="filter-tipo" onchange="filterClients()">
-      <option value="">Todos los tipos</option>
-      <option>Departamento</option>
-      <option>Casa</option>
-      <option>Penthouse</option>
-      <option>Oficina</option>
-      <option>Terreno</option>
-    </select>
-    <div class="vis-count">Mostrando <span id="count-display">0</span> clientes</div>
-  </div>
-
-  <!-- Grid de clientes -->
-  <div class="clients-grid" id="clients-grid">
-    <div class="empty-state">
-      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      <p>Aún no hay clientes registrados.<br>Usa el formulario para agregar el primero.</p>
-    </div>
-  </div>
+<!-- MODAL -->
+<div class="mbg" id="mbg" onclick="closeM()"></div>
+<div class="mbox" id="mbox">
+  <div class="mhandle"></div>
+  <div class="mbody" id="mbody"></div>
 </div>
 
 <!-- TOAST -->
-<div class="toast" id="toast">✓ Cliente guardado correctamente</div>
-
-<!-- MODAL DETALLE CLIENTE -->
-<div class="client-modal-backdrop" id="cm-backdrop" onclick="closeClientModal()"></div>
-<div class="client-modal" id="cm-modal">
-  <div class="cm-handle"></div>
-  <div class="cm-header">
-    <div id="cm-title" style="font-family:var(--serif);font-size:24px;font-weight:400;"></div>
-    <button class="cm-close" onclick="closeClientModal()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-  </div>
-  <div class="cm-body" id="cm-body"></div>
-</div>
+<div class="toast" id="toast">✓ Cliente guardado</div>
 
 <script>
-// ── Storage key
-const STORAGE_KEY = 'nattiva_crm_clients';
+const KEY = 'nattiva_crm_v2';
+const EC = {hot:{c:'#C62828',bg:'#FFEBEE',l:'🔴 Caliente'},prospect:{c:'#1565C0',bg:'#E3F2FD',l:'🔵 Prospecto'},process:{c:'#E65100',bg:'#FFF3E0',l:'🟡 En proceso'},closed:{c:'#2E7D32',bg:'#E8F5E9',l:'🟢 Cerrado'}};
+const AVC=['#A8191B','#1565C0','#2E7D32','#6A1B9A','#E65100','#00695C'];
+const load=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'[]')}catch{return[]}};
+const save_=a=>localStorage.setItem(KEY,JSON.stringify(a));
+const ini=n=>n.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase();
+const avc=n=>{let h=0;for(let c of n)h+=c.charCodeAt(0);return AVC[h%AVC.length]};
+const fmt=v=>{const n=parseInt(v||0);return n?'$'+n.toLocaleString():'—'};
 
-// ── Load clients from localStorage
-function loadClients(){ try{ return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); }catch{ return []; } }
-function saveClients(arr){ localStorage.setItem(STORAGE_KEY, JSON.stringify(arr)); }
+// Init date
+document.getElementById('f-fecha').value=new Date().toISOString().split('T')[0];
 
-// ── Tab switching
-function switchTab(tab){
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active', (tab==='form'&&i===0)||(tab==='vis'&&i===1)));
-  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
-  document.getElementById('view-'+tab).classList.add('active');
-  if(tab==='vis') renderClients();
+function tab(t,el){
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  if(el) el.classList.add('active');
+  else document.querySelectorAll('.tab')[t==='form'?0:1].classList.add('active');
+  document.getElementById('v-form').style.display=t==='form'?'block':'none';
+  document.getElementById('v-vis').style.display=t==='vis'?'block':'none';
+  if(t==='vis') render();
 }
 
-// ── Pills toggle
-function togglePill(el, group){
-  el.classList.toggle('active');
-}
-function getActivePills(containerId){
-  return Array.from(document.querySelectorAll('#'+containerId+' .pill.active')).map(p=>p.textContent.trim());
-}
-
-// ── Budget slider
-function updateBudget(val){
-  const n = parseInt(val);
-  const fmt = n>=1000000 ? '$'+( n/1000000).toFixed(1)+'M' : '$'+(n/1000).toFixed(0)+'K';
-  document.getElementById('budget-display').textContent = fmt;
-  const pct = (n-50000)/(2000000-50000)*100;
-  document.getElementById('f-presupuesto').style.background = `linear-gradient(to right,var(--crimson) ${pct}%,var(--ink-20) ${pct}%)`;
-}
-
-// ── Save client
-function guardarCliente(){
-  const nombre = document.getElementById('f-nombre').value.trim();
-  const telefono = document.getElementById('f-telefono').value.trim();
-  if(!nombre){ alert('Por favor ingresa el nombre del cliente.'); return; }
-  if(!telefono){ alert('Por favor ingresa el teléfono del cliente.'); return; }
-
-  const intenciones = getActivePills('pills-intencion');
-  const features    = getActivePills('pills-features');
-
-  const client = {
-    id: Date.now(),
-    nombre,
-    dni:          document.getElementById('f-dni').value.trim(),
-    telefono,
-    email:        document.getElementById('f-email').value.trim(),
-    edad:         document.getElementById('f-edad').value,
-    distrito:     document.getElementById('f-distrito').value.trim(),
-    intencion:    intenciones,
-    tipo:         document.getElementById('f-tipo').value,
-    zona:         document.getElementById('f-zona').value.trim(),
-    proyecto:     document.getElementById('f-proyecto').value.trim(),
-    habitaciones: document.getElementById('f-habitaciones').value,
-    metraje:      document.getElementById('f-metraje').value,
-    estacionamiento: document.getElementById('f-estac').value,
-    presupuesto:  document.getElementById('f-presupuesto').value,
-    pago:         document.getElementById('f-pago').value,
-    moneda:       document.getElementById('f-moneda').value,
-    features,
-    urgencia:     document.getElementById('f-urgencia').value,
-    estado:       document.getElementById('f-estado').value,
-    fuente:       document.getElementById('f-fuente').value,
-    fecha:        document.getElementById('f-fecha').value,
-    notas:        document.getElementById('f-notas').value.trim(),
-    creado:       new Date().toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'numeric'})
+function save(){
+  const nom=document.getElementById('f-nom').value.trim();
+  const tel=document.getElementById('f-tel').value.trim();
+  if(!nom){alert('Ingresa el nombre');return;}
+  if(!tel){alert('Ingresa el teléfono');return;}
+  const ints=[...document.querySelectorAll('#p-int .pill.on')].map(p=>p.textContent.trim());
+  const c={
+    id:Date.now(),nom,tel,
+    email:document.getElementById('f-email').value.trim(),
+    dist:document.getElementById('f-dist').value.trim(),
+    intencion:ints,
+    tipo:document.getElementById('f-tipo').value,
+    zona:document.getElementById('f-zona').value.trim(),
+    pres:document.getElementById('f-pres').value,
+    urg:document.getElementById('f-urg').value,
+    estado:document.getElementById('f-est').value,
+    fecha:document.getElementById('f-fecha').value,
+    notas:document.getElementById('f-notas').value.trim(),
+    creado:new Date().toLocaleDateString('es-PE',{day:'2-digit',month:'short',year:'numeric'})
   };
-
-  const clients = loadClients();
-  clients.unshift(client);
-  saveClients(clients);
-
-  // Reset form
-  document.querySelectorAll('#view-form input, #view-form select, #view-form textarea').forEach(el=>{
-    if(el.type==='range'){ el.value=250000; updateBudget(250000); }
-    else el.value='';
-  });
-  document.querySelectorAll('.pill.active').forEach(p=>p.classList.remove('active'));
-
-  // Show toast
-  const toast = document.getElementById('toast');
-  toast.classList.add('show');
-  setTimeout(()=>toast.classList.remove('show'), 3000);
-
-  // Switch to vis
-  setTimeout(()=>switchTab('vis'), 800);
+  const arr=load(); arr.unshift(c); save_(arr);
+  // Reset
+  ['f-nom','f-tel','f-email','f-dist','f-zona','f-notas'].forEach(id=>document.getElementById(id).value='');
+  ['f-tipo','f-pres','f-urg'].forEach(id=>document.getElementById(id).selectedIndex=0);
+  document.getElementById('f-est').selectedIndex=0;
+  document.querySelectorAll('.pill.on').forEach(p=>p.classList.remove('on'));
+  // Toast
+  const t=document.getElementById('toast');t.classList.add('on');
+  setTimeout(()=>t.classList.remove('on'),2500);
+  setTimeout(()=>tab('vis',null),600);
 }
 
-// ── Estado colors
-const estadoConfig = {
-  hot:     { color:'#C62828', bg:'#FFEBEE', label:'🔴 Caliente' },
-  prospect:{ color:'#1565C0', bg:'#E3F2FD', label:'🔵 Prospecto' },
-  process: { color:'#E65100', bg:'#FFF3E0', label:'🟡 En proceso' },
-  closed:  { color:'#2E7D32', bg:'#E8F5E9', label:'🟢 Cerrado' },
-  cold:    { color:'#424242', bg:'#F5F5F5', label:'⚫ Frío' },
-};
-const avatarColors = ['#A8191B','#1565C0','#2E7D32','#6A1B9A','#E65100','#00695C','#4527A0','#AD1457'];
-
-function getInitials(name){ return name.split(' ').slice(0,2).map(w=>w[0]).join('').toUpperCase(); }
-function getAvatarColor(name){ let h=0; for(let c of name) h+=c.charCodeAt(0); return avatarColors[h%avatarColors.length]; }
-function fmtBudget(v){ const n=parseInt(v); return n>=1000000?'$'+(n/1000000).toFixed(1)+'M':'$'+(n/1000).toFixed(0)+'K'; }
-
-// ── Render client cards
-function renderClients(filtered){
-  const clients = filtered !== undefined ? filtered : loadClients();
-  const grid = document.getElementById('clients-grid');
-  document.getElementById('count-display').textContent = clients.length;
-
-  if(!clients.length){
-    grid.innerHTML = `<div class="empty-state">
-      <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      <p>${filtered!==undefined ? 'No se encontraron clientes con esos filtros.' : 'Aún no hay clientes. ¡Agrega el primero!'}</p>
-    </div>`;
-    return;
-  }
-
-  grid.innerHTML = clients.map(c=>{
-    const est = estadoConfig[c.estado] || estadoConfig.prospect;
-    const intencion = (c.intencion||[]).join(', ') || '—';
-    const color = getAvatarColor(c.nombre);
-    return `<div class="client-card" onclick="openClientModal(${c.id})">
-      <div class="cc-top" style="background:${est.color};"></div>
+function render(){
+  const q=(document.getElementById('s-q').value||'').toLowerCase();
+  const fi=document.getElementById('s-int').value;
+  const fe=document.getElementById('s-est').value;
+  let arr=load().filter(c=>{
+    const ms=!q||(c.nom||'').toLowerCase().includes(q)||(c.tel||'').includes(q)||(c.zona||'').toLowerCase().includes(q);
+    const mi=!fi||(c.intencion||[]).some(i=>i.includes(fi));
+    const me=!fe||c.estado===fe;
+    return ms&&mi&&me;
+  });
+  document.getElementById('cnt').textContent=arr.length;
+  const g=document.getElementById('cgrid');
+  if(!arr.length){g.innerHTML='<div class="empty">No hay clientes aún.<br>¡Agrega el primero!</div>';return;}
+  const ec=id=>EC[id]||EC.prospect;
+  g.innerHTML=arr.map(c=>`
+    <div class="cc" onclick="openM(${c.id})">
+      <div class="cc-bar" style="background:${ec(c.estado).c}"></div>
       <div class="cc-body">
-        <div class="cc-row1">
-          <div class="cc-avatar" style="background:${color};">${getInitials(c.nombre)}</div>
-          <span class="cc-intent" style="background:${est.bg};color:${est.color};">${est.label}</span>
+        <div class="cc-top">
+          <div class="av" style="background:${avc(c.nom)}">${ini(c.nom)}</div>
+          <span class="est-tag" style="background:${ec(c.estado).bg};color:${ec(c.estado).c}">${ec(c.estado).l}</span>
         </div>
-        <div class="cc-name">${c.nombre}</div>
-        <div class="cc-meta">${c.telefono}${c.distrito?' · '+c.distrito:''}</div>
-        <div class="cc-tags">
-          ${c.tipo?`<span class="cc-tag">${c.tipo}</span>`:''}
-          ${c.zona?`<span class="cc-tag">${c.zona}</span>`:''}
-          ${c.urgencia?`<span class="cc-tag">${c.urgencia}</span>`:''}
-        </div>
-        <div style="display:flex;align-items:center;justify-content:space-between;">
-          <div class="cc-budget">${fmtBudget(c.presupuesto)}</div>
-          <div class="cc-date">${c.creado||''}</div>
-        </div>
+        <div class="cc-name">${c.nom}</div>
+        <div class="cc-tel">${c.tel}${c.dist?' · '+c.dist:''}</div>
+        <div class="cc-budget">${c.pres||'Sin presupuesto'}</div>
       </div>
       <div class="cc-footer">
-        <span style="font-size:11px;color:var(--ink-60);">${intencion.substring(0,30)}</span>
-        <button class="cc-action">Ver detalles →</button>
+        <span class="cc-int">${(c.intencion||[]).join(', ')||'—'}</span>
+        <button class="cc-more">Ver →</button>
       </div>
-    </div>`;
-  }).join('');
+    </div>`).join('');
 }
 
-// ── Filter
-function filterClients(){
-  const search  = document.getElementById('search-input').value.toLowerCase();
-  const intent  = document.getElementById('filter-intencion').value;
-  const estado  = document.getElementById('filter-estado').value;
-  const tipo    = document.getElementById('filter-tipo').value;
-
-  let clients = loadClients().filter(c=>{
-    const matchSearch = !search ||
-      c.nombre.toLowerCase().includes(search) ||
-      (c.telefono||'').toLowerCase().includes(search) ||
-      (c.proyecto||'').toLowerCase().includes(search) ||
-      (c.zona||'').toLowerCase().includes(search) ||
-      (c.email||'').toLowerCase().includes(search);
-    const matchIntent = !intent || (c.intencion||[]).some(i=>i.includes(intent));
-    const matchEstado = !estado || c.estado===estado;
-    const matchTipo   = !tipo   || c.tipo===tipo;
-    return matchSearch && matchIntent && matchEstado && matchTipo;
-  });
-
-  renderClients(clients);
-}
-
-// ── Open client modal
-function openClientModal(id){
-  const c = loadClients().find(x=>x.id===id);
-  if(!c) return;
-  const est = estadoConfig[c.estado] || estadoConfig.prospect;
-  const color = getAvatarColor(c.nombre);
-
-  document.getElementById('cm-title').innerHTML = `
-    <div style="display:flex;align-items:center;gap:12px;">
-      <div style="width:46px;height:46px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:white;flex-shrink:0;">${getInitials(c.nombre)}</div>
+function openM(id){
+  const c=load().find(x=>x.id===id);if(!c)return;
+  const ec=EC[c.estado]||EC.prospect;
+  const f=(l,v)=>v?`<div class="mf"><div class="mf-l">${l}</div><div class="mf-v">${v}</div></div>`:'';
+  document.getElementById('mbody').innerHTML=`
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+      <div style="width:44px;height:44px;border-radius:50%;background:${avc(c.nom)};display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:700;color:white;flex-shrink:0;">${ini(c.nom)}</div>
       <div>
-        <div style="font-size:22px;">${c.nombre}</div>
-        <span style="font-size:10px;font-weight:700;background:${est.bg};color:${est.color};padding:3px 9px;border-radius:4px;">${est.label}</span>
+        <div style="font-family:var(--serif);font-size:22px;">${c.nom}</div>
+        <span style="font-size:9px;font-weight:700;background:${ec.bg};color:${ec.c};padding:3px 8px;border-radius:4px;">${ec.l}</span>
       </div>
+      <button onclick="closeM()" style="margin-left:auto;width:30px;height:30px;border-radius:50%;background:var(--ink-20);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;">✕</button>
+    </div>
+    <div class="mrow">
+      ${f('Teléfono',c.tel)}${f('Email',c.email)}
+      ${f('Distrito',c.dist)}${f('Fecha visita',c.fecha)}
+    </div>
+    <div class="mrow">
+      ${f('Intención',(c.intencion||[]).join(', '))}
+      ${f('Tipo inmueble',c.tipo)}
+      ${f('Zona',c.zona)}${f('Presupuesto',c.pres)}
+      ${f('Urgencia',c.urg)}${f('Registrado',c.creado)}
+    </div>
+    ${c.notas?`<div style="background:var(--white);border-radius:9px;padding:12px;border:1px solid var(--ink-20);font-size:13px;color:var(--ink-60);line-height:1.6;margin-bottom:14px;">${c.notas}</div>`:''}
+    <div class="macts">
+      <button class="mact wa" onclick="window.open('https://wa.me/${c.tel.replace(/[^0-9]/g,'')}','_blank')">📱 WhatsApp</button>
+      <button class="mact del" onclick="del(${c.id})">🗑 Eliminar</button>
     </div>`;
-
-  const field=(l,v)=>v?`<div class="cm-field"><div class="cm-field-label">${l}</div><div class="cm-field-value">${v}</div></div>`:'';
-
-  document.getElementById('cm-body').innerHTML = `
-    <div class="cm-section">
-      <div class="cm-sec-label">Contacto</div>
-      <div class="cm-grid">
-        ${field('Teléfono',c.telefono)}
-        ${field('Email',c.email)}
-        ${field('DNI',c.dni)}
-        ${field('Edad',c.edad)}
-        ${field('Distrito',c.distrito)}
-        ${field('Cómo nos conoció',c.fuente)}
-      </div>
-    </div>
-    <div class="cm-section">
-      <div class="cm-sec-label">Intención</div>
-      <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;">
-        ${(c.intencion||[]).map(i=>`<span style="background:#FDE8EA;color:var(--crimson);border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;">${i}</span>`).join('')}
-      </div>
-    </div>
-    <div class="cm-section">
-      <div class="cm-sec-label">Inmueble deseado</div>
-      <div class="cm-grid">
-        ${field('Tipo',c.tipo)}
-        ${field('Zona',c.zona)}
-        ${field('Proyecto',c.proyecto)}
-        ${field('Habitaciones',c.habitaciones)}
-        ${field('Metraje',c.metraje)}
-        ${field('Estacionamiento',c.estacionamiento)}
-      </div>
-    </div>
-    <div class="cm-section">
-      <div class="cm-sec-label">Presupuesto</div>
-      <div class="cm-grid">
-        <div class="cm-field"><div class="cm-field-label">Presupuesto</div><div class="cm-field-value" style="color:var(--crimson);font-size:22px;font-family:var(--serif);">${fmtBudget(c.presupuesto)}</div></div>
-        ${field('Forma de pago',c.pago)}
-        ${field('Moneda',c.moneda)}
-        ${field('Urgencia',c.urgencia)}
-      </div>
-    </div>
-    ${c.features&&c.features.length?`<div class="cm-section"><div class="cm-sec-label">Características deseadas</div><div style="display:flex;flex-wrap:wrap;gap:6px;">${c.features.map(f=>`<span style="background:var(--paper);border-radius:6px;padding:4px 10px;font-size:11px;font-weight:600;color:var(--ink-60);">${f}</span>`).join('')}</div></div>`:''}
-    ${c.notas?`<div class="cm-section"><div class="cm-sec-label">Notas</div><div style="font-size:13px;color:var(--ink-60);line-height:1.65;background:var(--white);border-radius:10px;padding:12px 14px;border:1px solid var(--ink-20);">${c.notas}</div></div>`:''}
-    <div style="font-size:10px;color:var(--ink-60);text-align:right;margin-bottom:16px;">Registrado: ${c.creado||''} ${c.fecha?'· Visita: '+c.fecha:''}</div>
-    <div class="cm-actions">
-      <button class="cm-btn primary" onclick="contactar('${c.telefono}')">📱 Contactar por WhatsApp</button>
-      <button class="cm-btn danger" onclick="eliminarCliente(${c.id})">🗑 Eliminar</button>
-    </div>`;
-
-  document.getElementById('cm-backdrop').classList.add('open');
-  document.getElementById('cm-modal').classList.add('open');
+  document.getElementById('mbg').classList.add('on');
+  document.getElementById('mbox').classList.add('on');
   document.body.style.overflow='hidden';
 }
-
-function closeClientModal(){
-  document.getElementById('cm-backdrop').classList.remove('open');
-  document.getElementById('cm-modal').classList.remove('open');
+function closeM(){
+  document.getElementById('mbg').classList.remove('on');
+  document.getElementById('mbox').classList.remove('on');
   document.body.style.overflow='';
 }
-
-function contactar(tel){
-  const clean = tel.replace(/[^0-9+]/g,'');
-  window.open('https://wa.me/'+clean,'_blank');
+function del(id){
+  if(!confirm('¿Eliminar este cliente?'))return;
+  save_(load().filter(c=>c.id!==id));
+  closeM(); render();
 }
-
-function eliminarCliente(id){
-  if(!confirm('¿Eliminar este cliente del CRM?')) return;
-  const clients = loadClients().filter(c=>c.id!==id);
-  saveClients(clients);
-  closeClientModal();
-  renderClients();
-}
-
-// Init
-document.getElementById('f-fecha').value = new Date().toISOString().split('T')[0];
-updateBudget(250000);
-renderClients();
 </script>
 </body>
 </html>
