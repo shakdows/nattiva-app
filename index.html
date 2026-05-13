@@ -6,17 +6,7 @@
 <title>Nattiva Estate — Plataforma Inmobiliaria</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --crimson:#A8191B;--crimson-d:#7C1012;
-  --gold:#C49A3C;--gold-l:#DEB96A;
-  --ink:#111111;--ink-60:rgba(17,17,17,.6);--ink-20:rgba(17,17,17,.1);
-  --paper:#F8F6F2;--white:#FFFFFF;
-  --serif:'Cormorant Garamond',Georgia,serif;
-  --sans:'Jost',sans-serif;
-  --sh:0 2px 16px rgba(0,0,0,.07);
-  --sh-md:0 8px 32px rgba(0,0,0,.12);
-  --sh-lg:0 20px 60px rgba(0,0,0,.18);
-}
+:root{--crimson:#A8191B;--crimson-d:#7C1012;--gold:#C49A3C;--gold-l:#DEB96A;--ink:#111111;--ink-60:rgba(17,17,17,.6);--ink-20:rgba(17,17,17,.1);--paper:#F8F6F2;--white:#FFFFFF;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Jost',sans-serif;--sh:0 2px 16px rgba(0,0,0,.07);--sh-md:0 8px 32px rgba(0,0,0,.12);--sh-lg:0 20px 60px rgba(0,0,0,.18);}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--sans);background:var(--paper);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
@@ -46,9 +36,10 @@ header{position:sticky;top:0;z-index:300;background:rgba(248,246,242,.96);backdr
 #profile-photo-div{
   position:absolute;
   left:40%;right:0;top:0;bottom:0;
-  background-image:url('data:image/png;base64,...'); /* TU IMAGEN AQUÍ */
+  /* PEGA AQUÍ TU ENLACE DE IMAGEN: */
+  background-image:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1200&auto=format&fit=crop');
   background-size:cover;
-  background-position:center 10%; /* CAMBIO REALIZADO: Ajusta el encuadre vertical */
+  background-position:center 20%; /* CAMBIADO PARA VER CUERPO COMPLETO */
   background-repeat:no-repeat;
   pointer-events:none;
   z-index:1;
@@ -74,9 +65,107 @@ header{position:sticky;top:0;z-index:300;background:rgba(248,246,242,.96);backdr
 .p-score{font-family:var(--serif);font-size:30px;font-weight:600;color:var(--white)}
 .p-stars span{color:var(--gold);font-size:17px}
 .p-count{font-size:13px;color:rgba(255,255,255,.45)}
+
+.sec{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px}
+.sec-t{font-family:var(--serif);font-size:28px;font-weight:400}
+.sec-a{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--crimson);border-bottom:1px solid rgba(168,25,27,.3);padding-bottom:1px}
+.cot{border-radius:20px;overflow:hidden;border:1px solid var(--ink-20);box-shadow:var(--sh-md);display:flex;min-height:240px;cursor:pointer;transition:transform .25s,box-shadow .25s;}
+.cot:hover{transform:translateY(-3px);box-shadow:var(--sh-lg)}
+.cot-img{width:58%;position:relative;flex-shrink:0;overflow:hidden;background:#0a1018}
+.cot-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.85);transition:transform .5s}
+.cot:hover .cot-img img{transform:scale(1.04)}
+.cot-badge{position:absolute;top:18px;right:18px;z-index:2;background:var(--crimson);color:var(--white);border-radius:8px;padding:6px 13px;font-size:12px;font-weight:700;line-height:1.3;text-align:center;box-shadow:0 4px 12px rgba(168,25,27,.5)}
+.cot-body{flex:1;background:#111;padding:44px 40px;display:flex;flex-direction:column;justify-content:center;gap:12px;position:relative;overflow:hidden}
+.cot-body::before{content:'';position:absolute;bottom:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(168,25,27,.28) 0%,transparent 70%)}
+.cot-eyebrow{font-size:9px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--crimson);display:flex;align-items:center;gap:8px}
+.cot-eyebrow::before{content:'';display:block;width:22px;height:1px;background:var(--crimson)}
+.cot-num{font-family:var(--serif);font-size:16px;font-weight:300;line-height:1.2;color:rgba(255,255,255,.8)}
+.cot-num strong{display:block;font-size:44px;font-weight:600;color:var(--white);line-height:1}
+.cot-num strong em{color:var(--crimson);font-style:normal}
+.cot-tag{display:inline-flex;align-items:center;gap:5px;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.cot-tag::before{content:'—'}
+.cot-cta{display:inline-flex;align-items:center;gap:9px;margin-top:8px;background:var(--crimson);color:var(--white);border-radius:10px;padding:13px 26px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;width:fit-content;transition:background .2s}
+.cot-cta:hover{background:var(--crimson-d)}
+.cot-cta svg{width:15px;height:15px;stroke:currentColor;stroke-width:2.5;fill:none;stroke-linecap:round;stroke-linejoin:round}
+@media(max-width:768px){.cot{flex-direction:column;min-height:auto}.cot-img{width:100%;height:200px}.cot-body{padding:28px 24px}}
+
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr;gap:14px}}
+.card{background:var(--white);border-radius:18px;overflow:hidden;border:1px solid var(--ink-20);box-shadow:var(--sh);cursor:pointer;transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column;position:relative}
+.card:hover{transform:translateY(-4px);box-shadow:var(--sh-md)}
+.new-tag{position:absolute;top:10px;right:10px;z-index:5;background:var(--ink);color:var(--white);font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-radius:4px;padding:3px 8px}
+.card-img{height:150px;position:relative;overflow:hidden;flex-shrink:0}
+.card-img::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;z-index:2;background:linear-gradient(90deg,transparent,var(--gold) 50%,transparent);opacity:.55}
+.card-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.88);transition:transform .4s}
+.card:hover .card-img img{transform:scale(1.06)}
+.card-img-overlay{position:absolute;inset:0;z-index:1;background:linear-gradient(to top,rgba(0,0,0,.5) 0%,transparent 60%)}
+.card-body{padding:16px 18px 18px;flex:1;display:flex;flex-direction:column;gap:11px}
+.card-lbl{font-family:var(--serif);font-size:18px;font-weight:400;line-height:1.2;color:var(--ink)}
+.btn{display:flex;align-items:center;justify-content:center;width:100%;background:var(--crimson);color:var(--white);border-radius:9px;padding:11px 0;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;transition:background .2s;border:none;cursor:pointer}
+.btn:hover{background:var(--crimson-d)}
+.btn.gold-btn{background:var(--gold);color:var(--ink)}
+.btn.gold-btn:hover{background:#a88030;color:var(--white)}
+
+@keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-thumb{background:rgba(17,17,17,.2);border-radius:2px}
 </style>
 </head>
 <body>
-<!-- Resto de tu contenido HTML se mantiene igual -->
+
+<header>
+  <div class="hd-inner">
+    <div style="display:flex;align-items:center;gap:16px">
+      <div class="burger"><span></span><span></span><span></span></div>
+      <div class="logo"><span class="logo-mark">nattiva</span><span class="logo-sep">◆</span><span class="logo-sub">estate</span></div>
+    </div>
+    <button class="notif"><svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><span class="notif-dot"></span></button>
+  </div>
+</header>
+
+<div id="page-home">
+<main>
+  <div class="profile-hero" oncontextmenu="return false">
+    <div id="profile-photo-div"></div>
+    <div class="profile-overlay"></div>
+    <div class="profile-content">
+      <div class="p-eyebrow">Consultora Senior</div>
+      <div class="p-name">Nathalia<br>Pérez</div>
+      <div class="p-creds">Ing. Civil &nbsp;·&nbsp; Arquitecta</div>
+      <div class="p-exp">10+ años de experiencia</div>
+      <div class="p-badge">Asesora en <span>&nbsp;Inversión Inmobiliaria</span></div>
+      <div class="p-rating">
+        <span class="p-score">4.9</span>
+        <div class="p-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <span class="p-count">527 opiniones</span>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="sec"><span class="sec-t">Cotizador</span><a href="#" class="sec-a">Ver mi perfil</a></div>
+    <div class="cot">
+      <div class="cot-img"><img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=85&fit=crop" alt="Proyectos"><div class="cot-badge">200+<br>Disponibles</div></div>
+      <div class="cot-body">
+        <div class="cot-eyebrow">Nattiva Estates</div>
+        <div class="cot-num"><strong><em>+200</em> proyectos</strong>disponibles en Perú</div>
+        <div class="cot-tag">6 años de experiencia</div>
+        <a href="#" class="cot-cta">Ver propiedades<svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <div class="sec"><span class="sec-t">Herramientas</span></div>
+    <div class="grid">
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=500&q=80&fit=crop" alt="Calculadora"><div class="card-img-overlay"></div></div><div class="card-body"><div class="card-lbl">Calculadora<br>Hipotecaria</div><a href="#" class="btn">Calcular</a></div></div>
+      <div class="card"><span class="new-tag">Nuevo</span><div class="card-img"><img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=500&q=80&fit=crop" alt="Capacitaciones"><div class="card-img-overlay"></div></div><div class="card-body"><div class="card-lbl">Capacitaciones</div><a href="#" class="btn">Acceder</a></div></div>
+      <div class="card"><span class="new-tag">Nuevo</span><div class="card-img"><img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=500&q=80&fit=crop" alt="CRM"><div class="card-img-overlay"></div></div><div class="card-body"><div class="card-lbl">CRM Tus Clientes</div><a href="#" class="btn">Gestionar</a></div></div>
+      <div class="card"><div class="card-img"><img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=500&q=80&fit=crop" alt="Mensajería"><div class="card-img-overlay"></div></div><div class="card-body"><div class="card-lbl">CRM Mensajería</div><a href="#" class="btn gold-btn">Ver alertas</a></div></div>
+    </div>
+  </div>
+</main>
+</div>
+
 </body>
 </html>
