@@ -214,10 +214,8 @@ header{position:sticky;top:0;z-index:300;background:rgba(248,246,242,.96);backdr
 
 /* ── NAV ── */
 nav{position:fixed;bottom:0;left:0;right:0;z-index:400;background:rgba(248,246,242,.97);backdrop-filter:blur(18px);border-top:1px solid var(--ink-20);}
-.nav-inner{max-width:1280px;margin:0 auto;padding:12px 28px 22px;display:flex;gap:0;}
-@media(max-width:768px){.nav-inner{justify-content:space-around;padding:10px 0 18px}}
-.nb{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;text-decoration:none;transition:opacity .2s;position:relative;padding:0 32px;}
-@media(max-width:768px){.nb{flex:1;padding:0}}
+.nav-inner{max-width:480px;margin:0 auto;padding:12px 0 22px;display:flex;justify-content:space-around;}
+.nb{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;text-decoration:none;transition:opacity .2s;position:relative;flex:1;max-width:120px;}
 .nb:not(.active){opacity:.35}
 .nb:hover:not(.active){opacity:.65}
 .nb.active::before{content:'';position:absolute;top:-12px;width:22px;height:2px;border-radius:1px;background:var(--crimson)}
