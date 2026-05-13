@@ -229,6 +229,44 @@ nav{position:fixed;bottom:0;left:0;right:0;z-index:400;background:rgba(248,246,2
 .nb.active .nb-lbl{color:var(--crimson)}
 .nb:not(.active) .nb-lbl{color:var(--ink)}
 
+
+/* ── REVIEWS MODAL ── */
+.rev-backdrop{position:fixed;inset:0;z-index:800;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s}
+.rev-backdrop.open{opacity:1;pointer-events:all}
+.rev-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-44%);width:92%;max-width:660px;max-height:85vh;background:var(--paper);border-radius:24px;z-index:900;overflow-y:auto;opacity:0;pointer-events:none;transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .3s;scrollbar-width:thin;}
+.rev-modal.open{transform:translate(-50%,-50%);opacity:1;pointer-events:all}
+@media(max-width:700px){.rev-modal{top:auto;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);border-radius:24px 24px 0 0;max-height:90vh;width:100%;max-width:none}.rev-modal.open{transform:translateX(-50%) translateY(0)}}
+.rev-handle{width:40px;height:4px;border-radius:2px;background:var(--ink-20);margin:14px auto 6px}
+.rev-header{padding:20px 28px 0}
+.rev-title{font-family:var(--serif);font-size:28px;font-weight:400;margin-bottom:4px}
+.rev-summary{display:flex;align-items:center;gap:16px;padding:16px 28px;border-bottom:1px solid var(--ink-20);margin-bottom:4px}
+.rev-big-score{font-family:var(--serif);font-size:56px;font-weight:600;color:var(--ink);line-height:1}
+.rev-big-right{}
+.rev-big-stars{display:flex;gap:3px;margin-bottom:4px}
+.rev-big-stars span{color:var(--gold);font-size:22px}
+.rev-total{font-size:12px;color:var(--ink-60)}
+.rev-bars{flex:1}
+.rev-bar-row{display:flex;align-items:center;gap:8px;margin-bottom:5px}
+.rev-bar-lbl{font-size:11px;font-weight:600;color:var(--ink);width:12px;text-align:right}
+.rev-bar-lbl-star{color:var(--gold);font-size:11px}
+.rev-bar-track{flex:1;height:6px;background:var(--ink-20);border-radius:3px;overflow:hidden}
+.rev-bar-fill{height:100%;border-radius:3px;background:var(--gold)}
+.rev-bar-pct{font-size:10px;color:var(--ink-60);width:28px;text-align:right}
+.rev-list{padding:0 28px 28px;display:flex;flex-direction:column;gap:18px;margin-top:8px}
+.rev-card{background:var(--white);border-radius:16px;padding:18px 20px;border:1px solid var(--ink-20);box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.rev-card-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.rev-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--white);flex-shrink:0}
+.rev-card-info{}
+.rev-name{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px}
+.rev-meta{font-size:11px;color:var(--ink-60)}
+.rev-stars{display:flex;gap:2px;margin-bottom:8px}
+.rev-stars span{color:var(--gold);font-size:13px}
+.rev-text{font-size:13px;color:var(--ink-60);line-height:1.65}
+.rev-close{position:absolute;top:18px;right:22px;width:34px;height:34px;border-radius:50%;background:var(--ink-20);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.rev-close:hover{background:rgba(168,25,27,.15)}
+.rev-close svg{width:15px;height:15px;stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round}
+/* rev-modal already defined above */
+
 @keyframes up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 ::-webkit-scrollbar{width:4px}
 ::-webkit-scrollbar-thumb{background:rgba(17,17,17,.2);border-radius:2px}
@@ -260,10 +298,11 @@ img{-webkit-user-drag:none;user-select:none}
       <div class="p-creds">Ing. Civil &nbsp;·&nbsp; Arquitecta</div>
       <div class="p-exp">10+ años de experiencia</div>
       <div class="p-badge">Asesora en <span>&nbsp;Inversión Inmobiliaria</span></div>
-      <div class="p-rating">
+      <div class="p-rating" onclick="openReviews()" style="cursor:pointer;" title="Ver opiniones">
         <span class="p-score">4.9</span>
         <div class="p-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        <span class="p-count">527 opiniones</span>
+        <span class="p-count">15,632 opiniones</span>
+        <span style="color:rgba(255,255,255,.4);font-size:13px;margin-left:2px">›</span>
       </div>
     </div>
   </div>
@@ -349,6 +388,118 @@ img{-webkit-user-drag:none;user-select:none}
   <a href="#" class="nb"><div class="nb-ico"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><span class="nb-lbl">Clientes</span></a>
   <a href="#" class="nb"><div class="nb-ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></div><span class="nb-lbl">Más</span></a>
 </div></nav>
+
+
+<!-- REVIEWS MODAL -->
+<div class="rev-backdrop" id="rev-backdrop" onclick="closeReviews()"></div>
+<div class="rev-modal" id="rev-modal">
+  <button class="rev-close" onclick="closeReviews()"><svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+  <div class="rev-handle"></div>
+  <div class="rev-header">
+    <div class="rev-title">Opiniones de clientes</div>
+  </div>
+  <div class="rev-summary">
+    <div style="text-align:center;padding-right:16px;border-right:1px solid var(--ink-20)">
+      <div class="rev-big-score">4.9</div>
+      <div class="rev-big-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="rev-total">15,632 opiniones</div>
+    </div>
+    <div class="rev-bars">
+      <div class="rev-bar-row"><span class="rev-bar-lbl">5</span><span class="rev-bar-lbl-star">★</span><div class="rev-bar-track"><div class="rev-bar-fill" style="width:92%"></div></div><span class="rev-bar-pct">92%</span></div>
+      <div class="rev-bar-row"><span class="rev-bar-lbl">4</span><span class="rev-bar-lbl-star">★</span><div class="rev-bar-track"><div class="rev-bar-fill" style="width:8%;background:#C8B060"></div></div><span class="rev-bar-pct">8%</span></div>
+      <div class="rev-bar-row"><span class="rev-bar-lbl">3</span><span class="rev-bar-lbl-star">★</span><div class="rev-bar-track"><div class="rev-bar-fill" style="width:0%"></div></div><span class="rev-bar-pct">0%</span></div>
+      <div class="rev-bar-row"><span class="rev-bar-lbl">2</span><span class="rev-bar-lbl-star">★</span><div class="rev-bar-track"><div class="rev-bar-fill" style="width:0%"></div></div><span class="rev-bar-pct">0%</span></div>
+      <div class="rev-bar-row"><span class="rev-bar-lbl">1</span><span class="rev-bar-lbl-star">★</span><div class="rev-bar-track"><div class="rev-bar-fill" style="width:0%"></div></div><span class="rev-bar-pct">0%</span></div>
+    </div>
+  </div>
+  <div class="rev-list">
+
+    <div class="rev-card">
+      <div class="rev-card-top">
+        <div class="rev-avatar" style="background:#A8191B">MR</div>
+        <div class="rev-card-info">
+          <div class="rev-name">María Rodríguez</div>
+          <div class="rev-meta">Lima, Miraflores · hace 2 semanas</div>
+        </div>
+      </div>
+      <div class="rev-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="rev-text">Nathalia es absolutamente increíble. Encontré el departamento de mis sueños en San Isidro gracias a ella. Su conocimiento del mercado inmobiliario es impresionante y siempre estuvo disponible para resolver mis dudas. ¡100% recomendada!</div>
+    </div>
+
+    <div class="rev-card">
+      <div class="rev-card-top">
+        <div class="rev-avatar" style="background:#1A3A6A">CP</div>
+        <div class="rev-card-info">
+          <div class="rev-name">Carlos Paredes</div>
+          <div class="rev-meta">Lima, San Isidro · hace 1 mes</div>
+        </div>
+      </div>
+      <div class="rev-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="rev-text">Excelente profesional. Nos ayudó a invertir en dos propiedades en Miraflores con una rentabilidad del 9% anual. Su asesoría fue clave para tomar la mejor decisión. Muy seria y comprometida con sus clientes.</div>
+    </div>
+
+    <div class="rev-card">
+      <div class="rev-card-top">
+        <div class="rev-avatar" style="background:#2A7A4A">LV</div>
+        <div class="rev-card-info">
+          <div class="rev-name">Lucía Vargas</div>
+          <div class="rev-meta">Lima, Surco · hace 3 semanas</div>
+        </div>
+      </div>
+      <div class="rev-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="rev-text">Contraté a Nathalia para vender mi casa en La Molina y la vendió en solo 3 semanas al precio que pedí. Su manejo de la negociación fue perfecto. Una verdadera experta en el sector inmobiliario limeño.</div>
+    </div>
+
+    <div class="rev-card">
+      <div class="rev-card-top">
+        <div class="rev-avatar" style="background:#7A2A6A">AG</div>
+        <div class="rev-card-info">
+          <div class="rev-name">Andrés García</div>
+          <div class="rev-meta">Lima, Barranco · hace 2 meses</div>
+        </div>
+      </div>
+      <div class="rev-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="rev-text">Llevaba meses buscando oficinas en Surco sin éxito. Nathalia entendió exactamente lo que necesitaba y en dos semanas ya tenía opciones perfectas. El proceso fue transparente y muy profesional de principio a fin.</div>
+    </div>
+
+    <div class="rev-card">
+      <div class="rev-card-top">
+        <div class="rev-avatar" style="background:#C49A3C">SM</div>
+        <div class="rev-card-info">
+          <div class="rev-name">Sofía Mendoza</div>
+          <div class="rev-meta">Lima, Miraflores · hace 1 semana</div>
+        </div>
+      </div>
+      <div class="rev-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="rev-text">La mejor decisión fue confiarle mi inversión inmobiliaria a Nathalia. Compré un penthouse en San Isidro que ya valorizó un 15% en menos de un año. Su visión del mercado es extraordinaria. ¡Gracias Nathalia!</div>
+    </div>
+
+    <div class="rev-card">
+      <div class="rev-card-top">
+        <div class="rev-avatar" style="background:#3A5A8A">RT</div>
+        <div class="rev-card-info">
+          <div class="rev-name">Roberto Torres</div>
+          <div class="rev-meta">Lima, San Borja · hace 5 días</div>
+        </div>
+      </div>
+      <div class="rev-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="rev-text">Nathalia combinó su formación como Ing. Civil y Arquitecta para asesorarme técnicamente en cada propiedad. No solo me ayudó a elegir la mejor inversión sino que identificó detalles estructurales que otro agente hubiera pasado por alto. Excepcional.</div>
+    </div>
+
+    <div class="rev-card">
+      <div class="rev-card-top">
+        <div class="rev-avatar" style="background:#8A3A2A">PC</div>
+        <div class="rev-card-info">
+          <div class="rev-name">Patricia Chávez</div>
+          <div class="rev-meta">Lima, Miraflores · hace 3 días</div>
+        </div>
+      </div>
+      <div class="rev-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="rev-text">Increíble experiencia. Nathalia me acompañó en todo el proceso de compra de mi primer departamento. Siempre muy paciente, honesta y con un trato muy humano. Siento que realmente se preocupó por encontrar lo mejor para mí y mi familia.</div>
+    </div>
+
+  </div>
+</div>
 
 <script>
 
@@ -1377,6 +1528,17 @@ function switchPlan(type, el){
 
 /* photo via CSS background-image */
 
+
+function openReviews(){
+  document.getElementById('rev-backdrop').classList.add('open');
+  document.getElementById('rev-modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeReviews(){
+  document.getElementById('rev-backdrop').classList.remove('open');
+  document.getElementById('rev-modal').classList.remove('open');
+  document.body.style.overflow='';
+}
 </script>
 </body>
 </html>
