@@ -1258,10 +1258,10 @@ body.locked > *:not(#auth-screen) { display:none !important; }
       <div class="p-creds">Ing. Civil &nbsp;·&nbsp; Arquitecta</div>
       <div class="p-exp">10+ años de experiencia</div>
       <div class="p-badge">Gerente General <span>&nbsp;Nattiva Estate</span></div>
-      <div class="p-rating">
+      <div class="p-rating" onclick="openReviews()" style="cursor:pointer;">
         <span class="p-score">4.9</span>
         <div class="p-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        <span class="p-count" onclick="openReviews()" style="cursor:pointer;text-decoration:underline;text-underline-offset:3px;">15,632 opiniones</span>
+        <span class="p-count" style="text-decoration:underline;text-underline-offset:3px;">15,632 opiniones</span>
       </div>
     </div>
   </div>
@@ -1677,8 +1677,12 @@ function switchPlan(type, el){
 
 
 function openReviews(){
-  document.getElementById('rev-backdrop').classList.add('open');
-  document.getElementById('rev-modal').classList.add('open');
+  var bd = document.getElementById('rev-backdrop');
+  var md = document.getElementById('rev-modal');
+  if(!bd || !md){ console.error("Reviews modal not found"); return; }
+  bd.classList.add('open');
+  md.classList.add('open');
+  md.scrollTop = 0;
   document.body.style.overflow='hidden';
 }
 function closeReviews(){
