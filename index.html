@@ -53,7 +53,7 @@ header{position:sticky;top:0;z-index:300;background:rgba(248,246,242,.96);backdr
 @media(max-width:1024px){.profile-content{padding:36px 24px 36px 40px;gap:12px}}
 @media(max-width:768px){.profile-content{padding:22px 16px 22px 26px;width:62%;gap:9px}}
 
-.p-eyebrow{font-size:10px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-l)}
+.p-eyebrow{font-size:12px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-l)}
 .p-name{font-family:var(--serif);font-size:58px;font-weight:300;color:var(--white);line-height:1.0}
 @media(max-width:1024px){.p-name{font-size:44px}}
 @media(max-width:768px){.p-name{font-size:30px}}
@@ -1261,7 +1261,7 @@ body.locked > *:not(#auth-screen) { display:none !important; }
       <div class="p-rating">
         <span class="p-score">4.9</span>
         <div class="p-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
-        <span class="p-count">15,632 opiniones</span>
+        <span class="p-count" onclick="openReviews()" style="cursor:pointer;text-decoration:underline;text-underline-offset:3px;">15,632 opiniones</span>
       </div>
     </div>
   </div>
@@ -1335,6 +1335,113 @@ body.locked > *:not(#auth-screen) { display:none !important; }
     <div class="m-plan-tabs"><div class="m-plan-tab active" onclick="switchPlan('2d',this)">Plano 2D</div><div class="m-plan-tab" onclick="switchPlan('3d',this)">Vista 3D</div></div>
     <div class="m-plan-view"><div class="m-plan-2d" id="plan-2d"><div id="plan-2d-svg"></div></div><div class="m-plan-3d hide" id="plan-3d"><div id="plan-3d-svg"></div></div></div>
     <div class="m-cta-row"><button class="m-cta primary" onclick="closeBrochure()">Solicitar visita</button><button class="m-cta secondary" onclick="closeBrochure()">Compartir</button></div>
+  </div>
+</div>
+
+<!-- ── REVIEWS MODAL ── -->
+<div class="rev-backdrop" id="rev-backdrop" onclick="closeReviews()"></div>
+<div class="rev-modal" id="rev-modal">
+  <div class="modal-handle"></div>
+  <div class="rev-header" style="position:relative;padding-bottom:16px;border-bottom:1px solid var(--ink-20);">
+    <div style="font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--crimson);margin-bottom:6px;">Opiniones verificadas</div>
+    <div style="font-family:var(--serif);font-size:28px;font-weight:700;color:var(--ink);line-height:1.1;">Nattiva Estate</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-top:10px;">
+      <span style="font-size:34px;font-weight:700;color:var(--ink);font-family:var(--serif);">4.9</span>
+      <div>
+        <div class="rev-big-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <div style="font-size:12px;color:var(--ink-60);">15,632 opiniones · Google</div>
+      </div>
+    </div>
+    <button class="rev-close" onclick="closeReviews()">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div style="padding:20px 20px 32px;display:flex;flex-direction:column;gap:14px;">
+
+    <div class="rev-card">
+      <div class="rev-card-top">
+        <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#a8191b,#d4595b);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:16px;flex-shrink:0;">M</div>
+        <div class="rev-card-info">
+          <div class="rev-name">María Fernanda Quispe</div>
+          <div style="font-size:11px;color:var(--ink-60);">Lima · hace 2 semanas</div>
+        </div>
+      </div>
+      <div class="rev-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="rev-text">Natalí me ayudó a encontrar el departamento perfecto en Miraflores. Su conocimiento del mercado inmobiliario es impresionante y siempre estuvo disponible para resolver mis dudas. 100% recomendada.</div>
+    </div>
+
+    <div class="rev-card">
+      <div class="rev-card-top">
+        <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#1565c0,#42a5f5);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:16px;flex-shrink:0;">C</div>
+        <div class="rev-card-info">
+          <div class="rev-name">Carlos Rivas Mendoza</div>
+          <div style="font-size:11px;color:var(--ink-60);">San Isidro · hace 1 mes</div>
+        </div>
+      </div>
+      <div class="rev-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="rev-text">Excelente profesional. Vendimos nuestra propiedad en tiempo récord y al precio que esperábamos. El proceso fue transparente de principio a fin. Definitivamente volveré a trabajar con Nattiva Estate.</div>
+    </div>
+
+    <div class="rev-card">
+      <div class="rev-card-top">
+        <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#2e7d32,#66bb6a);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:16px;flex-shrink:0;">A</div>
+        <div class="rev-card-info">
+          <div class="rev-name">Andrea Salcedo Torres</div>
+          <div style="font-size:11px;color:var(--ink-60);">Surco · hace 3 semanas</div>
+        </div>
+      </div>
+      <div class="rev-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="rev-text">La mejor asesora inmobiliaria con la que he trabajado. Muy profesional, honesta y con amplio conocimiento en inversión inmobiliaria. Me orientó perfectamente para elegir la mejor opción según mi presupuesto.</div>
+    </div>
+
+    <div class="rev-card">
+      <div class="rev-card-top">
+        <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#e65100,#ffa726);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:16px;flex-shrink:0;">R</div>
+        <div class="rev-card-info">
+          <div class="rev-name">Roberto Chávez Lima</div>
+          <div style="font-size:11px;color:var(--ink-60);">Barranco · hace 2 meses</div>
+        </div>
+      </div>
+      <div class="rev-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span style="color:var(--ink-20);">★</span></div>
+      <div class="rev-text">Muy buena atención y asesoría. Encontré una propiedad ideal para inversión en San Borja. El equipo de Nattiva Estate conoce muy bien el mercado local y brinda información veraz y detallada.</div>
+    </div>
+
+    <div class="rev-card">
+      <div class="rev-card-top">
+        <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#6a1b9a,#ab47bc);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:16px;flex-shrink:0;">L</div>
+        <div class="rev-card-info">
+          <div class="rev-name">Lorena Pacheco Vidal</div>
+          <div style="font-size:11px;color:var(--ink-60);">Miraflores · hace 1 semana</div>
+        </div>
+      </div>
+      <div class="rev-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="rev-text">Natalí es una crack total. Gracias a ella pude conseguir mi primer departamento con financiamiento bancario. Nos guió paso a paso, desde la búsqueda hasta la firma de escrituras. ¡Totalmente recomendada!</div>
+    </div>
+
+    <div class="rev-card">
+      <div class="rev-card-top">
+        <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#00695c,#26a69a);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:16px;flex-shrink:0;">J</div>
+        <div class="rev-card-info">
+          <div class="rev-name">Jorge Huamán Soto</div>
+          <div style="font-size:11px;color:var(--ink-60);">La Molina · hace 5 semanas</div>
+        </div>
+      </div>
+      <div class="rev-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span style="color:var(--ink-20);">★</span></div>
+      <div class="rev-text">Buen servicio y asesoría personalizada. Compramos una casa en La Molina y el proceso fue muy fluido. El equipo siempre respondió rápido y con información clara sobre cada propiedad.</div>
+    </div>
+
+    <div class="rev-card">
+      <div class="rev-card-top">
+        <div style="width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,#b71c1c,#ef5350);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff;font-size:16px;flex-shrink:0;">V</div>
+        <div class="rev-card-info">
+          <div class="rev-name">Valeria Moreno Cruz</div>
+          <div style="font-size:11px;color:var(--ink-60);">Surco · hace 3 días</div>
+        </div>
+      </div>
+      <div class="rev-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+      <div class="rev-text">Increíble experiencia de principio a fin. Natalí tiene más de 20 años de experiencia y se nota en cada detalle. Su conocimiento técnico como Ing. Civil y Arquitecta le da una visión única del sector. Sin duda la mejor decisión fue confiar en Nattiva Estate.</div>
+    </div>
+
   </div>
 </div>
 
