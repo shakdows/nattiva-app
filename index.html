@@ -1205,6 +1205,59 @@ body.locked > *:not(#auth-screen) { display:none !important; }
 .acard-btn:hover{box-shadow:0 5px 18px rgba(0,0,0,.18);}
 .acard-err{display:none;margin-top:14px;padding:12px;background:#FFEBEE;border-radius:8px;color:#C62828;font-size:12px;font-weight:600;line-height:1.5;}
 
+
+/* ===== CAPA DE REFINAMIENTO PROFESIONAL ===== */
+header{height:62px;border-bottom:1px solid var(--line);}
+.hd-inner{height:62px;}
+#page-home main{gap:42px;padding-top:32px;}
+@media(max-width:768px){#page-home main{gap:30px;}}
+
+/* Encabezados de sección — estilo editorial */
+.sec{align-items:center;margin-bottom:18px;}
+.sec-t{font-size:26px;font-weight:500;letter-spacing:-.012em;color:var(--ink);}
+.sec-a{font-size:10px;letter-spacing:.16em;color:var(--crimson);border:none;padding:0;text-transform:uppercase;font-weight:700;display:inline-flex;align-items:center;gap:6px;}
+.sec-a::after{content:'\2192';font-size:13px;font-weight:400;}
+
+/* Hero — más sobrio y editorial */
+.profile-hero{border-radius:16px;box-shadow:var(--sh-md);}
+.profile-hero::after{width:3px;}
+.profile-content{gap:14px;}
+.p-eyebrow{letter-spacing:.34em;font-size:10.5px;font-weight:700;color:var(--gold-l);}
+.p-name{font-weight:400;letter-spacing:-.018em;line-height:.98;}
+.p-creds{letter-spacing:.08em;color:rgba(255,255,255,.62);font-size:13px;}
+.p-exp{background:transparent;border:1px solid rgba(255,255,255,.26);border-radius:5px;padding:5px 13px;color:rgba(255,255,255,.85);letter-spacing:.1em;font-weight:500;}
+.p-exp::before{color:var(--gold-l);}
+.p-badge{background:transparent;box-shadow:none;border:none;border-left:2px solid var(--gold-l);border-radius:0;padding:2px 0 2px 12px;color:rgba(255,255,255,.92);font-weight:500;font-size:13px;letter-spacing:.02em;}
+.p-badge span{color:var(--gold-l);}
+.p-rating{gap:12px;margin-top:4px;}
+.p-count{color:rgba(255,255,255,.5);}
+
+/* Tarjeta propiedades (cotizador) */
+.cot{border-radius:16px;border:1px solid var(--line);box-shadow:var(--sh-md);}
+.cot-body{background:#17110F;}
+.cot-eyebrow{color:var(--gold-l);letter-spacing:.24em;}
+.cot-eyebrow::before{background:var(--gold-l);}
+.cot-num strong em{color:var(--gold-l);font-style:normal;}
+.cot-tag{color:var(--gold-l);}
+.cot-cta{background:var(--crimson);letter-spacing:.14em;border-radius:9px;padding:14px 28px;}
+.cot-cta:hover{background:var(--crimson-d);}
+.cot-badge{background:var(--crimson);border-radius:7px;font-weight:700;}
+
+/* Tarjetas de herramientas — chrome más fino */
+.grid{gap:18px;}
+.card{border-radius:14px;border:1px solid var(--line);}
+.card-img{height:148px;}
+.card-img::before{opacity:.4;}
+.card-body{padding:16px 18px 18px;gap:13px;}
+.card-lbl{font-weight:500;font-size:17px;letter-spacing:-.006em;}
+.btn{border-radius:8px;letter-spacing:.16em;font-size:9.5px;padding:13px 0;font-weight:700;}
+.new-tag{background:var(--ink);letter-spacing:.14em;border-radius:4px;font-weight:700;}
+
+/* Nav inferior */
+nav{border-top:1px solid var(--line);}
+.nb-lbl{letter-spacing:.12em;}
+.nb.active::before{background:var(--crimson);}
+
 </style>
 </head>
 
@@ -1267,7 +1320,7 @@ body.locked > *:not(#auth-screen) { display:none !important; }
   </div>
 
   <div>
-    <div class="sec"><span class="sec-t">Cotizador</span><a href="#" class="sec-a">Ver mi perfil</a></div>
+    <div class="sec"><span class="sec-t">Propiedades</span><a href="https://looker-de-departamentos-nattiva.vercel.app/" target="_blank" class="sec-a">Ver catálogo</a></div>
     <div class="cot">
       <div class="cot-img"><img src="https://images.unsplash.com/photo-1486325212027-8081e485255e?w=900&q=85&fit=crop" alt="Proyectos"><div class="cot-badge">200+<br>Disponibles</div></div>
       <div class="cot-body">
