@@ -6,7 +6,7 @@
 <title>Nattiva Estate — Plataforma Inmobiliaria</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Jost:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--crimson:#A8191B;--crimson-d:#7C1012;--gold:#C49A3C;--gold-l:#DEB96A;--ink:#111111;--ink-60:rgba(17,17,17,.6);--ink-20:rgba(17,17,17,.1);--paper:#F8F6F2;--white:#FFFFFF;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Jost',sans-serif;--sh:0 2px 16px rgba(0,0,0,.07);--sh-md:0 8px 32px rgba(0,0,0,.12);--sh-lg:0 20px 60px rgba(0,0,0,.18);}
+:root{--crimson:#8E1B23;--crimson-d:#6E141C;--gold:#A98A5A;--gold-l:#C6AC82;--ink:#1A1614;--ink-60:rgba(26,22,20,.62);--ink-20:rgba(26,22,20,.12);--line:rgba(26,22,20,.09);--paper:#F6F4F0;--white:#FFFFFF;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Jost',sans-serif;--sh:0 1px 2px rgba(20,15,13,.05),0 4px 14px rgba(20,15,13,.05);--sh-md:0 2px 6px rgba(20,15,13,.06),0 10px 26px rgba(20,15,13,.08);--sh-lg:0 4px 12px rgba(20,15,13,.07),0 18px 44px rgba(20,15,13,.12);}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--sans);background:var(--paper);color:var(--ink);min-height:100vh;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
@@ -30,9 +30,9 @@ header{position:sticky;top:0;z-index:300;background:rgba(248,246,242,.96);backdr
 @media(max-width:768px){#page-home main{padding:20px 16px 100px;gap:18px}}
 
 /* ── PROFILE HERO ── */
-.profile-hero{border-radius:22px;overflow:hidden;height:460px;position:relative;box-shadow:var(--sh-lg);background:#0D0101;animation:up .6s cubic-bezier(.22,1,.36,1) both;width:100%;}
+.profile-hero{border-radius:14px;overflow:hidden;height:460px;position:relative;box-shadow:var(--sh-lg);background:#17110F;animation:up .6s cubic-bezier(.22,1,.36,1) both;width:100%;}
 @media(max-width:1024px){.profile-hero{height:360px}}
-@media(max-width:768px){.profile-hero{height:280px;border-radius:16px}}
+@media(max-width:768px){.profile-hero{height:280px;border-radius:14px}}
 
 /* FOTO — pega tu URL aquí en background-image */
 #profile-photo-div{
@@ -46,7 +46,7 @@ header{position:sticky;top:0;z-index:300;background:rgba(248,246,242,.96);backdr
   z-index:1;
 }
 
-.profile-overlay{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(95deg,rgba(8,0,0,1) 0%,rgba(70,3,3,.98) 18%,rgba(8,1,1,.92) 30%,rgba(4,0,0,.70) 40%,rgba(0,0,0,.25) 50%,rgba(0,0,0,.05) 58%,transparent 64%);}
+.profile-overlay{position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(95deg,rgba(18,12,11,.97) 0%,rgba(28,16,16,.94) 22%,rgba(20,13,12,.82) 36%,rgba(18,13,12,.45) 48%,rgba(18,13,12,.12) 58%,transparent 66%);}
 .profile-hero::after{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;z-index:4;background:linear-gradient(180deg,var(--gold-l),var(--gold) 60%,transparent);}
 
 .profile-content{position:absolute;left:0;top:0;bottom:0;width:50%;z-index:3;padding:48px 32px 44px 52px;display:flex;flex-direction:column;justify-content:center;gap:16px;}
@@ -54,7 +54,7 @@ header{position:sticky;top:0;z-index:300;background:rgba(248,246,242,.96);backdr
 @media(max-width:768px){.profile-content{padding:22px 16px 22px 26px;width:62%;gap:9px}}
 
 .p-eyebrow{font-size:12px;font-weight:700;letter-spacing:.28em;text-transform:uppercase;color:var(--gold-l)}
-.p-name{font-family:var(--serif);font-size:58px;font-weight:300;color:var(--white);line-height:1.0}
+.p-name{font-family:var(--serif);font-size:58px;font-weight:400;letter-spacing:-.01em;color:var(--white);line-height:1.0}
 @media(max-width:1024px){.p-name{font-size:44px}}
 @media(max-width:768px){.p-name{font-size:30px}}
 .p-creds{font-size:14px;color:rgba(255,255,255,.55);letter-spacing:.05em}
@@ -71,18 +71,18 @@ header{position:sticky;top:0;z-index:300;background:rgba(248,246,242,.96);backdr
 
 /* ── SECTION ── */
 .sec{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px}
-.sec-t{font-family:var(--serif);font-size:28px;font-weight:400}
-.sec-a{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--crimson);border-bottom:1px solid rgba(168,25,27,.3);padding-bottom:1px}
+.sec-t{font-family:var(--serif);font-size:28px;font-weight:500;letter-spacing:-.005em}
+.sec-a{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--crimson);border-bottom:1px solid rgba(142,27,35,.28);padding-bottom:1px}
 
 /* ── COTIZADOR ── */
-.cot{border-radius:20px;overflow:hidden;border:1px solid var(--ink-20);box-shadow:var(--sh-md);display:flex;min-height:240px;cursor:pointer;transition:transform .25s,box-shadow .25s;}
+.cot{border-radius:14px;overflow:hidden;border:1px solid var(--ink-20);box-shadow:var(--sh-md);display:flex;min-height:240px;cursor:pointer;transition:transform .25s,box-shadow .25s;}
 .cot:hover{transform:translateY(-3px);box-shadow:var(--sh-lg)}
 .cot-img{width:58%;position:relative;flex-shrink:0;overflow:hidden;background:#0a1018}
 .cot-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.85);transition:transform .5s}
 .cot:hover .cot-img img{transform:scale(1.04)}
-.cot-badge{position:absolute;top:18px;right:18px;z-index:2;background:var(--crimson);color:var(--white);border-radius:8px;padding:6px 13px;font-size:12px;font-weight:700;line-height:1.3;text-align:center;box-shadow:0 4px 12px rgba(168,25,27,.5)}
+.cot-badge{position:absolute;top:18px;right:18px;z-index:2;background:var(--crimson);color:var(--white);border-radius:8px;padding:6px 13px;font-size:12px;font-weight:700;line-height:1.3;text-align:center;box-shadow:0 2px 8px rgba(20,15,13,.16)}
 .cot-body{flex:1;background:#111;padding:44px 40px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:12px;position:relative;overflow:hidden}
-.cot-body::before{content:'';position:absolute;bottom:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(168,25,27,.28) 0%,transparent 70%)}
+.cot-body::before{content:'';position:absolute;bottom:-50px;right:-50px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(142,27,35,.10) 0%,transparent 72%)}
 .cot-eyebrow{font-size:11px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--crimson);display:flex;align-items:center;gap:8px}
 .cot-eyebrow::before{content:'';display:block;width:22px;height:1px;background:var(--crimson)}
 .cot-num{font-family:var(--serif);font-size:17px;font-weight:300;line-height:1.3;color:rgba(255,255,255,.75);margin:0}
@@ -99,7 +99,7 @@ header{position:sticky;top:0;z-index:300;background:rgba(248,246,242,.96);backdr
 /* ── TOOLS ── */
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
 @media(max-width:900px){.grid{grid-template-columns:1fr 1fr;gap:14px}}
-.card{background:var(--white);border-radius:18px;overflow:hidden;border:1px solid var(--ink-20);box-shadow:var(--sh);cursor:pointer;transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column;position:relative}
+.card{background:var(--white);border-radius:12px;overflow:hidden;border:1px solid var(--ink-20);box-shadow:var(--sh);cursor:pointer;transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column;position:relative}
 .card:hover{transform:translateY(-4px);box-shadow:var(--sh-md)}
 .new-tag{position:absolute;top:10px;right:10px;z-index:5;background:var(--ink);color:var(--white);font-size:8px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-radius:4px;padding:3px 8px}
 .card-img{height:150px;position:relative;overflow:hidden;flex-shrink:0}
@@ -126,18 +126,18 @@ header{position:sticky;top:0;z-index:300;background:rgba(248,246,242,.96);backdr
 @media(max-width:768px){.proj-hero{padding:28px 16px 0}}
 .proj-eyebrow{font-size:10px;font-weight:700;letter-spacing:.22em;text-transform:uppercase;color:var(--crimson);display:flex;align-items:center;gap:8px;margin-bottom:12px}
 .proj-eyebrow::before{content:'';display:block;width:28px;height:1px;background:var(--crimson)}
-.proj-title{font-family:var(--serif);font-size:56px;font-weight:300;line-height:1.0;margin-bottom:16px}
+.proj-title{font-family:var(--serif);font-size:56px;font-weight:400;letter-spacing:-.01em;line-height:1.0;margin-bottom:16px}
 @media(max-width:768px){.proj-title{font-size:32px}}
 .proj-title strong{color:var(--crimson);font-weight:600}
 .proj-desc{font-size:14px;color:var(--ink-60);line-height:1.7;max-width:520px;margin-bottom:28px}
 .filters{display:flex;gap:10px;margin-bottom:36px;flex-wrap:wrap}
 .filt{padding:10px 24px;border-radius:50px;font-size:11px;font-weight:600;letter-spacing:.06em;cursor:pointer;transition:all .22s;border:1.5px solid var(--ink-20);color:var(--ink-60);background:var(--white)}
-.filt.active{background:var(--crimson);color:var(--white);border-color:var(--crimson);box-shadow:0 4px 14px rgba(168,25,27,.35)}
+.filt.active{background:var(--crimson);color:var(--white);border-color:var(--crimson);box-shadow:0 2px 8px rgba(20,15,13,.12)}
 .filt:hover:not(.active){border-color:var(--crimson);color:var(--crimson)}
 .props{max-width:1280px;margin:0 auto;padding:0 28px 110px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
 @media(max-width:1100px){.props{grid-template-columns:1fr 1fr}}
 @media(max-width:768px){.props{grid-template-columns:1fr;padding:0 16px 100px}}
-.prop{background:var(--white);border-radius:18px;overflow:hidden;border:1px solid var(--ink-20);box-shadow:var(--sh);cursor:pointer;transition:transform .28s,box-shadow .28s;display:flex;flex-direction:column;position:relative}
+.prop{background:var(--white);border-radius:12px;overflow:hidden;border:1px solid var(--ink-20);box-shadow:var(--sh);cursor:pointer;transition:transform .28s,box-shadow .28s;display:flex;flex-direction:column;position:relative}
 .prop:hover{transform:translateY(-5px);box-shadow:var(--sh-lg)}
 .prop.featured{grid-column:span 2;flex-direction:row;min-height:220px}
 @media(max-width:768px){.prop.featured{grid-column:span 1;flex-direction:column}}
@@ -149,7 +149,7 @@ header{position:sticky;top:0;z-index:300;background:rgba(248,246,242,.96);backdr
 .prop-img{height:190px;position:relative;overflow:hidden;flex-shrink:0}
 .prop-img img{width:100%;height:100%;object-fit:cover;transition:transform .45s}
 .prop:hover .prop-img img{transform:scale(1.06)}
-.prop-price{position:absolute;top:12px;left:12px;z-index:2;background:var(--crimson);color:var(--white);font-size:11px;font-weight:700;border-radius:6px;padding:4px 10px;box-shadow:0 3px 10px rgba(168,25,27,.5)}
+.prop-price{position:absolute;top:12px;left:12px;z-index:2;background:var(--crimson);color:var(--white);font-size:11px;font-weight:700;border-radius:6px;padding:4px 10px;box-shadow:0 2px 6px rgba(20,15,13,.18)}
 .prop-status{position:absolute;top:12px;right:12px;z-index:2;font-size:8px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;border-radius:5px;padding:4px 9px}
 .prop-status.venta{background:rgba(0,0,0,.72);color:var(--white)}
 .prop-status.alquiler{background:rgba(196,154,60,.95);color:var(--ink)}
@@ -166,10 +166,10 @@ header{position:sticky;top:0;z-index:300;background:rgba(248,246,242,.96);backdr
 /* ── BROCHURE MODAL ── */
 .modal-backdrop{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s}
 .modal-backdrop.open{opacity:1;pointer-events:all}
-.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-44%);width:92%;max-width:700px;max-height:88vh;background:var(--paper);border-radius:24px;z-index:700;overflow-y:auto;opacity:0;pointer-events:none;transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .3s;scrollbar-width:none;}
+.modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-44%);width:92%;max-width:700px;max-height:88vh;background:var(--paper);border-radius:16px;z-index:700;overflow-y:auto;opacity:0;pointer-events:none;transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .3s;scrollbar-width:none;}
 .modal::-webkit-scrollbar{display:none}
 .modal.open{transform:translate(-50%,-50%);opacity:1;pointer-events:all}
-@media(max-width:700px){.modal{top:auto;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);border-radius:24px 24px 0 0;max-height:92vh;width:100%;max-width:none}.modal.open{transform:translateX(-50%) translateY(0)}}
+@media(max-width:700px){.modal{top:auto;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);border-radius:16px 16px 0 0;max-height:92vh;width:100%;max-width:none}.modal.open{transform:translateX(-50%) translateY(0)}}
 .modal-handle{width:40px;height:4px;border-radius:2px;background:var(--ink-20);margin:14px auto 0}
 .m-gallery{position:relative;height:280px;overflow:hidden}
 .m-gallery-main{width:100%;height:100%;object-fit:cover}
@@ -178,7 +178,7 @@ header{position:sticky;top:0;z-index:300;background:rgba(248,246,242,.96);backdr
 .m-thumb{width:56px;height:42px;border-radius:6px;overflow:hidden;flex-shrink:0;border:2px solid rgba(255,255,255,.4);cursor:pointer;transition:border-color .2s}
 .m-thumb.active{border-color:var(--crimson)}
 .m-thumb img{width:100%;height:100%;object-fit:cover}
-.m-price-overlay{position:absolute;top:18px;left:18px;z-index:2;background:var(--crimson);color:var(--white);font-size:18px;font-weight:700;border-radius:9px;padding:8px 18px;box-shadow:0 4px 16px rgba(168,25,27,.5);font-family:var(--serif)}
+.m-price-overlay{position:absolute;top:18px;left:18px;z-index:2;background:var(--crimson);color:var(--white);font-size:18px;font-weight:700;border-radius:9px;padding:8px 18px;box-shadow:0 3px 10px rgba(20,15,13,.18);font-family:var(--serif)}
 .m-status-overlay{position:absolute;top:18px;right:18px;z-index:2;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;border-radius:6px;padding:5px 11px;background:rgba(0,0,0,.7);color:var(--white)}
 .m-body{padding:24px 28px 28px}
 .m-header{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
@@ -232,9 +232,9 @@ nav{position:fixed;bottom:0;left:0;right:0;z-index:1000;background:rgba(248,246,
 /* ── REVIEWS MODAL ── */
 .rev-backdrop{position:fixed;inset:0;z-index:800;background:rgba(0,0,0,.65);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .3s}
 .rev-backdrop.open{opacity:1;pointer-events:all}
-.rev-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-44%);width:92%;max-width:660px;max-height:85vh;background:var(--paper);border-radius:24px;z-index:900;overflow-y:auto;opacity:0;pointer-events:none;transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .3s;scrollbar-width:thin;}
+.rev-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-44%);width:92%;max-width:660px;max-height:85vh;background:var(--paper);border-radius:16px;z-index:900;overflow-y:auto;opacity:0;pointer-events:none;transition:transform .4s cubic-bezier(.22,1,.36,1),opacity .3s;scrollbar-width:thin;}
 .rev-modal.open{transform:translate(-50%,-50%);opacity:1;pointer-events:all}
-@media(max-width:700px){.rev-modal{top:auto;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);border-radius:24px 24px 0 0;max-height:90vh;width:100%;max-width:none}.rev-modal.open{transform:translateX(-50%) translateY(0)}}
+@media(max-width:700px){.rev-modal{top:auto;bottom:0;left:50%;transform:translateX(-50%) translateY(100%);border-radius:16px 16px 0 0;max-height:90vh;width:100%;max-width:none}.rev-modal.open{transform:translateX(-50%) translateY(0)}}
 .rev-handle{width:40px;height:4px;border-radius:2px;background:var(--ink-20);margin:14px auto 6px}
 .rev-header{padding:20px 28px 0}
 .rev-title{font-family:var(--serif);font-size:28px;font-weight:400;margin-bottom:4px}
@@ -252,7 +252,7 @@ nav{position:fixed;bottom:0;left:0;right:0;z-index:1000;background:rgba(248,246,
 .rev-bar-fill{height:100%;border-radius:3px;background:var(--gold)}
 .rev-bar-pct{font-size:10px;color:var(--ink-60);width:28px;text-align:right}
 .rev-list{padding:0 28px 28px;display:flex;flex-direction:column;gap:18px;margin-top:8px}
-.rev-card{background:var(--white);border-radius:16px;padding:18px 20px;border:1px solid var(--ink-20);box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.rev-card{background:var(--white);border-radius:14px;padding:18px 20px;border:1px solid var(--ink-20);box-shadow:0 2px 10px rgba(0,0,0,.05)}
 .rev-card-top{display:flex;align-items:center;gap:12px;margin-bottom:10px}
 .rev-avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:700;color:var(--white);flex-shrink:0}
 .rev-card-info{}
@@ -279,7 +279,7 @@ nav{position:fixed;bottom:0;left:0;right:0;z-index:1000;background:rgba(248,246,
 @media(max-width:1000px){.cap-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:640px){.cap-grid{grid-template-columns:1fr;padding:0 16px 100px}}
 .cap-card{
-  background:var(--white);border-radius:18px;
+  background:var(--white);border-radius:12px;
   border:1px solid var(--ink-20);box-shadow:var(--sh);
   overflow:hidden;display:flex;flex-direction:column;
   transition:transform .25s,box-shadow .25s;
@@ -477,7 +477,7 @@ svg2d:`<svg viewBox="0 0 520 440" xmlns="http://www.w3.org/2000/svg" font-family
 <circle cx="444" cy="380" r="12" fill="none" stroke="#88AA88" stroke-width="1" stroke-dasharray="4,2"/>
 
 <!-- dimension lines -->
-<g stroke="#A8191B" stroke-width=".7" fill="#A8191B">
+<g stroke="#8E1B23" stroke-width=".7" fill="#8E1B23">
   <line x1="28" y1="30" x2="492" y2="30"/>
   <line x1="28" y1="27" x2="28" y2="33"/>
   <line x1="492" y1="27" x2="492" y2="33"/>
@@ -497,9 +497,9 @@ svg2d:`<svg viewBox="0 0 520 440" xmlns="http://www.w3.org/2000/svg" font-family
 <!-- compass -->
 <g transform="translate(476,406)">
   <circle r="14" fill="white" stroke="#333" stroke-width="1"/>
-  <polygon points="0,-11 3.5,0 0,3 -3.5,0" fill="#A8191B"/>
+  <polygon points="0,-11 3.5,0 0,3 -3.5,0" fill="#8E1B23"/>
   <polygon points="0,11 3.5,0 0,-3 -3.5,0" fill="#888"/>
-  <text y="-14" text-anchor="middle" font-size="7" font-weight="700" fill="#A8191B">N</text>
+  <text y="-14" text-anchor="middle" font-size="7" font-weight="700" fill="#8E1B23">N</text>
 </g>
 <!-- scale bar -->
 <g transform="translate(28,436)">
@@ -807,11 +807,11 @@ svg2d:`<svg viewBox="0 0 520 440" xmlns="http://www.w3.org/2000/svg" font-family
 <text x="380" y="388" text-anchor="middle" font-size="7.5" fill="#666">ESTAR</text>
 
 <!-- compass -->
-<g transform="translate(492,415)"><circle r="14" fill="white" stroke="#333" stroke-width="1"/><polygon points="0,-11 3.5,0 0,3 -3.5,0" fill="#A8191B"/><polygon points="0,11 3.5,0 0,-3 -3.5,0" fill="#888"/><text y="-14" text-anchor="middle" font-size="7" font-weight="700" fill="#A8191B">N</text></g>
+<g transform="translate(492,415)"><circle r="14" fill="white" stroke="#333" stroke-width="1"/><polygon points="0,-11 3.5,0 0,3 -3.5,0" fill="#8E1B23"/><polygon points="0,11 3.5,0 0,-3 -3.5,0" fill="#888"/><text y="-14" text-anchor="middle" font-size="7" font-weight="700" fill="#8E1B23">N</text></g>
 <!-- scale -->
 <g transform="translate(28,430)"><rect width="75" height="5" fill="#333"/><rect x="75" width="75" height="5" fill="white" stroke="#333" stroke-width=".8"/><text y="13" font-size="6.5" fill="#555">0</text><text x="70" y="13" font-size="6.5" fill="#555">5 m</text><text x="145" y="13" font-size="6.5" fill="#555">10 m</text></g>
 <!-- dims -->
-<g stroke="#A8191B" stroke-width=".7" fill="#A8191B">
+<g stroke="#8E1B23" stroke-width=".7" fill="#8E1B23">
   <line x1="28" y1="30" x2="492" y2="30"/><line x1="28" y1="27" x2="28" y2="33"/><line x1="492" y1="27" x2="492" y2="33"/>
   <text x="260" y="27" text-anchor="middle" font-size="7.5">23.20 m</text>
   <line x1="18" y1="38" x2="18" y2="418"/><line x1="15" y1="38" x2="21" y2="38"/><line x1="15" y1="418" x2="21" y2="418"/>
@@ -883,9 +883,9 @@ svg3d:`<svg viewBox="0 0 540 420" xmlns="http://www.w3.org/2000/svg" font-family
 <!-- PENTHOUSE FLOOR — top 2 floors highlighted -->
 <rect x="138" y="58" width="224" height="44" fill="rgba(255,255,255,.18)" stroke="rgba(255,255,255,.6)" stroke-width="1.5"/>
 <!-- Penthouse label -->
-<rect x="370" y="72" width="130" height="18" rx="3" fill="#A8191B"/>
+<rect x="370" y="72" width="130" height="18" rx="3" fill="#8E1B23"/>
 <text x="435" y="84" text-anchor="middle" font-size="8" fill="white" font-weight="700" letter-spacing="1">PISO 24 · PENTHOUSE</text>
-<line x1="370" y1="81" x2="362" y2="81" stroke="#A8191B" stroke-width="1.5"/>
+<line x1="370" y1="81" x2="362" y2="81" stroke="#8E1B23" stroke-width="1.5"/>
 
 <!-- ROOFTOP TERRACE with pool -->
 <rect x="140" y="40" width="220" height="22" fill="#E0D8CC" stroke="#999" stroke-width="1"/>
@@ -990,9 +990,9 @@ svg2d:`<svg viewBox="0 0 520 440" xmlns="http://www.w3.org/2000/svg" font-family
 <rect x="356" y="196" width="60" height="50" rx="4" fill="#E4DFD8" stroke="#aaa" stroke-width="1"/>
 <rect x="356" y="196" width="60" height="14" rx="3" fill="#C8C3BA" stroke="#999" stroke-width=".5"/>
 <!-- compass + scale -->
-<g transform="translate(492,415)"><circle r="14" fill="white" stroke="#333" stroke-width="1"/><polygon points="0,-11 3.5,0 0,3 -3.5,0" fill="#A8191B"/><polygon points="0,11 3.5,0 0,-3 -3.5,0" fill="#888"/><text y="-14" text-anchor="middle" font-size="7" font-weight="700" fill="#A8191B">N</text></g>
+<g transform="translate(492,415)"><circle r="14" fill="white" stroke="#333" stroke-width="1"/><polygon points="0,-11 3.5,0 0,3 -3.5,0" fill="#8E1B23"/><polygon points="0,11 3.5,0 0,-3 -3.5,0" fill="#888"/><text y="-14" text-anchor="middle" font-size="7" font-weight="700" fill="#8E1B23">N</text></g>
 <g transform="translate(28,430)"><rect width="90" height="5" fill="#333"/><rect x="90" width="90" height="5" fill="white" stroke="#333" stroke-width=".8"/><text y="14" font-size="6.5" fill="#555">0</text><text x="86" y="14" font-size="6.5" fill="#555">7.5m</text><text x="176" y="14" font-size="6.5" fill="#555">15m</text></g>
-<g stroke="#A8191B" stroke-width=".7" fill="#A8191B">
+<g stroke="#8E1B23" stroke-width=".7" fill="#8E1B23">
   <line x1="28" y1="30" x2="492" y2="30"/><line x1="28" y1="27" x2="28" y2="33"/><line x1="492" y1="27" x2="492" y2="33"/>
   <text x="260" y="27" text-anchor="middle" font-size="7.5">30.80 m</text>
   <line x1="18" y1="38" x2="18" y2="418"/><text x="14" y="228" text-anchor="middle" font-size="7.5" transform="rotate(-90,14,228)">25.00 m</text>
@@ -1184,11 +1184,11 @@ body.locked > *:not(#auth-screen) { display:none !important; }
 .aslide:nth-child(2){background-image:url('https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1600&q=80');}
 .aslide:nth-child(3){background-image:url('https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1600&q=80');}
 .aslide:nth-child(4){background-image:url('https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1600&q=80');}
-.aoverlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(5,0,0,.82),rgba(140,20,20,.5));}
+.aoverlay{position:absolute;inset:0;background:linear-gradient(135deg,rgba(12,8,8,.86),rgba(70,28,30,.52));}
 .acard{
   position:relative;z-index:10;
-  background:#fff;border-radius:26px;
-  box-shadow:0 30px 80px rgba(0,0,0,.5);
+  background:#fff;border-radius:16px;
+  box-shadow:0 24px 64px rgba(20,15,13,.42);
   padding:52px 48px 44px;
   width:92%;max-width:430px;
   text-align:center;
@@ -1220,9 +1220,9 @@ body.locked > *:not(#auth-screen) { display:none !important; }
   <div class="aoverlay"></div>
   <div class="acard">
     <svg viewBox="0 0 210 56" width="160" height="44" style="display:block;margin:0 auto 28px" xmlns="http://www.w3.org/2000/svg">
-      <text x="0" y="44" font-family="Georgia,serif" font-size="46" font-weight="600" font-style="italic" fill="#A8191B">nattiva</text>
+      <text x="0" y="44" font-family="Georgia,serif" font-size="46" font-weight="600" font-style="italic" fill="#8E1B23">nattiva</text>
     </svg>
-    <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;font-weight:400;color:#111;margin-bottom:10px;">Bienvenida a <strong style="color:#A8191B;font-weight:600;">Nattiva</strong></div>
+    <div style="font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;font-weight:400;color:#111;margin-bottom:10px;">Bienvenida a <strong style="color:#8E1B23;font-weight:600;">Nattiva</strong></div>
     <div style="font-size:13px;color:rgba(17,17,17,.6);margin-bottom:36px;line-height:1.7;">Plataforma exclusiva para asesores<br>inmobiliarios de Nattiva Estate.<br>Inicia sesión con tu cuenta autorizada.</div>
     <button class="acard-btn" onclick="doAuth()">
       <svg width="20" height="20" viewBox="0 0 48 48">
