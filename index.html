@@ -110,7 +110,7 @@ header:not(.solid) .hd-menu{color:var(--bone)}
 .hero-side::after{content:"";height:54px;width:1px;background:var(--t20)}
 @media(max-width:680px){.hero-side{display:none}}
 .hero-c{position:relative;z-index:3;padding:0 var(--pad) clamp(34px,7vh,72px);color:var(--bone);width:100%;max-width:1180px;margin:0 auto}
-.hero-eyebrow{color:var(--gold-l);margin-bottom:20px;display:flex;align-items:center;gap:14px}
+.hero-eyebrow{font-size:14px;font-weight:600;letter-spacing:.28em;color:var(--gold-l);margin-bottom:22px;display:flex;align-items:center;gap:14px}
 .hero-eyebrow::before{content:"";width:30px;height:1px;background:var(--gold)}
 .hero-name{font-family:var(--disp);font-weight:300;font-size:clamp(52px,13vw,128px);line-height:.92;letter-spacing:-.025em}
 .hero-name .ln{display:block;overflow:hidden}
@@ -122,13 +122,13 @@ header:not(.solid) .hd-menu{color:var(--bone)}
 .hero-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px;margin-top:26px;font-size:13px;letter-spacing:.04em;color:var(--t60)}
 .hero-meta span{display:flex;align-items:center;gap:10px}
 .hero-meta span+span::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--gold);margin-right:12px}
-.hero-rating{margin-top:30px;display:inline-flex;align-items:center;gap:14px;cursor:pointer;border:1px solid var(--t20);border-radius:100px;padding:11px 12px 11px 20px;transition:.4s var(--e);background:rgba(243,236,224,.04)}
+.hero-rating{margin-top:32px;display:inline-flex;align-items:center;gap:18px;cursor:pointer;border:1px solid var(--t20);border-radius:100px;padding:15px 18px 15px 26px;transition:.4s var(--e);background:rgba(243,236,224,.04)}
 .hero-rating:hover{border-color:var(--gold);background:rgba(176,137,78,.1)}
-.hr-num{font-family:var(--disp);font-size:24px;line-height:1}
-.hr-stars{color:var(--gold-l);font-size:12px;letter-spacing:2px}
-.hr-txt{font-size:11px;letter-spacing:.04em;color:var(--t60)}
-.hr-ar{width:30px;height:30px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.hr-ar svg{width:14px;height:14px;stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.hr-num{font-family:var(--disp);font-size:36px;line-height:1}
+.hr-stars{color:var(--gold-l);font-size:16px;letter-spacing:2.5px}
+.hr-txt{font-size:14px;letter-spacing:.03em;color:var(--t60);margin-top:2px}
+.hr-ar{width:40px;height:40px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hr-ar svg{width:17px;height:17px;stroke:var(--ink);stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .scroll-cue{position:absolute;right:var(--pad);bottom:clamp(34px,7vh,72px);z-index:3;display:flex;flex-direction:column;align-items:center;gap:12px;color:var(--t60);font-size:9.5px;letter-spacing:.3em;text-transform:uppercase}
 .scroll-cue .bar{width:1px;height:46px;background:var(--t20);position:relative;overflow:hidden}
 .scroll-cue .bar::after{content:"";position:absolute;top:-50%;left:0;width:100%;height:50%;background:var(--gold);animation:cue 2.4s var(--e) infinite}
@@ -432,7 +432,7 @@ header:not(.solid) .hd-menu{color:var(--bone)}
     <div class="eyebrow hero-eyebrow">Gerente General &amp; Fundadora</div>
     <h1 class="hero-name" id="heroName"><span class="ln"><i>Natalí</i></span><span class="ln"><i><em>Timana</em> Castillo</i></span></h1>
     <div class="hero-meta">
-      <span>Ing. Civil</span><span>Arquitecta</span><span>Asesora de Inversión</span>
+      <span>Ing. Civil</span><span>Asesora de Inversión</span>
     </div>
     <div class="hero-rating" onclick="openReviews()">
       <span class="hr-num fr">4.9</span>
