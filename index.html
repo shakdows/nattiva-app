@@ -677,10 +677,6 @@ header:not(.solid) .hd-menu{color:var(--bone)}
     <div class="nh-eyebrow">Inmobiliaria de lujo · Lima, Perú</div>
     <h1 class="nh-h">Conectamos tu inversión<br>con las mejores <em>inmobiliarias</em></h1>
     <p class="nh-sub">En Nattiva trabajamos junto a las desarrolladoras más sólidas del Perú para ofrecerte propiedades excepcionales, respaldo real y un estándar de servicio sin igual.</p>
-    <div class="nh-cta">
-      <a href="https://wa.me/51936512527?text=Hola%20Developer%20de%20Nattiva%2C%20necesito%20tu%20ayuda%20con%20una%20consulta." target="_blank" class="btn btn-gold" data-cursor><span>WhatsApp directo</span><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-      <a onclick="navTo('aliados')" class="btn btn-ghost" data-cursor><span>Ver inmobiliarias</span><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
-    </div>
   </div>
   <div class="scroll-cue">Scroll<div class="bar"></div></div>
 </section>
@@ -1757,18 +1753,18 @@ const LOGO_BASE='https://raw.githubusercontent.com/shakdows/nattiva-app/main/log
 const PARTNER_COLORS=["#B0894E","#CE3A41","#46627C","#4A7A5A","#C9A463","#A2454C","#2BB6C4","#8E7CC3","#C97B3F"];
 /* [archivo del logo, nombre, desarrolladora en el cotizador (''=no filtra)] */
 const PARTNER_SRC=[
-  ["grupo-mg","Grupo MG","GRUPO MG","",20],
+  ["grupo-mg","Grupo MG","GRUPO MG","https://grupomg.pe/",20],
   ["albamar","Albamar","ALBAMAR","https://albamar.com.pe/",16],
   ["grupo-tyc","Grupo T&C","GRUPO T&C","https://www.grupotyc.com/",16],
   ["vyv","V&V","V&V","https://vyv.pe/proyectos-en-venta/",15],
-  ["imagina","Imagina","IMAGINA","https://drive.google.com/drive/folders/1EY5jE48LZUY2UZcBzjFfDYqaEd7GfFxD",13],
+  ["imagina","Imagina","IMAGINA","https://www.imagina.pe/",13],
   ["edifica","Edifica","EDIFICA","https://edifica.com.pe/",12],
   ["cantabria","Cantabria","CANTABRIA","https://cantabriainmobiliaria.pe/",10],
-  ["","Gratto Inmobiliaria","GRATTO INMOBILIARIA","https://drive.google.com/drive/folders/1NUIRt0Ul1kOdcZXjHfo7eM8Uj162ELu0",7],
-  ["","GDC","GDC","",7],
-  ["","Inarco","INARCO","",7],
-  ["","Marcan","MARCAN","",4],
-  ["","Franca","FRANCA","https://drive.google.com/drive/folders/18wnmzxKMDutQ1v42Pkt4yzOujoLfxt_5",2]
+  ["","Gratto Inmobiliaria","GRATTO INMOBILIARIA","https://grattoinmobiliaria.com/",7],
+  ["","GDC","GDC","https://gdcinmobiliaria.pe/",7],
+  ["","Inarco","INARCO","https://inarco.com.pe/",7],
+  ["","Marcan","MARCAN","https://marcan.com.pe/",4],
+  ["","Franca","FRANCA","https://francainmobiliaria.pe/",2]
 ];
 const PARTNERS=PARTNER_SRC.map((r,i)=>({name:r[1],dev:r[2]||'',web:r[3]||'',n:r[4]||0,logo:r[0]?LOGO_BASE+r[0]+'.png':'',color:PARTNER_COLORS[i%PARTNER_COLORS.length]}));
 /* mapa global desarrolladora -> folleto (para el botón del cotizador) */
@@ -1788,7 +1784,7 @@ function alliLogoFallback(img,initial){img.outerHTML='<span class="alli-glyph">'
         <div class="cat">${p.n?p.n+(p.n===1?' proyecto':' proyectos'):'Inmobiliaria'}</div>
         <div class="row">
           <span class="alli-tag"><span class="dot" style="background:${p.color}"></span>Socio verificado</span>
-          ${p.web?`<a class="alli-link alli-folleto" href="${p.web}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Folleto ▸</a>`:`<span class="alli-link">Ver proyectos</span>`}
+          ${p.web?`<a class="alli-link alli-folleto" href="${p.web}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Ir a su web ▸</a>`:`<span class="alli-link">Ver proyectos</span>`}
         </div>
       </div>
     </article>`;
