@@ -1760,8 +1760,8 @@ const PARTNER_SRC=[
   ["imagina","Imagina","IMAGINA","https://www.imagina.pe/",13],
   ["edifica","Edifica","EDIFICA","https://edifica.com.pe/",12],
   ["cantabria","Cantabria","CANTABRIA","https://cantabriainmobiliaria.pe/",10],
-  ["","Gratto Inmobiliaria","GRATTO INMOBILIARIA","https://grattoinmobiliaria.com/",7],
-  ["","GDC","GDC","https://gdcinmobiliaria.pe/",7],
+  ["gratto","Gratto Inmobiliaria","GRATTO INMOBILIARIA","https://grattoinmobiliaria.com/",7],
+  ["gdc","GDC","GDC","https://gdcinmobiliaria.pe/",7],
   ["","Inarco","INARCO","https://inarco.com.pe/",7],
   ["","Marcan","MARCAN","https://marcan.com.pe/",4],
   ["","Franca","FRANCA","https://francainmobiliaria.pe/",2]
@@ -1769,13 +1769,13 @@ const PARTNER_SRC=[
 const PARTNERS=PARTNER_SRC.map((r,i)=>({name:r[1],dev:r[2]||'',web:r[3]||'',n:r[4]||0,logo:r[0]?LOGO_BASE+r[0]+'.png':'',color:PARTNER_COLORS[i%PARTNER_COLORS.length]}));
 /* mapa global desarrolladora -> folleto (para el botón del cotizador) */
 window.FOLLETOS={};(function(){const cp=s=>(s||'').toLowerCase().replace(/(^|[\s.&/])\p{L}/gu,c=>c.toUpperCase());PARTNERS.forEach(p=>{if(p.web&&p.dev)window.FOLLETOS[cp(p.dev)]={url:p.web,name:p.name};});})();
-function alliLogoFallback(img,initial){img.outerHTML='<span class="alli-glyph">'+initial+'</span>';}
+function alliLogoFallback(img,nombre){img.parentNode.outerHTML='<div class="alli-wm"><small>Desarrolladora</small><b>'+nombre+'</b></div>';}
 (function(){
   const track=document.getElementById('alliTrack'),rail=document.getElementById('alliRail');
   if(!track||!rail)return;
   const set=PARTNERS.map(p=>{
     const stage=p.logo
-      ?`<div class="alli-logo3d"><img class="base" src="${p.logo}" alt="${p.name}" loading="lazy" onerror="alliLogoFallback(this,'${p.name.charAt(0)}')"></div>`
+      ?`<div class="alli-logo3d"><img class="base" src="${p.logo}" alt="${p.name}" loading="lazy" onerror="alliLogoFallback(this,'${p.name.replace(/'/g,"\\'")}')"></div>`
       :`<div class="alli-wm"><small>Desarrolladora</small><b>${p.name}</b></div>`;
     return `<article class="alli-card" data-dev="${p.dev||''}" data-web="${p.web||''}" title="Ver ${p.name}">
       <div class="alli-stage">${stage}</div>
