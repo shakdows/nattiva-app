@@ -2128,8 +2128,12 @@ const PROJECTS_DATA=[{"d":"CHORRILLOS","e":"2K","p":"MAR DE GRAU","dorm":"—","
   const unidades=PROJECTS_DATA.reduce((a,p)=>a+p.u,0);
   const distritos=new Set(PROJECTS_DATA.map(p=>p.d)).size;
   const ndev=new Set(PROJECTS_DATA.map(p=>p.e)).size;
+  /* Precio desde: valor fijado a mano por Nattiva. El minimo real de la data es
+     mas bajo (hay unidades desde ~S/ 155,000); si se quiere volver al calculo
+     automatico, basta con poner PRECIO_DESDE_MANUAL en null. */
+  const PRECIO_DESDE_MANUAL=350000;
   const prs=PROJECTS_DATA.filter(p=>p.pr&&p.cur==='S/').map(p=>p.pr);
-  const minpr=prs.length?Math.min(...prs):0;
+  const minpr=PRECIO_DESDE_MANUAL!=null?PRECIO_DESDE_MANUAL:(prs.length?Math.min(...prs):0);
   const kFmt=n=>n>=1000?Math.round(n/1000)+'K':n;
   k.innerHTML=[
     [fmt(proyectos),'Proyectos'],[fmt(unidades),'Unidades'],[fmt(distritos),'Distritos'],[fmt(ndev),'Desarrolladoras'],['S/ '+kFmt(minpr),'Precio desde']
