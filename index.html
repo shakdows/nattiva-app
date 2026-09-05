@@ -70,6 +70,7 @@ body.view-ent #top,body.view-ent #proyectos,body.view-ent .rhead,body.view-ent #
 body:not(.view-ent) #entView{display:none}
 body.view-sum #top,body.view-sum #proyectos,body.view-sum .rhead,body.view-sum #grid,body.view-sum #pulse{display:none!important}
 body:not(.view-sum) #sumView{display:none}
+body.view-devs #coll,body.view-biz #coll,body.view-ent #coll,body.view-sum #coll{display:none!important}
 
 /* ===== DEVS DIRECTORY ===== */
 #devsView{min-height:60vh}
@@ -145,6 +146,48 @@ body:not(.view-sum) #sumView{display:none}
 .hstat-v.em{color:var(--em)}
 .hstat-k{font-size:9.5px;font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .hstat-s{font-size:11px;color:var(--faint);font-weight:500}
+
+/* ══════════ LA COLECCIÓN · Coverflow 3D (proyectos reales) ══════════ */
+.coll{max-width:1240px;margin:0 auto;padding:clamp(34px,5vw,64px) clamp(16px,4vw,40px) 0}
+.coll-hd{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:18px}
+.coll-t{font-family:var(--serif);font-weight:400;font-size:clamp(29px,4.4vw,52px);line-height:1.03;letter-spacing:-.02em;color:var(--ink);margin:0}
+.coll-t em{font-style:italic;color:var(--gold)}
+.coll-s{max-width:330px;font-size:13.5px;line-height:1.65;color:var(--muted)}
+.coll-lbl{display:flex;align-items:center;gap:16px;margin-top:24px;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--faint)}
+.coll-lbl i{font-family:var(--serif);font-style:italic;font-size:13px;letter-spacing:0;text-transform:none;color:var(--gold)}
+.coll-lbl .rule{flex:1;height:1px;background:var(--line)}
+.cf-stage{position:relative;height:clamp(350px,50vw,520px);perspective:2200px;perspective-origin:50% 44%;overflow:hidden;touch-action:pan-y;margin-top:16px;cursor:grab}
+.cf-stage:active{cursor:grabbing}
+.cf-track{position:absolute;inset:0;transform-style:preserve-3d}
+.cf-card{position:absolute;top:50%;left:50%;width:clamp(238px,37vw,410px);height:clamp(310px,46vw,486px);border-radius:16px;overflow:hidden;background:var(--paper2);box-shadow:var(--sh3);transform-style:preserve-3d;transition:transform .75s var(--ease),opacity .75s var(--ease);will-change:transform;cursor:pointer}
+.cf-card img{width:100%;height:100%;object-fit:cover;display:block;pointer-events:none}
+.cf-noimg{background:linear-gradient(155deg,var(--emd),var(--em) 46%,#5D0A16)}
+.cf-noimg::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(125deg,rgba(255,255,255,.05) 0 1px,transparent 1px 18px)}
+.cf-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(20,12,14,.5) 0%,rgba(20,12,14,.05) 36%,rgba(20,12,14,.92));transition:opacity .6s}
+.cf-card:not(.active) .cf-shade{background:linear-gradient(180deg,rgba(20,12,14,.5),rgba(20,12,14,.76))}
+.cf-num{position:absolute;top:15px;left:17px;z-index:2;font-family:var(--serif);font-style:italic;font-size:14px;color:#fff;opacity:.85}
+.cf-tag{position:absolute;top:14px;right:14px;z-index:2;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#fff;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.28);padding:6px 11px;border-radius:40px}
+.cf-info{position:absolute;left:22px;right:22px;bottom:22px;z-index:2;color:#fff;transform:translateY(14px);opacity:0;transition:.7s var(--ease) .1s}
+.cf-card.active .cf-info{transform:none;opacity:1}
+.cf-status{font-size:9px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#F0B8BF;margin-bottom:8px}
+.cf-name{font-family:var(--serif);font-weight:400;font-size:clamp(21px,2.9vw,30px);line-height:1.05;letter-spacing:-.012em}
+.cf-meta{margin-top:7px;font-size:11.5px;color:rgba(255,255,255,.72)}
+.cf-row{display:flex;align-items:flex-end;justify-content:space-between;margin-top:13px;gap:12px}
+.cf-price{font-family:var(--serif);font-size:17px;color:#fff}
+.cf-open{display:inline-flex;align-items:center;gap:8px;font-size:9.5px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);background:#fff;padding:10px 15px;border-radius:40px;transition:.35s var(--ease);white-space:nowrap}
+.cf-card.active .cf-open:hover{gap:12px}
+.cf-open svg{width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.cf-ctrl{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:26px}
+.cf-arw{width:50px;height:50px;border-radius:50%;border:1px solid var(--line);background:var(--paper);display:flex;align-items:center;justify-content:center;transition:.35s var(--ease);cursor:pointer}
+.cf-arw:hover{background:var(--ink);border-color:var(--ink)}
+.cf-arw:hover svg{stroke:#fff}
+.cf-arw svg{width:17px;height:17px;stroke:var(--ink);stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round;transition:.35s}
+.cf-dots{display:flex;align-items:center;gap:7px}
+.cf-dot{width:7px;height:7px;border-radius:50%;background:var(--line);transition:.4s var(--ease);cursor:pointer}
+.cf-dot.active{background:var(--gold);width:22px;border-radius:4px}
+.cf-count{font-family:var(--serif);font-style:italic;font-size:14px;color:var(--faint);min-width:56px;text-align:center}
+.cf-count b{color:var(--ink);font-style:normal;font-weight:400}
+@media(max-width:700px){.coll-s{max-width:100%}.cf-ctrl{gap:12px}}
 
 /* ===== MARKET PULSE TICKER ===== */
 .pulse{position:relative;display:flex;align-items:stretch;background:var(--ink);color:#fff;overflow:hidden}
@@ -932,6 +975,21 @@ footer{background:var(--ink);color:rgba(255,255,255,.6);padding:2.4rem clamp(1re
   <div class="pulse-lab">Mercado en vivo</div>
   <div class="pulse-vp"><div class="pulse-track" id="pulseTrack"></div></div>
 </div>
+
+<section class="coll" id="coll">
+  <div class="coll-hd">
+    <h2 class="coll-t">Propiedades<br><em>excepcionales</em></h2>
+    <p class="coll-s">Una selección de los proyectos que comercializamos, tomada directamente de la base en vivo. Toca una tarjeta para abrir su ficha completa.</p>
+  </div>
+  <div class="coll-lbl"><i>La Colección</i><span class="rule"></span>Arrastra · desliza · explora</div>
+  <div class="cf-stage" id="cfStage"><div class="cf-track" id="cfTrack"></div></div>
+  <div class="cf-ctrl">
+    <button class="cf-arw" onclick="cfGo(-1)" aria-label="Anterior"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <div class="cf-dots" id="cfDots"></div>
+    <span class="cf-count" id="cfCount"></span>
+    <button class="cf-arw" onclick="cfGo(1)" aria-label="Siguiente"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+  </div>
+</section>
 
 <div class="fwrap" id="proyectos">
   <div class="fbar">
@@ -1858,6 +1916,7 @@ function buildDD(){
   window.addEventListener('scroll',function(){document.getElementById('hdr').classList.toggle('stuck',window.scrollY>10);});
   render();
   renderDevs();
+  cfRender();
   // hash routing
   if(location.hash==='#desarrolladoras')showTab('devs');
   else if(location.hash==='#inmobiliarias')showTab('biz');
@@ -1931,6 +1990,85 @@ function renderDevs(){
     return '<a class="ptile'+feat+'" href="'+t.url+'" target="_blank" rel="noopener" style="'+st+'">'+inner+'</a>';
   }).join('');
 }
+
+/* ══════════ LA COLECCIÓN · Coverflow 3D con proyectos REALES del Looker ══════════
+   Sin datos inventados: cada tarjeta es un proyecto de la base (P). Usa la portada
+   real de COVERS cuando existe; si no, cae a una tarjeta tipográfica de marca. */
+var CF=[],cfIndex=0,cfCards=[];
+function cfPick(){
+  var idx=P.map(function(p,i){return i;});
+  idx.sort(function(a,b){
+    var A=P[a],B=P[b];
+    var ca=(COVERS[A.n]||BROCHURES[A.n]||A.b)?1:0,cb=(COVERS[B.n]||BROCHURES[B.n]||B.b)?1:0;
+    if(ca!==cb)return cb-ca;              // primero los que tienen material real
+    return B.u.length-A.u.length;         // luego, mayor inventario
+  });
+  var seen={},out=[];
+  idx.forEach(function(i){                // máximo uno por desarrolladora: colección variada
+    var p=P[i];
+    if(out.length>=10||seen[p.devN])return;
+    seen[p.devN]=1;out.push(i);
+  });
+  CF=out;
+}
+function cfRender(){
+  var t=document.getElementById('cfTrack');if(!t)return;
+  cfPick();
+  t.innerHTML=CF.map(function(pi,i){
+    var p=P[pi],cov=COVERS[p.n];
+    var img=cov?'<img src="'+coverThumb(cov,900)+'" alt="'+projName(p)+'" loading="lazy" referrerpolicy="no-referrer" onerror="this.remove()">':'';
+    var dr=p.dorms.filter(function(d){return d>0;});
+    var meta=(dr.length?dr.map(dormLabel).join(', ')+' dorm. · ':'')+p.u.length+' unidad'+(p.u.length===1?'':'es');
+    return '<div class="cf-card'+(cov?'':' cf-noimg')+'" data-i="'+i+'" onclick="cfTap('+i+')">'
+      +img+'<div class="cf-shade"></div>'
+      +'<span class="cf-num">'+('0'+(i+1)).slice(-2)+'</span>'
+      +'<span class="cf-tag">'+p.distN+'</span>'
+      +'<div class="cf-info">'
+      +'<div class="cf-status">'+p.devN+'</div>'
+      +'<div class="cf-name">'+projName(p)+'</div>'
+      +'<div class="cf-meta">'+meta+'</div>'
+      +'<div class="cf-row"><span class="cf-price">'+(p.desde?'desde '+pen(p.desde):'Consultar')+'</span>'
+      +'<span class="cf-open">Ver ficha <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>'
+      +'</div></div></div>';
+  }).join('');
+  cfCards=[].slice.call(t.querySelectorAll('.cf-card'));
+  var d=document.getElementById('cfDots');
+  if(d)d.innerHTML=cfCards.map(function(c,i){return '<span class="cf-dot" onclick="cfSet('+i+')"></span>';}).join('');
+  cfSet(0);
+}
+function cfSet(i){
+  var n=cfCards.length;if(!n)return;
+  cfIndex=(i%n+n)%n;
+  cfCards.forEach(function(c,j){
+    var d=j-cfIndex;
+    if(d>n/2)d-=n;if(d<-n/2)d+=n;
+    var ad=Math.abs(d);
+    c.style.transform='translate(-50%,-50%) translateX('+(d*46)+'%) translateZ('+(-ad*230)+'px) rotateY('+(d*-34)+'deg) scale('+(1-Math.min(ad*.1,.4))+')';
+    c.style.opacity=ad>3?0:1-Math.min(ad*.22,.72);
+    c.style.zIndex=100-ad;
+    c.classList.toggle('active',d===0);
+  });
+  var dots=document.querySelectorAll('.cf-dot');
+  for(var k=0;k<dots.length;k++)dots[k].classList.toggle('active',k===cfIndex);
+  var cc=document.getElementById('cfCount');
+  if(cc)cc.innerHTML='<b>'+('0'+(cfIndex+1)).slice(-2)+'</b> / '+('0'+n).slice(-2);
+}
+function cfGo(d){cfSet(cfIndex+d);}
+function cfTap(i){if(i===cfIndex)openDD(CF[i]);else cfSet(i);}
+(function(){ /* arrastre con mouse y touch */
+  var st=document.getElementById('cfStage');if(!st)return;
+  var x0=null;
+  function down(e){x0=(e.touches?e.touches[0].clientX:e.clientX);}
+  function move(e){
+    if(x0===null)return;
+    var x=(e.touches?e.touches[0].clientX:e.clientX);
+    if(Math.abs(x-x0)>58){cfGo(x<x0?1:-1);x0=x;}
+  }
+  function up(){x0=null;}
+  st.addEventListener('mousedown',down);st.addEventListener('touchstart',down,{passive:true});
+  window.addEventListener('mousemove',move);st.addEventListener('touchmove',move,{passive:true});
+  window.addEventListener('mouseup',up);st.addEventListener('touchend',up);
+})();
 
 /* ===== B2B · Dashboard interactivo de mercado ===== */
 (function(){
