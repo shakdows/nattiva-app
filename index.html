@@ -281,62 +281,64 @@ header:not(.solid) .hd-menu{color:var(--bone)}
 @media(max-width:680px){.aurora::before,.aurora::after{filter:blur(60px);opacity:.4}}
 
 /* ══════════ SERVICES ══════════ */
-.services{background:var(--ink);color:var(--bone)}
-.services .sec-idx .lbl{color:var(--t60)}
-.services .sec-idx .rule{background:var(--ink-3)}
-.services .sec-idx .num{color:var(--crimson-l)}
+.services{background:linear-gradient(155deg,#D8434B 0%,#C0333B 48%,#A2272F 100%);color:var(--bone)}
+.section.services{margin-top:clamp(44px,7vw,96px)}
+.services .sec-idx .lbl{color:rgba(243,236,224,.72)}
+.services .sec-idx .rule{background:rgba(243,236,224,.25)}
+.services .sec-idx .num{color:var(--gold-l)}
 .sv-title{font-family:var(--disp);font-weight:300;font-size:clamp(34px,6vw,64px);line-height:1;letter-spacing:-.02em;margin-bottom:46px}
 .sv-title em{font-style:italic;color:var(--gold-l)}
-.sv-list{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;border-top:0}
-@media(max-width:900px){.sv-list{grid-template-columns:1fr}}
-.sv{position:relative;display:flex;flex-direction:column;padding:30px 28px 26px;border:1px solid var(--ink-3);border-radius:18px;background:linear-gradient(170deg,var(--ink-2),var(--ink));transition:transform .5s var(--e),border-color .5s,box-shadow .5s;cursor:pointer;overflow:hidden;text-decoration:none;color:inherit}
+.sv-list{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;border-top:0}
+@media(max-width:1100px){.sv-list{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.sv-list{grid-template-columns:1fr}}
+.sv{position:relative;display:flex;flex-direction:column;padding:30px 28px 26px;border:1px solid rgba(255,255,255,.65);border-radius:18px;background:linear-gradient(170deg,#FFFFFF,var(--paper));transition:transform .5s var(--e),border-color .5s,box-shadow .5s;cursor:pointer;overflow:hidden;text-decoration:none;color:var(--ink);box-shadow:0 22px 50px -30px rgba(60,8,14,.5)}
 .sv::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 100% 0%,rgba(176,137,78,.18),transparent 55%);opacity:0;transition:opacity .5s;pointer-events:none}
-.sv:hover{transform:translateY(-6px);border-color:var(--gold);box-shadow:0 30px 60px -28px rgba(176,137,78,.5)}
+.sv:hover{transform:translateY(-6px);border-color:var(--gold);box-shadow:0 34px 70px -28px rgba(60,8,14,.65)}
 .sv:hover::before{opacity:1}
 .sv-n{position:absolute;top:26px;right:26px;font-family:var(--disp);font-style:italic;font-size:13px;color:var(--gold)}
 .sv-ico{width:48px;height:48px;border-radius:14px;background:rgba(176,137,78,.12);border:1px solid rgba(176,137,78,.35);display:flex;align-items:center;justify-content:center;margin-bottom:22px;transition:.4s var(--e)}
 .sv:hover .sv-ico{background:rgba(176,137,78,.22);border-color:var(--gold)}
-.sv-ico svg{width:22px;height:22px;stroke:var(--gold-l);stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.sv-h{font-family:var(--disp);font-size:24px;font-weight:400;margin-bottom:10px;color:var(--bone);line-height:1.1}
-.sv-p{font-size:13px;color:var(--t60);line-height:1.6;flex:1}
-.sv-cta{display:inline-flex;align-items:center;gap:10px;margin-top:24px;align-self:flex-start;font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--ink);background:var(--gold);padding:12px 18px;border-radius:100px;transition:.4s var(--e)}
-.sv:hover .sv-cta{background:var(--gold-l);gap:14px}
+.sv-ico svg{width:22px;height:22px;stroke:var(--gold);stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.sv-h{font-family:var(--disp);font-size:24px;font-weight:400;margin-bottom:10px;color:var(--ink);line-height:1.1}
+.sv-p{font-size:13px;color:rgba(21,17,15,.64);line-height:1.6;flex:1}
+.sv-cta{display:inline-flex;align-items:center;gap:8px;margin-top:24px;align-self:flex-start;font-size:9.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;white-space:nowrap;color:#fff;background:#C0333B;padding:12px 16px;border-radius:100px;transition:.4s var(--e)}
+.sv:hover .sv-cta{background:#D8434B;gap:14px}
 .sv-cta svg{width:13px;height:13px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 /* ── Acceso Asociados: puerta con contraseña ── */
 .sv-gate{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:26px;margin-top:-10px}
-.sv-gate-p{font-size:14px;color:var(--t60);line-height:1.7;max-width:52ch}
-.sv-enter{display:inline-flex;align-items:center;gap:14px;font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);background:var(--gold);border:0;padding:16px 26px 16px 16px;border-radius:100px;cursor:pointer;transition:.45s var(--e);box-shadow:0 18px 40px -18px rgba(176,137,78,.7)}
-.sv-enter:hover{background:var(--gold-l);transform:translateY(-3px);gap:20px}
-.sv-lock{width:34px;height:34px;border-radius:50%;background:rgba(21,17,15,.14);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
+.sv-gate-p{font-size:14px;color:rgba(243,236,224,.84);line-height:1.7;max-width:52ch}
+.sv-enter{display:inline-flex;align-items:center;gap:14px;font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#A2272F;background:var(--bone);border:0;padding:16px 26px 16px 16px;border-radius:100px;cursor:pointer;transition:.45s var(--e);box-shadow:0 18px 40px -18px rgba(60,8,14,.6)}
+.sv-enter:hover{background:#fff;transform:translateY(-3px);gap:20px}
+.sv-lock{width:34px;height:34px;border-radius:50%;background:rgba(162,39,47,.12);display:inline-flex;align-items:center;justify-content:center;flex-shrink:0}
 .sv-lock svg,.sv-enter .arr{width:15px;height:15px;stroke:currentColor;stroke-width:1.8;fill:none;stroke-linecap:round;stroke-linejoin:round}
 .sv-tools{margin-top:34px;animation:svIn .8s var(--e) both}
-.sv-tools[hidden]{display:none}
+.sv-tools[hidden],.sv-gate[hidden]{display:none}
 @keyframes svIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
 .sv-unlocked{display:inline-flex;align-items:center;gap:10px;font-size:10px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--gold-l);margin-bottom:22px}
 .sv-unlocked .dot{width:7px;height:7px;border-radius:50%;background:#5FBF7A;box-shadow:0 0 0 4px rgba(95,191,122,.18)}
 .gate-ov{position:fixed;inset:0;z-index:9000;background:rgba(21,17,15,.72);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .45s var(--e)}
 .gate-ov.open{opacity:1;pointer-events:auto}
-.gate{position:relative;width:100%;max-width:480px;background:linear-gradient(165deg,var(--ink-2),var(--ink));border:1px solid rgba(176,137,78,.35);border-radius:24px;padding:38px 36px 34px;color:var(--bone);box-shadow:0 50px 120px -30px rgba(0,0,0,.7);transform:translateY(18px) scale(.98);transition:transform .5s var(--e)}
+.gate{position:relative;width:100%;max-width:480px;background:linear-gradient(155deg,#D8434B 0%,#C0333B 48%,#A2272F 100%);border:1px solid rgba(243,236,224,.22);border-radius:24px;padding:38px 36px 34px;color:var(--bone);box-shadow:0 50px 120px -30px rgba(0,0,0,.7);transform:translateY(18px) scale(.98);transition:transform .5s var(--e)}
 .gate-ov.open .gate{transform:none}
-.gate-x{position:absolute;top:14px;right:16px;width:36px;height:36px;border-radius:50%;border:1px solid var(--ink-3);background:transparent;color:var(--t60);font-size:20px;line-height:1;cursor:pointer;transition:.3s}
-.gate-x:hover{background:var(--ink-3);color:var(--bone)}
+.gate-x{position:absolute;top:14px;right:16px;width:36px;height:36px;border-radius:50%;border:1px solid rgba(243,236,224,.3);background:transparent;color:rgba(243,236,224,.85);font-size:20px;line-height:1;cursor:pointer;transition:.3s}
+.gate-x:hover{background:rgba(243,236,224,.16);color:#fff}
 .gate-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:9.5px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-l);margin-bottom:22px}
-.gate-eyebrow .sv-lock{background:rgba(176,137,78,.14);color:var(--gold-l)}
+.gate-eyebrow .sv-lock{background:rgba(243,236,224,.14);color:var(--gold-l)}
 .gate-t{font-family:var(--disp);font-weight:300;font-size:clamp(26px,4vw,34px);line-height:1.08;letter-spacing:-.015em;margin:0 0 12px}
 .gate-t em{font-style:italic;color:var(--gold-l)}
-.gate-p{font-size:13px;color:var(--t60);line-height:1.65;margin-bottom:26px}
+.gate-p{font-size:13px;color:rgba(243,236,224,.84);line-height:1.65;margin-bottom:26px}
 .gate-field{position:relative}
-.gate-field input{width:100%;background:rgba(243,236,224,.04);border:1px solid var(--ink-3);border-radius:14px;padding:16px 52px 16px 18px;color:var(--bone);font-family:var(--sans);font-size:15px;letter-spacing:.08em;outline:0;transition:.3s}
-.gate-field input:focus{border-color:var(--gold);box-shadow:0 0 0 4px rgba(176,137,78,.15)}
-.gate-field input::placeholder{color:rgba(243,236,224,.35);letter-spacing:.02em}
-.gate-eye{position:absolute;top:50%;right:10px;transform:translateY(-50%);width:36px;height:36px;border:0;background:transparent;color:var(--t60);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
-.gate-eye:hover{color:var(--gold-l)}
+.gate-field input{width:100%;background:rgba(243,236,224,.10);border:1px solid rgba(243,236,224,.30);border-radius:14px;padding:16px 52px 16px 18px;color:var(--bone);font-family:var(--sans);font-size:15px;letter-spacing:.08em;outline:0;transition:.3s}
+.gate-field input:focus{border-color:var(--gold-l);box-shadow:0 0 0 4px rgba(201,164,99,.28)}
+.gate-field input::placeholder{color:rgba(243,236,224,.55);letter-spacing:.02em}
+.gate-eye{position:absolute;top:50%;right:10px;transform:translateY(-50%);width:36px;height:36px;border:0;background:transparent;color:rgba(243,236,224,.75);cursor:pointer;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.gate-eye:hover{color:#fff}
 .gate-eye svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
-.gate-err{min-height:20px;margin:10px 4px 6px;font-size:12px;color:var(--crimson-l);letter-spacing:.02em}
+.gate-err{min-height:20px;margin:10px 4px 6px;font-size:12px;color:#FFE9B8;letter-spacing:.02em}
 .gate.shake{animation:gateShake .5s}
 @keyframes gateShake{0%,100%{transform:none}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
-.gate-go{width:100%;display:inline-flex;align-items:center;justify-content:center;gap:12px;font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--ink);background:var(--gold);border:0;padding:17px 22px;border-radius:100px;cursor:pointer;transition:.4s var(--e)}
-.gate-go:hover{background:var(--gold-l);gap:16px}
+.gate-go{width:100%;display:inline-flex;align-items:center;justify-content:center;gap:12px;font-family:var(--sans);font-size:11px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:#A2272F;background:var(--bone);border:0;padding:17px 22px;border-radius:100px;cursor:pointer;transition:.4s var(--e)}
+.gate-go:hover{background:#fff;gap:16px}
 .gate-go svg{width:14px;height:14px;stroke:currentColor;stroke-width:2;fill:none;stroke-linecap:round;stroke-linejoin:round}
 @media(max-width:700px){.gate{padding:30px 22px 26px}}
 @media(max-width:779px){.sv .new{right:50px;top:32px}}
@@ -719,9 +721,16 @@ header:not(.solid) .hd-menu{color:var(--bone)}
     <a class="sv" href="https://looker-de-departamentos-nattiva.vercel.app/" target="_blank" rel="noopener" data-cursor>
       <span class="sv-n fr">iii.</span>
       <div class="sv-ico"><svg viewBox="0 0 24 24"><rect x="3" y="12" width="4" height="9" rx="1"/><rect x="10" y="7" width="4" height="14" rx="1"/><rect x="17" y="3" width="4" height="18" rx="1"/></svg></div>
-      <div class="sv-h fr">Looker de Departamentos</div>
-      <div class="sv-p">Explora los 232 proyectos de Lima: precios, unidades y entregas, filtrados en tiempo real.</div>
-      <span class="sv-cta">Abrir herramienta <svg viewBox="0 0 24 24"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="7 7 17 7 17 17"/></svg></span>
+      <div class="sv-h fr">Explorador de Proyectos</div>
+      <div class="sv-p">Busca entre los 232 proyectos de Lima por distrito, precio, dormitorios y fecha de entrega.</div>
+      <span class="sv-cta">Abrir herramienta <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
+    </a>
+    <a class="sv" href="https://datastudio.google.com/u/0/reporting/800a2f2b-38b6-4e71-9ee3-3af86d177523/page/p_xjvu8zep5c" target="_blank" rel="noopener" data-cursor>
+      <span class="sv-n fr">iv.</span>
+      <div class="sv-ico"><svg viewBox="0 0 24 24"><path d="M21.2 15.9A10 10 0 1 1 8 2.8"/><path d="M22 12A10 10 0 0 0 12 2v10z"/></svg></div>
+      <div class="sv-h fr">Reporte de Mercado</div>
+      <div class="sv-p">Panel analítico de la oferta: precio por m², unidades y tendencias por distrito, desde la base en vivo.</div>
+      <span class="sv-cta">Abrir herramienta <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></span>
     </a>
   </div>
   </div><!-- /svTools -->
