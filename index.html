@@ -3,10 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#15110F">
+<meta name="theme-color" content="#C0333B">
 <meta name="description" content="Nattiva Estate — Inmobiliaria de lujo en Perú. Trabajamos con las mejores inmobiliarias del país: propiedades excepcionales, inversión estratégica y un estándar de servicio sin igual.">
 <title>Nattiva Estate · Inmobiliaria de lujo en Perú</title>
-<link rel="icon" type="image/png" id="favicon" href="">
+<link rel="icon" type="image/png" id="favicon" href="/icons/favicon-32.png">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Nattiva">
+<meta name="mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,400..500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
@@ -762,13 +768,23 @@ header:not(.solid) .hd-menu{color:var(--bone)}
 
 <section class="contact section-anchor" id="contact">
   <div class="aurora"></div>
-  <div class="eyebrow ct-eyebrow rev">Hablemos</div>
-  <h2 class="ct-h fr rev rev-d1">Tu próxima<br><em>inversión</em> empieza aquí</h2>
-  <p class="ct-p rev rev-d2">Agenda una asesoría privada y descubre, sin compromiso, las oportunidades más exclusivas del mercado inmobiliario peruano.</p>
+  <div class="eyebrow ct-eyebrow rev">Soporte</div>
+  <h2 class="ct-h fr rev rev-d1">Pide ayuda a tu<br><em>developer</em></h2>
+  <p class="ct-p rev rev-d2">¿Tienes una duda o algo no funciona? Haz clic aquí y me escribes directo por WhatsApp. También puedes instalar Nattiva como app en tu celular, tablet o laptop.</p>
   <div class="ct-btns rev rev-d2">
-    <a href="https://wa.me/51936512527?text=Hola%20Developer%20de%20Nattiva%2C%20necesito%20tu%20ayuda%20con%20una%20consulta." target="_blank" class="btn btn-gold" data-cursor><span>WhatsApp directo</span><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    <a href="https://wa.me/51936512527?text=Hola%20Developer%20de%20Nattiva%2C%20necesito%20tu%20ayuda%20con%20una%20consulta." target="_blank" class="btn btn-gold" data-cursor><span>Haz clic aquí</span><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></a>
+    <button type="button" class="btn btn-ghost" id="installBtn" data-cursor><span>Descargar app</span><svg viewBox="0 0 24 24"><path d="M12 3v12"/><polyline points="7 11 12 16 17 11"/><path d="M4 20h16"/></svg></button>
   </div>
 </section>
+
+<div class="gate-ov" id="pwaOv" aria-hidden="true">
+  <div class="gate" role="dialog" aria-modal="true" aria-labelledby="pwaT">
+    <button class="gate-x" type="button" onclick="closePwa()" aria-label="Cerrar">&times;</button>
+    <div class="gate-eyebrow"><span class="sv-lock"><svg viewBox="0 0 24 24"><path d="M12 3v12"/><polyline points="7 11 12 16 17 11"/><path d="M4 20h16"/></svg></span>Instalar Nattiva</div>
+    <h3 class="gate-h fr" id="pwaT">Ten la app<br><em>a un toque</em></h3>
+    <p class="gate-p" id="pwaHow"></p>
+  </div>
+</div>
 
 <footer class="foot">
   <div class="foot-top">
@@ -2122,6 +2138,36 @@ const PROJECTS_DATA=[{"d":"CHORRILLOS","e":"2K","p":"MAR DE GRAU","dorm":"—","
   k.innerHTML=[
     [fmt(proyectos),'Proyectos'],[fmt(unidades),'Unidades'],[fmt(distritos),'Distritos'],[fmt(ndev),'Desarrolladoras'],['S/ '+kFmt(minpr),'Precio desde']
   ].map(x=>`<div class="kpi"><div class="v fr">${x[0]}</div><div class="l">${x[1]}</div></div>`).join('');
+})();
+
+/* ════════ APP INSTALABLE (PWA) ════════ */
+(function(){
+  var diferido=null, btn=document.getElementById('installBtn'), ov=document.getElementById('pwaOv');
+  if('serviceWorker' in navigator){
+    addEventListener('load',function(){navigator.serviceWorker.register('/sw.js').catch(function(){});});
+  }
+  addEventListener('beforeinstallprompt',function(e){e.preventDefault();diferido=e;});
+  addEventListener('appinstalled',function(){
+    diferido=null;
+    if(btn){btn.querySelector('span').textContent='App instalada';btn.disabled=true;btn.style.opacity=.6;}
+  });
+  function instalada(){return matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;}
+  function instrucciones(){
+    var ua=navigator.userAgent;
+    var iOS=/iPad|iPhone|iPod/.test(ua)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
+    if(iOS) return 'En iPhone o iPad, con <b>Safari</b>: toca el botón <b>Compartir</b> y elige <b>Añadir a pantalla de inicio</b>.';
+    if(/Android/.test(ua)) return 'En Android, con <b>Chrome</b>: abre el menú <b>⋮</b> y elige <b>Instalar aplicación</b> o <b>Añadir a pantalla de inicio</b>.';
+    return 'En tu computadora, con <b>Chrome</b> o <b>Edge</b>: pulsa el icono de <b>instalar</b> al final de la barra de direcciones y confirma <b>Instalar</b>.';
+  }
+  window.closePwa=function(){if(!ov)return;ov.classList.remove('open');ov.setAttribute('aria-hidden','true');};
+  function abrir(txt){if(!ov)return;document.getElementById('pwaHow').innerHTML=txt;ov.classList.add('open');ov.setAttribute('aria-hidden','false');}
+  if(btn) btn.addEventListener('click',function(){
+    if(instalada()){abrir('Ya tienes Nattiva instalada en este dispositivo. Ábrela desde tu pantalla de inicio o tu escritorio.');return;}
+    if(diferido){diferido.prompt();diferido.userChoice.then(function(){diferido=null;});return;}
+    abrir(instrucciones());
+  });
+  if(ov) ov.addEventListener('click',function(e){if(e.target===this)closePwa();});
+  addEventListener('keydown',function(e){if(e.key==='Escape')closePwa();});
 })();
 </script>
 </body>

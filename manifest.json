@@ -1,0 +1,21 @@
+{
+  "id": "/",
+  "name": "Nattiva Estate",
+  "short_name": "Nattiva",
+  "description": "Inmobiliaria de lujo en Lima. Portafolio, cotizador y herramientas para asociados.",
+  "lang": "es-PE",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#C0333B",
+  "theme_color": "#C0333B",
+  "categories": ["business", "finance", "lifestyle"],
+  "icons": [
+    { "src": "/icons/icon-144.png", "sizes": "144x144", "type": "image/png" },
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icons/icon-384.png", "sizes": "384x384", "type": "image/png" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/icons/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
