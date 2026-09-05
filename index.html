@@ -486,6 +486,9 @@ header:not(.solid) .hd-menu{color:var(--bone)}
 .alli-card:hover .alli-logo3d .g.c{animation:alliGl2 .42s steps(2) infinite}
 @keyframes alliGl1{0%{transform:translate(0,0)}50%{transform:translate(-4px,1px)}100%{transform:translate(3px,-1px)}}
 @keyframes alliGl2{0%{transform:translate(0,0)}50%{transform:translate(4px,-1px)}100%{transform:translate(-3px,1px)}}
+.alli-wm{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:0 22px}
+.alli-wm small{font-size:9px;font-weight:600;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.alli-wm b{font-family:var(--disp);font-weight:300;font-size:30px;line-height:1.1;letter-spacing:-.01em;color:var(--bone)}
 .alli-glyph{font-family:var(--disp);font-weight:300;font-size:96px;line-height:1;
   background:linear-gradient(160deg,var(--gold-l),var(--crimson-l));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
   transition:transform .6s var(--e)}
@@ -1669,55 +1672,20 @@ const LOGO_BASE='https://raw.githubusercontent.com/shakdows/nattiva-app/main/log
 const PARTNER_COLORS=["#B0894E","#CE3A41","#46627C","#4A7A5A","#C9A463","#A2454C","#2BB6C4","#8E7CC3","#C97B3F"];
 /* [archivo del logo, nombre, desarrolladora en el cotizador (''=no filtra)] */
 const PARTNER_SRC=[
-  ["2k-inmobiliaria","2K Inmobiliaria","2K","https://www.2kinmobiliaria.com/"],
-  ["albamar","Albamar","ALBAMAR","https://albamar.com.pe/"],
-  ["cantabria","Cantabria","CANTABRIA","https://cantabriainmobiliaria.pe/"],
-  ["ciudaris","Ciudaris","CIUDARIS",""],
-  ["conforta","Conforta","CONFORTA","https://drive.google.com/drive/folders/1_gqtlLhLjUY5w37Qhux3kef1w4HOVE-L"],
-  ["edifica","Edifica","EDIFICA","https://edifica.com.pe/"],
-  ["grupo-lar","Grupo Lar","GRUPO LAR","https://grupolar.pe/"],
-  ["grupo-mg","Grupo MG","GRUPO MG",""],
-  ["grupo-tyc","Grupo T&C","GRUPO T&C","https://www.grupotyc.com/"],
-  ["imagina","Imagina","IMAGINA","https://drive.google.com/drive/folders/1EY5jE48LZUY2UZcBzjFfDYqaEd7GfFxD"],
-  ["make","Make","MAKE","https://makeinmobiliaria.pe/"],
-  ["noi-inmobiliaria","Noi","NOI","https://noi.pe/"],
-  ["senda","Senda","SENDA",""],
-  ["urbana-peru","Urbana Perú","URBANA","https://www.urbanaperu.com.pe/"],
-  ["verdant","Verdant","VERDANT","https://beacons.ai/verdant.pe"],
-  ["vidarq","Vidarq","VIDARQ","https://vidarq.pe/"],
-  ["vita-in","Vitain","VITAIN",""],
-  ["vyv","V&V","V&V","https://vyv.pe/proyectos-en-venta/"],
-  ["zafira","Zafira","ZAFIRA","https://zafira.pe/"],
-  ["andiamo","Andiamo","Andiamo",""],
-  ["arch","Arch","Arch",""],
-  ["armando-paredes","Armando Paredes","Armando Paredes",""],
-  ["avenir","Avenir","Avenir",""],
-  ["casaideal","Casa Ideal","Casa Ideal",""],
-  ["cimentares","Cimentares","Cimentares",""],
-  ["cosapi","Cosapi","Cosapi",""],
-  ["cumbres-andinas","Cumbres Andinas","Cumbres Andinas",""],
-  ["efron-arquitectos","Efron Arquitectos","Efron Arquitectos",""],
-  ["fai","FAI","FAI",""],
-  ["fcm-construcciones","FCM Construcciones","FCM Construcciones",""],
-  ["galeon","Galeón","Galeón","https://drive.google.com/drive/folders/1_w9zQpnjsXtnIyd8N3SAX4pnT-dQF5EJ"],
-  ["gracia","Gracia","Gracia",""],
-  ["grupo-octagon","Grupo Octagon","Grupo Octagon","https://drive.google.com/drive/folders/1Kygq9gUuv9e-UG_tT1MSGHBfWfiUYNFo"],
-  ["illusione","Illusione","Illusione","https://drive.google.com/drive/folders/1L18dh1TrVroH9Yw8kTX7AxTrhyV2zXIl"],
-  ["la-venturosa","La Venturosa","La Venturosa",""],
-  ["libre","Libre","Libre",""],
-  ["marca-diagonal","Marca Diagonal","Marca Diagonal",""],
-  ["mirano","Mirano","Mirano",""],
-  ["ms-inmobiliaria","MS Inmobiliaria","MS Inmobiliaria",""],
-  ["nexo-agentes","Nexo Agentes","Nexo Agentes","https://drive.google.com/drive/folders/1E-KkJMhl5Z_1QQS9hmC53XuneS-askxp"],
-  ["pisonay","Pisonay","Pisonay",""],
-  ["procity","Procity","Procity",""],
-  ["quatro","Quatro","Quatro",""],
-  ["rb-arquitectura","RB Arquitectura","RB Arquitectura",""],
-  ["tale","Tale","Tale",""],
-  ["tucan-inversiones","Tucán Inversiones","Tucán Inversiones",""],
-  ["urbalima","Urbalima","Urbalima",""]
+  ["grupo-mg","Grupo MG","GRUPO MG","",20],
+  ["albamar","Albamar","ALBAMAR","https://albamar.com.pe/",16],
+  ["grupo-tyc","Grupo T&C","GRUPO T&C","https://www.grupotyc.com/",16],
+  ["vyv","V&V","V&V","https://vyv.pe/proyectos-en-venta/",15],
+  ["imagina","Imagina","IMAGINA","https://drive.google.com/drive/folders/1EY5jE48LZUY2UZcBzjFfDYqaEd7GfFxD",13],
+  ["edifica","Edifica","EDIFICA","https://edifica.com.pe/",12],
+  ["cantabria","Cantabria","CANTABRIA","https://cantabriainmobiliaria.pe/",10],
+  ["","Gratto Inmobiliaria","GRATTO INMOBILIARIA","https://drive.google.com/drive/folders/1NUIRt0Ul1kOdcZXjHfo7eM8Uj162ELu0",7],
+  ["","GDC","GDC","",7],
+  ["","Inarco","INARCO","",7],
+  ["","Marcan","MARCAN","",4],
+  ["","Franca","FRANCA","https://drive.google.com/drive/folders/18wnmzxKMDutQ1v42Pkt4yzOujoLfxt_5",2]
 ];
-const PARTNERS=PARTNER_SRC.map((r,i)=>({name:r[1],dev:r[2]||'',web:r[3]||'',logo:LOGO_BASE+r[0]+'.png',color:PARTNER_COLORS[i%PARTNER_COLORS.length]}));
+const PARTNERS=PARTNER_SRC.map((r,i)=>({name:r[1],dev:r[2]||'',web:r[3]||'',n:r[4]||0,logo:r[0]?LOGO_BASE+r[0]+'.png':'',color:PARTNER_COLORS[i%PARTNER_COLORS.length]}));
 /* mapa global desarrolladora -> folleto (para el botón del cotizador) */
 window.FOLLETOS={};(function(){const cp=s=>(s||'').toLowerCase().replace(/(^|[\s.&/])\p{L}/gu,c=>c.toUpperCase());PARTNERS.forEach(p=>{if(p.web&&p.dev)window.FOLLETOS[cp(p.dev)]={url:p.web,name:p.name};});})();
 function alliLogoFallback(img,initial){img.outerHTML='<span class="alli-glyph">'+initial+'</span>';}
@@ -1727,12 +1695,12 @@ function alliLogoFallback(img,initial){img.outerHTML='<span class="alli-glyph">'
   const set=PARTNERS.map(p=>{
     const stage=p.logo
       ?`<div class="alli-logo3d"><img class="base" src="${p.logo}" alt="${p.name}" loading="lazy" onerror="alliLogoFallback(this,'${p.name.charAt(0)}')"></div>`
-      :`<div class="alli-logo3d"><span class="alli-glyph">${p.name.charAt(0)}</span></div>`;
+      :`<div class="alli-wm"><small>Desarrolladora</small><b>${p.name}</b></div>`;
     return `<article class="alli-card" data-dev="${p.dev||''}" data-web="${p.web||''}" title="Ver ${p.name}">
       <div class="alli-stage">${stage}</div>
       <div class="alli-info">
         <div class="nm">${p.name}</div>
-        <div class="cat">${p.cat||'Inmobiliaria'}</div>
+        <div class="cat">${p.n?p.n+(p.n===1?' proyecto':' proyectos'):'Inmobiliaria'}</div>
         <div class="row">
           <span class="alli-tag"><span class="dot" style="background:${p.color}"></span>Socio verificado</span>
           ${p.web?`<a class="alli-link alli-folleto" href="${p.web}" target="_blank" rel="noopener" onclick="event.stopPropagation()">Folleto ▸</a>`:`<span class="alli-link">Ver proyectos</span>`}
