@@ -39,7 +39,9 @@ h1 em{color:var(--vino);font-style:italic}
 .kpi .v.p{color:var(--verde)}.kpi .v.n{color:var(--rojo)}
 
 .cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
-@media(max-width:900px){.cols{grid-template-columns:1fr}}
+.cards2{columns:2;column-gap:20px}
+.cards2 .card{break-inside:avoid;-webkit-column-break-inside:avoid;page-break-inside:avoid;display:inline-block;width:100%}
+@media(max-width:900px){.cols{grid-template-columns:1fr}.cards2{columns:1}}
 .card{background:#fff;border:1px solid var(--linea);border-radius:16px;margin-bottom:20px;overflow:hidden}
 .card>h2{background:var(--crema2);font-size:11.5px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
   color:var(--vino);padding:11px 16px;border-bottom:1px solid var(--linea)}
@@ -172,8 +174,7 @@ footer{text-align:center;padding:26px 0 46px;color:var(--gris);font-size:12px;fo
 
 <!-- ============ VISTA DETALLE ============ -->
 <div class="wrap hidden" id="vistaDetalle">
- <div class="cols">
-  <div>
+ <div class="cards2">
     <div class="card"><h2>Precio de compra</h2><div class="body">
       <div class="head"><span class="n"></span><span class="a">S/</span><span class="u"></span><span class="b">US$</span></div>
       <div class="f"><span class="n">Valor del depa</span><input type="number" id="valor" value="737884" step="1000"><span class="u"></span><span class="usd" id="uValor"></span></div>
@@ -202,9 +203,7 @@ footer{text-align:center;padding:26px 0 46px;color:var(--gris);font-size:12px;fo
       <div class="f"><span class="n">Seguro desgrav. + inmueble</span><input type="number" id="seguro" value="300" step="10"><span class="u"></span><span class="usd" id="uSeg"></span></div>
       <div class="f tot"><span class="n">Cuota mensual total</span><span class="out" id="oCuota"></span><span class="u"></span><span class="usd" id="uCuota"></span></div>
     </div></div>
-  </div>
 
-  <div>
     <div class="card"><h2>Ingresos operativos (Airbnb)</h2><div class="body">
       <div class="f"><span class="n">Días disponibles al mes</span><input type="number" id="dias" value="27" step="1"><span class="u">d</span><span class="usd"></span></div>
       <div class="f"><span class="n">Tasa de ocupación</span><input type="number" id="ocup" value="75" step="1"><span class="u">%</span><span class="usd"></span></div>
@@ -238,7 +237,6 @@ footer{text-align:center;padding:26px 0 46px;color:var(--gris);font-size:12px;fo
       <div class="f neg"><span class="n">Cuota del banco</span><span class="out" id="fCuota"></span><span class="u"></span><span class="usd"></span></div>
       <div class="f tot"><span class="n">Flujo de caja</span><span class="out" id="fFlujo"></span><span class="u"></span><span class="usd" id="uFlujo"></span></div>
     </div></div>
-  </div>
  </div>
 
  <div class="card exit"><h2>Precio de venta (salida)</h2>
