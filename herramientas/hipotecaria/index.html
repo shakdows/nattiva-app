@@ -7,30 +7,29 @@
   <meta name="theme-color" content="#b3202a" />
   <link rel="icon" href="/icons/favicon-32.png" />
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
-  <!-- SPLASH -->
-  <div id="splash">
-    <img src="/logos/nattiva.png" alt="Nattiva" onerror="this.style.display='none'">
-  </div>
 
+
+  <header class="wrap">
+    <div class="marca">náttiva</div>
+    <div class="eyebrow">Simulador comercial · Créditos hipotecarios</div>
+    <h1>Calculadora <em>Hipotecaria</em></h1>
+    <p class="sub">Cuota mensual, ingreso referencial y cronograma de amortización — en un solo cuadro.</p>
+    <p class="legal top">Simulación referencial, sujeta a evaluación crediticia, políticas internas y condiciones comerciales vigentes. Consulte la TCEA aplicable directamente con la entidad financiera.</p>
+  </header>
 
   <!-- APP -->
   <main id="app" class="screen app-shell">
 
     <!-- FORM -->
     <section class="calculator-layout" id="form">
-      <div class="form-panel">
-        <div class="form-top-logo">
-          <img src="/logos/nattiva.png" alt="Nattiva" onerror="this.style.display='none'" />
-          <div class="form-top-logo-text">
-            <h2>Calculadora de Créditos</h2>
-            <p>Simulador comercial Nattiva</p>
-          </div>
-        </div>
+      <div class="card"><h2>Datos del cliente y del crédito</h2><div class="body">
         <div class="form-grid">
           <div class="field full">
             <label for="cliente">Nombre del cliente</label>
@@ -59,7 +58,7 @@
           Calcular simulación
         </button>
         <p id="err" class="error-text"></p>
-      </div>
+      </div></div>
     </section>
 
     <!-- RESULT -->
@@ -209,6 +208,8 @@
       </footer>
     </div>
   </div>
+
+  <footer>náttiva · Simulador comercial de créditos hipotecarios · Elaborado por Natali Timaná</footer>
 
   <a class="volver-nattiva" href="/#services">&larr; Volver a Nattiva</a>
 
