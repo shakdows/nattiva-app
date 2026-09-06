@@ -32,10 +32,10 @@ h1 em{color:var(--vino);font-style:italic}
 .field{display:flex;flex-direction:column}
 .field.full{grid-column:1/-1}
 label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gris);margin-bottom:6px}
-input[type=text]{width:100%;font-family:'Jost',sans-serif;font-size:14px;font-weight:600;color:var(--vino);
+input[type=text],input[type=email],input[type=tel]{width:100%;font-family:'Jost',sans-serif;font-size:14px;font-weight:600;color:var(--vino);
   padding:10px 12px;border:1px solid var(--linea);border-radius:8px;background:var(--crema);outline:none;transition:.16s}
-input[type=text]::placeholder{color:#b5adaf;font-weight:400}
-input[type=text]:focus{border-color:var(--oro);background:#fff}
+input[type=text]::placeholder,input[type=email]::placeholder,input[type=tel]::placeholder{color:#b5adaf;font-weight:400}
+input[type=text]:focus,input[type=email]:focus,input[type=tel]:focus{border-color:var(--oro);background:#fff}
 
 /* ─── BOTONES ─── */
 button{font-family:'Jost',sans-serif;cursor:pointer;transition:.18s}
