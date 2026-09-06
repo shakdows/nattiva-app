@@ -1704,7 +1704,15 @@ window.addEventListener('load',()=>{
     v.play().catch(()=>{});
     playMusic();
   }
-  setTimeout(begin,1800);
+  /* Si se llega con un ancla de seccion (p. ej. al volver desde una herramienta
+     con /#services), no hay loader ni intro: se entra directo a esa parte. */
+  const ancla=(location.hash||'').slice(1);
+  if(ancla&&ancla!=='top'&&document.getElementById(ancla)){
+    started=true;loader.classList.add('done');kickReveal();skipIntro();
+    setTimeout(()=>{const s=document.getElementById(ancla);if(s)s.scrollIntoView({block:'start',behavior:'instant'});},80);
+  }else{
+    setTimeout(begin,1800);
+  }
   /* si el navegador bloqueó el sonido, la música arranca al primer gesto */
   ['pointerdown','keydown','touchstart','click','wheel'].forEach(ev=>window.addEventListener(ev,()=>{if(!_mOn&&!_mUserOff&&!introDone)playMusic();}));
 });
