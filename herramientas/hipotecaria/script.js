@@ -1,12 +1,7 @@
-const correctPassword = "2026Nattiva";
-
 const nf  = new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const nfi = new Intl.NumberFormat("en-US");
 
-const loginScreen   = document.getElementById("loginScreen");
 const app           = document.getElementById("app");
-const passwordInput = document.getElementById("passwordInput");
-const loginError    = document.getElementById("loginError");
 
 const cliente = document.getElementById("cliente");
 const precio  = document.getElementById("precio");
@@ -49,20 +44,6 @@ cuota.addEventListener("input",   () => { cuota.value   = cleanNum(cuota.value);
 tea.addEventListener("input",     () => { tea.value     = cleanNum(tea.value); });
 plazo.addEventListener("input",   () => { plazo.value   = plazo.value.replace(/[^\d]/g, ""); });
 cliente.addEventListener("input", () => { cliente.value = cliente.value.replace(/[0-9]/g, ""); });
-passwordInput.addEventListener("keydown", e => { if (e.key === "Enter") checkPassword(); });
-
-/* ── Auth ── */
-function checkPassword() {
-  if (passwordInput.value.trim() === correctPassword) {
-    loginScreen.style.display = "none";
-    app.style.display = "flex";
-    loginError.textContent = "";
-  } else {
-    loginError.textContent = "Contraseña incorrecta";
-    passwordInput.value = "";
-    passwordInput.focus();
-  }
-}
 
 /* ── Calcular ── */
 function calcular() {
