@@ -8,7 +8,8 @@ body{font-family:'Jost',sans-serif;background:var(--crema);color:var(--tinta);li
 
 /* ─── CABECERA ─── */
 header{text-align:center;padding:34px 0 14px}
-.marca{font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:var(--vino);letter-spacing:.03em}
+.marca{display:inline-block;font-family:'Cormorant Garamond',serif;font-size:30px;font-weight:600;color:var(--vino);letter-spacing:.03em;text-decoration:none;line-height:1}
+.marca img{display:block;height:38px;width:auto}
 .eyebrow{font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--oro);margin-top:6px}
 h1{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,4.5vw,42px);font-weight:600;margin-top:8px}
 h1 em{color:var(--vino);font-style:italic}
