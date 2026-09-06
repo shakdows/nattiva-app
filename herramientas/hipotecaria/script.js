@@ -4,6 +4,8 @@ const nfi = new Intl.NumberFormat("en-US");
 const app           = document.getElementById("app");
 
 const cliente = document.getElementById("cliente");
+const correo   = document.getElementById("correo");
+const whatsapp = document.getElementById("whatsapp");
 const precio  = document.getElementById("precio");
 const cuota   = document.getElementById("cuota");
 const tea     = document.getElementById("tea");
@@ -44,6 +46,7 @@ cuota.addEventListener("input",   () => { cuota.value   = cleanNum(cuota.value);
 tea.addEventListener("input",     () => { tea.value     = cleanNum(tea.value); });
 plazo.addEventListener("input",   () => { plazo.value   = plazo.value.replace(/[^\d]/g, ""); });
 cliente.addEventListener("input", () => { cliente.value = cliente.value.replace(/[0-9]/g, ""); });
+whatsapp.addEventListener("input", () => { whatsapp.value = whatsapp.value.replace(/[^\d+ ]/g, ""); });
 
 /* ── Calcular ── */
 function calcular() {
@@ -76,7 +79,8 @@ function calcular() {
 
   // Guardamos la simulación para el cronograma francés
   simActual = {
-    nombre, precio: p, cuotaInicialPct: c, cuotaInicial: ci,
+    nombre, correo: correo.value.trim(), whatsapp: whatsapp.value.replace(/\D/g, ""),
+    precio: p, cuotaInicialPct: c, cuotaInicial: ci,
     montoFinanciado: mf, tasaMensual: r, meses: m, anios: a, tcea: t, cuotaMensual: cm,
     tabla: generarCronograma(mf, r, m, cm)
   };
@@ -93,7 +97,7 @@ function resetear() {
   simActual = null;
   form.classList.remove("hide");
   result.classList.add("hide");
-  cliente.value = precio.value = cuota.value = tea.value = plazo.value = "";
+  cliente.value = correo.value = whatsapp.value = precio.value = cuota.value = tea.value = plazo.value = "";
   err.textContent = "";
   window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -114,22 +118,59 @@ function generarTexto() {
   );
 }
 
-function compartirWhatsApp() {
-  window.open("https://api.whatsapp.com/send?text=" + encodeURIComponent(generarTexto()), "_blank");
+/* ── Envío con el PDF adjunto ──
+   Un navegador no puede adjuntar archivos a WhatsApp ni a un correo por su cuenta.
+   Donde existe la hoja de compartir del sistema con archivos (celulares, y algunos
+   escritorios), el PDF viaja adjunto y el usuario elige WhatsApp o su correo. Donde
+   no existe, se descarga el PDF y se abre WhatsApp o el correo ya dirigidos al
+   cliente con el resumen escrito, para adjuntar el archivo con un arrastre. */
+function archivoPropuesta() {
+  const doc = construirPropuesta();
+  if (!doc) return null;
+  return new File([doc.output("blob")], "Nattiva-Credito-" + nombreArchivo() + ".pdf", { type: "application/pdf" });
 }
-function compartirEmail() {
-  window.location.href =
-    "mailto:?subject=" + encodeURIComponent("Propuesta de crédito Nattiva — " + outCliente.textContent) +
-    "&body=" + encodeURIComponent(generarTexto());
+function descargarArchivo(file) {
+  const url = URL.createObjectURL(file);
+  const a = document.createElement("a");
+  a.href = url; a.download = file.name; a.click();
+  setTimeout(() => URL.revokeObjectURL(url), 1500);
 }
-async function compartirGeneral() {
+function telefonoCliente() {
+  let t = (simActual && simActual.whatsapp) || "";
+  if (t.length === 9 && t[0] === "9") t = "51" + t;   // celular peruano sin codigo de pais
+  return t;
+}
+function puedeCompartirArchivo(file) {
+  try { return !!(navigator.canShare && navigator.canShare({ files: [file] })); } catch (e) { return false; }
+}
+function abrirEnlace(url) { window.open(url, "_blank"); }
+function abrirCorreo(url) { window.location.href = url; }
+
+async function compartirWhatsApp() {
+  const file = archivoPropuesta();
+  if (!file) return;
   const texto = generarTexto();
-  if (navigator.share) {
-    try { await navigator.share({ title: "Propuesta Nattiva", text: texto }); } catch {}
-  } else {
-    try { await navigator.clipboard.writeText(texto); alert("✅ Resumen copiado al portapapeles."); }
-    catch { alert("Usa WhatsApp o Email para compartir."); }
+  if (puedeCompartirArchivo(file)) {
+    try { await navigator.share({ files: [file], title: "Propuesta Nattiva", text: texto }); return; }
+    catch (e) { if (e && e.name === "AbortError") return; }
   }
+  descargarArchivo(file);
+  const tel = telefonoCliente();
+  abrirEnlace((tel ? "https://wa.me/" + tel : "https://api.whatsapp.com/send") +
+    "?text=" + encodeURIComponent(texto + "\n\n📎 Te adjunto la propuesta en PDF."));
+}
+async function compartirEmail() {
+  const file = archivoPropuesta();
+  if (!file) return;
+  const asunto = "Propuesta de crédito Nattiva — " + simActual.nombre;
+  const cuerpo = generarTexto().replace(/[*_]/g, "") + "\n\nAdjunto la propuesta en PDF.";
+  if (puedeCompartirArchivo(file)) {
+    try { await navigator.share({ files: [file], title: asunto, text: cuerpo }); return; }
+    catch (e) { if (e && e.name === "AbortError") return; }
+  }
+  descargarArchivo(file);
+  abrirCorreo("mailto:" + encodeURIComponent(simActual.correo || "") +
+    "?subject=" + encodeURIComponent(asunto) + "&body=" + encodeURIComponent(cuerpo));
 }
 
 /* ══════════════════════════════════════════════
@@ -145,23 +186,25 @@ const PDF_CW    = PDF_W - PDF_M * 2;         // ancho útil
 const PDF_FOOT  = 46;                        // alto de la banda de pie
 const PDF_LIMIT = PDF_H - PDF_FOOT - 10;     // y máximo para contenido
 
+/* Paleta del PDF: la misma identidad que la web (crema, vino y oro). */
 const C = {
-  navy:   [ 13,  31,  60],
-  navy2:  [ 21,  42,  82],
-  navyLn: [ 52,  71, 110],
+  navy:   [155,  35,  48],   // vino: fondos protagonistas y cifras
+  navy2:  [122,  26,  38],   // vino oscuro: caja de la cuota
+  navyLn: [176,  84,  96],   // borde suave sobre vino
   white:  [255, 255, 255],
-  ghost:  [151, 164, 187],
-  muted:  [107, 122, 149],
-  line:   [226, 234, 244],
-  soft:   [248, 250, 253],
-  cream:  [250, 247, 242],
-  gold:   [253, 246, 227],
-  goldLn: [232, 184,  75],
-  red:    [179,  32,  42],
-  redBg:  [253, 232, 234],
-  green:  [ 18, 140,  58],
-  foot:   [244, 247, 251],
-  sep:    [205, 216, 232]
+  ghost:  [240, 220, 222],   // texto claro sobre vino
+  muted:  [133, 123, 128],   // gris de la web
+  line:   [230, 220, 208],   // linea de la web
+  soft:   [250, 246, 241],   // crema
+  cream:  [244, 237, 228],   // crema 2
+  gold:   [250, 246, 241],   // tarjeta destacada: crema con acento oro
+  goldLn: [201, 162,  90],   // oro
+  oro:    [201, 162,  90],
+  red:    [192,  57,  43],   // rojo de la web (columna de interes)
+  redBg:  [244, 237, 228],   // etiqueta: crema 2
+  green:  [ 46, 125,  82],   // verde de la web
+  foot:   [244, 237, 228],   // banda de pie: crema 2
+  sep:    [230, 220, 208]
 };
 
 const NOTA_PROPUESTA =
@@ -287,11 +330,11 @@ function avisoSinLibreria() {
 /* ══════════════════════════════════════════════
    PDF 1 — PROPUESTA DE CRÉDITO (una página)
    ══════════════════════════════════════════════ */
-function descargarPDF() {
-  if (!simActual) { alert("Primero realiza un cálculo."); return; }
+function construirPropuesta() {
+  if (!simActual) { alert("Primero realiza un cálculo."); return null; }
 
   const doc = nuevoPDF();
-  if (!doc) { avisoSinLibreria(); return; }
+  if (!doc) { avisoSinLibreria(); return null; }
 
   const s = simActual;
 
@@ -305,7 +348,7 @@ function descargarPDF() {
   /* ── Portada ── */
   const HB = 156;
   fill(doc, C.navy); doc.rect(0, 0, PDF_W, HB, "F");
-  fill(doc, C.red);  doc.rect(0, 0, PDF_W, 5, "F");
+  fill(doc, C.oro);  doc.rect(0, 0, PDF_W, 5, "F");
 
   const lwA = dibujarLogo(doc, PDF_M, 58, 40);
   const tx  = PDF_M + (lwA ? lwA + 18 : 0);
@@ -332,22 +375,22 @@ function descargarPDF() {
   const pillTxt = "SIMULACIÓN REFERENCIAL";
   const pillW   = anchoTexto(doc, pillTxt, 7.2, "bold", 0.9) + 24;
   const pillX   = PDF_W - PDF_M - pillW, pillY = HB + 22;
-  fill(doc, C.redBg); stroke(doc, C.red); doc.setLineWidth(0.6);
+  fill(doc, C.redBg); stroke(doc, C.line); doc.setLineWidth(0.6);
   doc.roundedRect(pillX, pillY, pillW, 19, 9.5, 9.5, "FD");
-  txt(doc, pillTxt, pillX + 12, pillY + 12.8, { size: 7.2, style: "bold", color: C.red, cs: 0.9 });
+  txt(doc, pillTxt, pillX + 12, pillY + 12.8, { size: 7.2, style: "bold", color: C.navy, cs: 0.9 });
 
   /* ── Tarjetas destacadas ── */
   const cY = 246, cH = 78, cW = (PDF_CW - 16) / 2;
-  const tarjeta = (x, bg, borde, acento, label, valor) => {
+  const tarjeta = (x, bg, borde, acento, label, valor, colorValor) => {
     fill(doc, bg); stroke(doc, borde); doc.setLineWidth(0.8);
     doc.roundedRect(x, cY, cW, cH, 10, 10, "FD");
     fill(doc, acento); doc.rect(x + 1, cY + 12, 3, cH - 24, "F");
     txt(doc, label, x + 20, cY + 30, { size: 8.4, color: C.muted });
     txt(doc, valor, x + 20, cY + 58,
-        { size: ajustar(doc, valor, cW - 40, 17, "bold"), style: "bold", color: C.navy });
+        { size: ajustar(doc, valor, cW - 40, 17, "bold"), style: "bold", color: colorValor || C.navy });
   };
   tarjeta(PDF_M, C.gold, C.goldLn, C.goldLn,
-          "Ingreso mensual referencial", "S/ " + nf.format(s.cuotaMensual / 0.3));
+          "Ingreso mensual referencial", "S/ " + nf.format(s.cuotaMensual / 0.3), C.green);
   tarjeta(PDF_M + cW + 16, C.soft, C.line, C.navy,
           "Monto a financiar", "S/ " + nf.format(s.montoFinanciado));
 
@@ -381,11 +424,16 @@ function descargarPDF() {
   const nH   = 22 + nota.length * 11;
   fill(doc, C.soft); stroke(doc, C.line); doc.setLineWidth(0.8);
   doc.roundedRect(PDF_M, nY, PDF_CW, nH, 8, 8, "FD");
-  fill(doc, C.red); doc.rect(PDF_M + 1, nY + 8, 3, nH - 16, "F");
+  fill(doc, C.oro); doc.rect(PDF_M + 1, nY + 8, 3, nH - 16, "F");
   nota.forEach((l, i) => txt(doc, l, PDF_M + 22, nY + 20 + i * 11, { size: 8.2, color: C.muted }));
 
   pieDePagina(doc, PIE_PROPUESTA);
-  doc.save("Nattiva-Credito-" + nombreArchivo() + ".pdf");
+  return doc;
+}
+
+function descargarPDF() {
+  const doc = construirPropuesta();
+  if (doc) doc.save("Nattiva-Credito-" + nombreArchivo() + ".pdf");
 }
 
 
@@ -628,7 +676,7 @@ function cabeceraTablaCrono(doc, y) {
 }
 
 function cabeceraPaginaCrono(doc, s) {
-  fill(doc, C.red); doc.rect(0, 0, PDF_W, 4, "F");
+  fill(doc, C.oro); doc.rect(0, 0, PDF_W, 4, "F");
   txt(doc, "Cronograma de amortización", PDF_M, 42,
       { font: "times", style: "bold", size: 13, color: C.navy });
   txt(doc, s.nombre + " · " + s.meses + " cuotas · TCEA " + s.tcea + "%", PDF_W - PDF_M, 42,
@@ -656,7 +704,7 @@ function descargarCronogramaPDF() {
   /* ── Cabecera de portada ── */
   const HB = 110;
   fill(doc, C.navy); doc.rect(0, 0, PDF_W, HB, "F");
-  fill(doc, C.red);  doc.rect(0, 0, PDF_W, 5, "F");
+  fill(doc, C.oro);  doc.rect(0, 0, PDF_W, 5, "F");
 
   const lwB = dibujarLogo(doc, PDF_M, 38, 34);
   const tx  = PDF_M + (lwB ? lwB + 16 : 0);
