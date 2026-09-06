@@ -4,8 +4,6 @@ const nfi = new Intl.NumberFormat("en-US");
 const app           = document.getElementById("app");
 
 const cliente = document.getElementById("cliente");
-const correo   = document.getElementById("correo");
-const whatsapp = document.getElementById("whatsapp");
 const precio  = document.getElementById("precio");
 const cuota   = document.getElementById("cuota");
 const tea     = document.getElementById("tea");
@@ -46,7 +44,6 @@ cuota.addEventListener("input",   () => { cuota.value   = cleanNum(cuota.value);
 tea.addEventListener("input",     () => { tea.value     = cleanNum(tea.value); });
 plazo.addEventListener("input",   () => { plazo.value   = plazo.value.replace(/[^\d]/g, ""); });
 cliente.addEventListener("input", () => { cliente.value = cliente.value.replace(/[0-9]/g, ""); });
-whatsapp.addEventListener("input", () => { whatsapp.value = whatsapp.value.replace(/[^\d+ ]/g, ""); });
 
 /* ── Calcular ── */
 function calcular() {
@@ -79,8 +76,7 @@ function calcular() {
 
   // Guardamos la simulación para el cronograma francés
   simActual = {
-    nombre, correo: correo.value.trim(), whatsapp: whatsapp.value.replace(/\D/g, ""),
-    precio: p, cuotaInicialPct: c, cuotaInicial: ci,
+    nombre, precio: p, cuotaInicialPct: c, cuotaInicial: ci,
     montoFinanciado: mf, tasaMensual: r, meses: m, anios: a, tcea: t, cuotaMensual: cm,
     tabla: generarCronograma(mf, r, m, cm)
   };
@@ -97,80 +93,9 @@ function resetear() {
   simActual = null;
   form.classList.remove("hide");
   result.classList.add("hide");
-  cliente.value = correo.value = whatsapp.value = precio.value = cuota.value = tea.value = plazo.value = "";
+  cliente.value = precio.value = cuota.value = tea.value = plazo.value = "";
   err.textContent = "";
   window.scrollTo({ top: 0, behavior: "smooth" });
-}
-
-/* ── Compartir ── */
-function generarTexto() {
-  return (
-    "📊 *Propuesta de crédito Nattiva*\n\n" +
-    "👤 Cliente: " + outCliente.textContent + "\n" +
-    "💰 Cuota mensual: *" + cuotaMensual.textContent + "*\n\n" +
-    "🏠 Precio del inmueble: " + outPrecio.textContent + "\n" +
-    "📥 Cuota inicial: " + outCuota.textContent + "\n" +
-    "💳 Monto a financiar: " + outMonto.textContent + "\n" +
-    "📅 Plazo: " + outPlazo.textContent + "\n" +
-    "📈 TCEA: " + outTea.textContent + "\n" +
-    "💼 Ingreso referencial: " + outIngreso.textContent + "\n\n" +
-    "_Simulación referencial sujeta a evaluación crediticia._"
-  );
-}
-
-/* ── Envío con el PDF adjunto ──
-   Un navegador no puede adjuntar archivos a WhatsApp ni a un correo por su cuenta.
-   Donde existe la hoja de compartir del sistema con archivos (celulares, y algunos
-   escritorios), el PDF viaja adjunto y el usuario elige WhatsApp o su correo. Donde
-   no existe, se descarga el PDF y se abre WhatsApp o el correo ya dirigidos al
-   cliente con el resumen escrito, para adjuntar el archivo con un arrastre. */
-function archivoPropuesta() {
-  const doc = construirPropuesta();
-  if (!doc) return null;
-  return new File([doc.output("blob")], "Nattiva-Credito-" + nombreArchivo() + ".pdf", { type: "application/pdf" });
-}
-function descargarArchivo(file) {
-  const url = URL.createObjectURL(file);
-  const a = document.createElement("a");
-  a.href = url; a.download = file.name; a.click();
-  setTimeout(() => URL.revokeObjectURL(url), 1500);
-}
-function telefonoCliente() {
-  let t = (simActual && simActual.whatsapp) || "";
-  if (t.length === 9 && t[0] === "9") t = "51" + t;   // celular peruano sin codigo de pais
-  return t;
-}
-function puedeCompartirArchivo(file) {
-  try { return !!(navigator.canShare && navigator.canShare({ files: [file] })); } catch (e) { return false; }
-}
-function abrirEnlace(url) { window.open(url, "_blank"); }
-function abrirCorreo(url) { window.location.href = url; }
-
-async function compartirWhatsApp() {
-  const file = archivoPropuesta();
-  if (!file) return;
-  const texto = generarTexto();
-  if (puedeCompartirArchivo(file)) {
-    try { await navigator.share({ files: [file], title: "Propuesta Nattiva", text: texto }); return; }
-    catch (e) { if (e && e.name === "AbortError") return; }
-  }
-  descargarArchivo(file);
-  const tel = telefonoCliente();
-  abrirEnlace((tel ? "https://wa.me/" + tel : "https://api.whatsapp.com/send") +
-    "?text=" + encodeURIComponent(texto + "\n\n📎 Te adjunto la propuesta en PDF."));
-}
-async function compartirEmail() {
-  const file = archivoPropuesta();
-  if (!file) return;
-  const asunto = "Propuesta de crédito Nattiva — " + simActual.nombre;
-  const cuerpo = generarTexto().replace(/[*_]/g, "") + "\n\nAdjunto la propuesta en PDF.";
-  if (puedeCompartirArchivo(file)) {
-    try { await navigator.share({ files: [file], title: asunto, text: cuerpo }); return; }
-    catch (e) { if (e && e.name === "AbortError") return; }
-  }
-  descargarArchivo(file);
-  abrirCorreo("mailto:" + encodeURIComponent(simActual.correo || "") +
-    "?subject=" + encodeURIComponent(asunto) + "&body=" + encodeURIComponent(cuerpo));
 }
 
 /* ══════════════════════════════════════════════
