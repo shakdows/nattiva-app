@@ -161,14 +161,35 @@ def compacta(x):
     return int(x) if float(x) == int(float(x)) else float(x)
 
 
+_entrega_rescatadas = [0]
+
+
 def fecha_entrega(v):
+    """La columna F. ENTREGA se escribe como MMM-AA ("ago-28" = agosto 2028).
+
+    Google Sheets convirtio en fecha las que supo interpretar y perdio el año:
+    "ago-28" quedo como 2026-08-28, con el 28 metido en el dia y el año puesto
+    en 2026. Se nota en que todas las fechas caen en 2026, en que el dia solo
+    vale 25, 26, 27 o 28, y en que no hay ninguna de setiembre: "SET-.." y
+    "SEP-28" no se pudieron parsear y sobrevivieron como texto.
+
+    Cuando el dia esta en ese rango se lee como año, que es lo que la hoja
+    quiso decir. Un dia normal (1-24) se respeta como fecha de verdad.
+    """
+    if hasattr(v, 'year') and hasattr(v, 'day'):
+        if 25 <= v.day <= 35 and 2000 + v.day >= v.year:
+            _entrega_rescatadas[0] += 1
+            return '%s-%02d' % (MESES[v.month], v.day)
+        return '%s-%02d' % (MESES[v.month], v.year % 100)
+
     v = txt(v)
-    m = re.fullmatch(r'(\d{4})-(\d{2})-(\d{2})', v)
+    m = re.fullmatch(r'(\d{4})-(\d{2})-(\d{2})( .*)?', v)
     if m:
-        return '%s-%s' % (MESES[int(m.group(2))], m.group(1)[2:])
-    m = re.fullmatch(r'(\d{4})-(\d{2})-(\d{2}) .*', v)
-    if m:
-        return '%s-%s' % (MESES[int(m.group(2))], m.group(1)[2:])
+        ano, mes, dia = int(m.group(1)), int(m.group(2)), int(m.group(3))
+        if 25 <= dia <= 35 and 2000 + dia >= ano:
+            _entrega_rescatadas[0] += 1
+            return '%s-%02d' % (MESES[mes], dia)
+        return '%s-%02d' % (MESES[mes], ano % 100)
     m = re.fullmatch(r'([A-Za-zÁÉÍÓÚáéíóú]{3})-(\d{2})', v)
     if m:
         return m.group(1).capitalize() + '-' + m.group(2)
@@ -480,6 +501,13 @@ def main():
     escribe_html(db, log)
     escribe_csv(regs)
     print('Escrito nattiva_data_limpia.csv (%d filas)' % len(regs))
+
+    if _entrega_rescatadas[0]:
+        print('\nF. ENTREGA: %d celdas venian convertidas en fecha por Google (el año'
+              ' metido en el dia) y se leyeron como MMM-AA.' % _entrega_rescatadas[0])
+        log.aviso('%d celdas de F. ENTREGA estan guardadas como fecha y no como texto. '
+                  'Pon la columna M en Formato > Numero > Texto sin formato para que '
+                  'Sheets deje de comerse el año.' % _entrega_rescatadas[0])
 
     revisa_entrega_fix(db, log)
 
