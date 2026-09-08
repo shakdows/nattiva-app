@@ -1254,7 +1254,8 @@ function medOf(a){if(!a||!a.length)return 0;a=a.slice().sort(function(x,y){retur
 /* Corrección de AÑO DE ENTREGA por proyecto (fuente: tabla oficial "AÑO DE ENTREGA").
    Úsalo cuando la fecha por unidad de la hoja esté equivocada. Clave = nombre EXACTO del proyecto. */
 var ENTREGA_FIX={
-  "BENAVIDES 1361":"2028"
+  "BENAVIDES 1361":"2028",
+  "LEGACY":"2027"
 };
 (function(){
   Object.keys(ENTREGA_FIX).forEach(function(name){

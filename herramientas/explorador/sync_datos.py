@@ -93,8 +93,10 @@ OVR_DORM = {'PENDIENTE': -1, 'NA': -1, 'null': -1, '': -1, 'MONOAMBIENTE': 0}
 OVR_MONEDA = {'SOLES': 0, 'DÓLARES': 1, 'DOLARES': 1, 'null': 0, '': 0}
 OVR_VIS = {'SI': 1, 'NO': 0, 'null': -1, '': -1, 'NA': -1}
 
-# Corrige el ano de entrega cuando la fecha por unidad de la hoja esta mal.
-ENTREGA_FIX = {'BENAVIDES 1361': '2028'}
+# El ano de entrega se corrige en index.html, en el bloque `var ENTREGA_FIX`,
+# que se aplica al cargar la pagina. Este script no lo toca: solo lo lee y lo
+# muestra en el reporte para que no se olvide que esos proyectos llevan una
+# fecha puesta a mano, distinta de la que dice la hoja.
 
 # Si la hoja 2 quiere agregar mas de este % del tamano que el proyecto tiene en
 # la hoja 1, se avisa: casi siempre significa que numeran distinto.
@@ -418,6 +420,28 @@ def escribe_csv(regs):
             w.writerow([c[k] for _, k in cols])
 
 
+def revisa_entrega_fix(db, log):
+    """Lee el bloque `var ENTREGA_FIX` de index.html y lo reporta."""
+    s = open(HTML, encoding='utf-8').read()
+    m = re.search(r'var ENTREGA_FIX=\s*(\{.*?\})\s*;', s, re.S)
+    if not m:
+        return
+    try:
+        fix = json.loads(re.sub(r',(\s*\})', r'\1', m.group(1)))
+    except ValueError:
+        log.aviso('No pude leer el bloque ENTREGA_FIX de index.html.')
+        return
+    if not fix:
+        return
+    nombres = {p['n'] for p in db['P']}
+    print('\nAno de entrega puesto a mano (index.html > ENTREGA_FIX):')
+    for nombre, ano in sorted(fix.items()):
+        print('   %-24s -> %s' % (nombre, ano))
+        if nombre not in nombres:
+            log.aviso('ENTREGA_FIX apunta a "%s", que ya no existe en los datos. '
+                      'Borralo de index.html o corrige el nombre.' % nombre)
+
+
 class Log(object):
     def __init__(self):
         self.avisos = []
@@ -456,6 +480,8 @@ def main():
     escribe_html(db, log)
     escribe_csv(regs)
     print('Escrito nattiva_data_limpia.csv (%d filas)' % len(regs))
+
+    revisa_entrega_fix(db, log)
 
     if log.avisos:
         print('\n%d AVISO(S) - revisalos antes de publicar:' % len(log.avisos))

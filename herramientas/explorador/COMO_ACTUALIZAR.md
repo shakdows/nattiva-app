@@ -8,10 +8,15 @@ desde la hoja de Google Drive.
 
 **"base de datos de nattiva locker"** — `1s0RBSd4A8r2ck-KuLkLABuXx2ZrgpYahBEP9IQxdwng`
 
-| Pestaña | Rol |
-|---|---|
-| `Cotizador Nattiva_Online_Tabla` | **Hoja 1, la principal.** Manda siempre. |
-| `performance` | **Hoja 2.** Solo aporta lo que no exista en la hoja 1. |
+| Pestaña | gid | Rol |
+|---|---|---|
+| `Cotizador Nattiva_Online_Tabla` | `1515937504` | **Hoja 1, la principal.** Manda siempre. |
+| `performance` | `374566647` | **Hoja 2.** Solo aporta lo que no exista en la hoja 1. |
+
+Versión publicada de la hoja (solo lectura, para consultarla desde el navegador):
+[hoja 1](https://docs.google.com/spreadsheets/d/e/2PACX-1vS4zvDkNHAB8rXVzMqZYB9OS0Mp_R7q0uayQyz3umPDC8LA0cBHawc9UpoXT9pfJNYdIIPhGrbTj7nh/pubhtml?gid=1515937504&single=true)
+·
+[hoja 2](https://docs.google.com/spreadsheets/d/e/2PACX-1vS4zvDkNHAB8rXVzMqZYB9OS0Mp_R7q0uayQyz3umPDC8LA0cBHawc9UpoXT9pfJNYdIIPhGrbTj7nh/pubhtml?gid=374566647&single=true)
 
 La hoja 2 nunca pisa un dato de la hoja 1. Sus precios son *precio lista* (sin
 descuento) y numera las unidades con otro criterio, así que tomarla como
