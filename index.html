@@ -66,6 +66,23 @@ img{display:block;max-width:100%}
 .ld-brand{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center}
 .ld-logo{height:clamp(42px,11vw,64px);width:auto;filter:brightness(0) invert(1);opacity:0;transform:translateY(10px);animation:ldIn 1.1s var(--e) .3s forwards}
 .ld-rule{width:0;height:1px;background:rgba(255,255,255,.55);margin:24px 0 16px;animation:ldRule 1.1s var(--e) .7s forwards}
+/* ═══ ARRANQUE · pieza grafica de Nattiva ═══
+   La imagen ya trae el logotipo y la bajada, asi que el bloque de marca del
+   loader sobra: se retira para no duplicarlo. Se encuadra con «contain» sobre
+   un fondo oscuro para que en un celular vertical no se recorte el texto. */
+.loader{background:radial-gradient(120% 70% at 50% 50%,#241713 0%,#150F0D 55%,#0C0807 100%)}
+.loader::before{content:"";position:absolute;inset:0;
+  background-image:url('/img/hero-nattiva.jpg');
+  background-image:image-set(url('/img/hero-nattiva.webp') type('image/webp'),url('/img/hero-nattiva.jpg') type('image/jpeg'));
+  background-size:contain;background-position:center;background-repeat:no-repeat;
+  opacity:0;animation:ldIn 1s var(--e) .15s forwards}
+/* En vertical, «contain» deja la pieza muy chica. Se agranda al 147%, que
+   recorta solo la planta de la izquierda y el interior de la derecha y deja
+   la bajada impresa entera. */
+@media (max-aspect-ratio:6/5){
+  .loader::before{background-size:147% auto}
+}
+.loader .ld-brand{display:none}
 .ld-word{font-family:var(--disp);font-style:italic;font-size:15px;letter-spacing:.14em;color:rgba(255,255,255,.8);opacity:0;animation:ldIn .9s ease 1s forwards}
 .ld-bar{position:absolute;bottom:0;left:0;height:2px;background:rgba(255,255,255,.9);width:0;z-index:2;animation:ldBar 2s var(--e2) forwards}
 .ld-enter{position:absolute;bottom:clamp(56px,13vh,120px);left:50%;transform:translateX(-50%);z-index:3;display:none;align-items:center;gap:11px;font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:#fff;border:1px solid rgba(255,255,255,.55);border-radius:100px;padding:15px 32px;background:rgba(255,255,255,.1);backdrop-filter:blur(4px);cursor:pointer;transition:background .3s,color .3s;animation:ldEnterIn .6s var(--e) both,ldEnterPulse 2.4s ease-in-out 1s infinite}
@@ -606,6 +623,7 @@ header:not(.solid) .hd-menu{color:var(--bone)}
 .nh-h em{font-style:italic;background:linear-gradient(100deg,var(--gold-l) 8%,var(--crimson-l) 92%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 1px 2px rgba(15,11,9,.7)) drop-shadow(0 3px 16px rgba(15,11,9,.6))}
 .nh-sub{color:var(--bone);max-width:58ch;margin:26px auto 0;line-height:1.75;font-size:clamp(15.5px,1.5vw,17.5px);font-weight:500;text-shadow:0 1px 3px rgba(15,11,9,.9),0 3px 14px rgba(15,11,9,.85),0 8px 34px rgba(15,11,9,.6);opacity:0;animation:nhUp 1.1s var(--e) .68s forwards}
 .nh-cta{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:42px;opacity:0;animation:nhUp 1.1s var(--e) .82s forwards}
+
 @keyframes nhUp{to{opacity:1;transform:none}}
 @media(max-width:680px){.hero-c{padding:124px var(--pad) 96px}}
 </style>
