@@ -1718,6 +1718,15 @@ window.addEventListener('load',()=>{
     v.addEventListener('error',skipIntro);
     v.addEventListener('timeupdate',()=>{if(v.duration&&isFinite(v.duration)){const rem=v.duration-v.currentTime;if(rem<1.6&&v.playbackRate>0.6)v.playbackRate=0.55;}}); /* cámara lenta al final para lucir el logo */
     v.addEventListener('loadedmetadata',()=>{if(v.duration&&isFinite(v.duration))setTimeout(endAfterHold,(v.duration+3)*1000)});
+    /* Antes el unico seguro era un tope de 60 s. Con el video incrustado eso
+       nunca se notaba, porque ya estaba descargado al ejecutarse el script;
+       ahora es un archivo aparte y puede no haber llegado, y el intro se
+       quedaba un minuto en negro. Si a los 5 s la reproduccion no avanzo,
+       se entra al sitio: vale mas ver la pagina que esperar un video que
+       quiza no llegue. El tope duro se conserva para el caso contrario. */
+    let avanzo=false;
+    v.addEventListener('timeupdate',()=>{if(v.currentTime>0.3)avanzo=true;});
+    setTimeout(()=>{if(!avanzo)skipIntro();},5000);
     setTimeout(skipIntro,60000);
     v.play().catch(()=>{});
     playMusic();
