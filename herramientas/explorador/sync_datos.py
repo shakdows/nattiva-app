@@ -19,7 +19,8 @@ USO
     4. git add -A && git commit && git push
 
 Reescribe:  index.html (el bloque `var DB=` y los conteos por desarrolladora)
-            nattiva_data_limpia.csv
+            nattiva_data_limpia.csv   la data plana, con columna ORIGEN
+            datos-faltantes.csv       lo que la hoja dejo en PENDIENTE o null
 """
 
 import sys, os, re, csv, json, unicodedata, collections
@@ -27,6 +28,7 @@ import sys, os, re, csv, json, unicodedata, collections
 HERE = os.path.dirname(os.path.abspath(__file__))
 HTML = os.path.join(HERE, 'index.html')
 CSV_OUT = os.path.join(HERE, 'nattiva_data_limpia.csv')
+FALTAN_OUT = os.path.join(HERE, 'datos-faltantes.csv')
 
 HOJA1 = 'Cotizador Nattiva_Online_Tabla'   # se busca por prefijo, tolera espacios
 HOJA2 = 'performance'
@@ -441,6 +443,62 @@ def escribe_csv(regs):
             w.writerow([c[k] for _, k in cols])
 
 
+VACIOS = {'PENDIENTE', 'NULL', 'NA', '', 'NONE'}
+CAMPOS_CLAVE = [('DORMITORIOS', 'dormitorios'), ('PRECIO', 'precio'), ('VISTA', 'vista'),
+                ('F. ENTREGA', 'entrega'), ('BANCO', 'banco'), ('AREA TOTAL', 'area')]
+
+
+def revisa_huecos(f1, log):
+    """Lista lo que la hoja 1 dejo en PENDIENTE o null.
+
+    No se inventa nada: el explorador muestra "-" o "Por confirmar" donde la
+    hoja no dice. Este reporte sirve para pedirle a cada desarrolladora que
+    complete lo suyo.
+    """
+    def vacio(v):
+        return txt(v).upper() in VACIOS
+
+    por_dev = collections.defaultdict(collections.Counter)
+    filas = []
+    for r in f1:
+        dev = txt(r.get('DESARROLLADORA')) or 'SIN DESARROLLADORA'
+        por_dev[dev]['unidades'] += 1
+        falta = [nom for col, nom in CAMPOS_CLAVE if vacio(r.get(col))]
+        if not falta:
+            continue
+        por_dev[dev]['con_hueco'] += 1
+        for nom in falta:
+            por_dev[dev][nom] += 1
+        filas.append([dev, txt(r.get('PROYECTO')), txt(r.get('N° INMUEBLE')),
+                      txt(r.get('MODELO')), txt(r.get('AREA TOTAL')), '; '.join(falta)])
+
+    with open(FALTAN_OUT, 'w', newline='', encoding='utf-8') as fh:
+        w = csv.writer(fh)
+        w.writerow(['DESARROLLADORA', 'PROYECTO', 'N INMUEBLE', 'MODELO', 'AREA TOTAL', 'QUE FALTA'])
+        w.writerows(filas)
+
+    if not filas:
+        print('\nNo hay campos pendientes en la hoja 1.')
+        return
+
+    print('\nCampos pendientes en la hoja 1 (escrito en datos-faltantes.csv):')
+    print('   %-22s %7s %10s %11s %8s %7s %8s %6s'
+          % ('DESARROLLADORA', 'unid', 'con hueco', 'dormitorios', 'precio', 'vista', 'entrega', 'banco'))
+    for dev, c in sorted(por_dev.items(), key=lambda x: -x[1]['con_hueco']):
+        if not c['con_hueco']:
+            continue
+        print('   %-22s %7d %10d %11s %8s %7s %8s %6s'
+              % (dev[:22], c['unidades'], c['con_hueco'], c['dormitorios'] or '',
+                 c['precio'] or '', c['vista'] or '', c['entrega'] or '', c['banco'] or ''))
+    sin_precio = sum(c['precio'] for c in por_dev.values())
+    sin_dorm = sum(c['dormitorios'] for c in por_dev.values())
+    print('   TOTAL: %d filas con algun pendiente · %d sin precio · %d sin dormitorios'
+          % (len(filas), sin_precio, sin_dorm))
+    if sin_precio:
+        log.aviso('%d unidades no tienen precio en la hoja: en el explorador salen '
+                  'como "-". Revisa datos-faltantes.csv.' % sin_precio)
+
+
 def revisa_entrega_fix(db, log):
     """Lee el bloque `var ENTREGA_FIX` de index.html y lo reporta."""
     s = open(HTML, encoding='utf-8').read()
@@ -509,6 +567,7 @@ def main():
                   'Pon la columna M en Formato > Numero > Texto sin formato para que '
                   'Sheets deje de comerse el año.' % _entrega_rescatadas[0])
 
+    revisa_huecos(f1, log)
     revisa_entrega_fix(db, log)
 
     if log.avisos:

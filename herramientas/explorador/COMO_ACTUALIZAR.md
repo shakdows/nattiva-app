@@ -78,3 +78,13 @@ cambiando sola.
   en las fichas de aliados, y las dos cifras escritas a mano en el texto.
 - `nattiva_data_limpia.csv` — la data plana, con una columna `ORIGEN` que dice
   si cada fila vino de la hoja 1 o de la hoja 2.
+- `datos-faltantes.csv` — las filas de la hoja 1 con algún campo en `PENDIENTE`
+  o `null`, y qué le falta a cada una.
+
+## Lo que la hoja deja pendiente
+
+El explorador nunca inventa un dato: donde la hoja dice `PENDIENTE` o `null`,
+la ficha muestra «—» o «Por confirmar». En cada corrida el script resume por
+desarrolladora cuántas unidades tienen huecos y escribe el detalle fila por
+fila en `datos-faltantes.csv`, para poder pedirle a cada desarrolladora que
+complete lo suyo. Si hay unidades sin precio, además sale como AVISO.
