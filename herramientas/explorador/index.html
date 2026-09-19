@@ -1773,8 +1773,10 @@ function coverThumb(id,w){
    Renders genericos de arquitectura, NO fotos de los edificios reales.
    Sirven de muestra hasta que cada proyecto tenga las suyas; en cuanto una
    entre a COVERS, esa manda. Por eso la ficha rotula "Imagen referencial".  */
+/* arq-02 sale del banco: su render viene con el cielo en negro y de portada
+   se ve como un hueco. Las tres que quedan tienen cielo de atardecer. */
 var ARQ_FACHADA=['/img/arquitectura/arq-03.webp','/img/arquitectura/arq-04.webp',
-                 '/img/arquitectura/arq-11.webp','/img/arquitectura/arq-02.webp'];
+                 '/img/arquitectura/arq-11.webp'];
 var ARQ_INTERIOR=['/img/arquitectura/arq-13.webp','/img/arquitectura/arq-07.webp',
                   '/img/arquitectura/arq-15.webp','/img/arquitectura/arq-06.webp',
                   '/img/arquitectura/arq-05.webp','/img/arquitectura/arq-16.webp',
@@ -1875,7 +1877,11 @@ function buildDD(){
       +'<div class="dd-kpi"><span class="dd-kpi-v num">'+(selCuota?pen(selCuota):'—')+'</span><span class="dd-kpi-k">Cuota desde</span></div>'
       +'<div class="dd-kpi"><span class="dd-kpi-v num">'+(selPpm?pen(selPpm):'—')+'</span><span class="dd-kpi-k">Precio / m²</span></div>'
       +'<div class="dd-kpi"><span class="dd-kpi-v">'+selDormTxt+'</span><span class="dd-kpi-k">Dormitorios</span></div>'
-    +'</div></div></div>'
+    +'</div>'
+    /* la tarjeta de tipologias sube al hero: llenaba media pantalla sola
+       abajo y aqui cierra la columna de datos junto a la galeria */
+    +dormBreakdown(p)
+    +'</div></div>'
     +'<div class="dd-bar"><div class="dd-bar-t"><b>'+shownU+'</b> unidades'+(ddDorm===null?' disponibles':' de '+ddDormTxt)+' · marca la columna «Comparar» para verlas lado a lado</div>'
       +'<div class="dd-cmpwrap">'
         +(ddCmpU.length?'<button class="dd-cmpclr" onclick="clearUnitCmp()">Limpiar</button>':'')
@@ -1961,7 +1967,13 @@ function buildDD(){
     +dkeys.map(function(d){var lb=d<0?'Por confirmar':(d===0?'Estudio':dormLabel(d)+' dorm.');return '<button class="dd-dchip'+(ddDorm===d?' on':'')+'" onclick="setDDDorm('+d+')">'+lb+' · '+dset[d]+'</button>';}).join('')+'</div>';
   /* la cabecera de unidades y la tabla van dentro de una misma caja: asi la
      rejilla las coloca juntas al costado del mapa, no en filas distintas */
-  var table='<div class="dd-body">'+dormBreakdown(p)+posDD(p)+calcDD(p)+mapSection
+  /* Dos columnas independientes, no una rejilla de filas: la calculadora es
+     mucho mas alta que la posicion de precio y en filas dejaba un hueco del
+     alto de media pantalla debajo. Cada columna apila lo suyo y se acaba
+     donde se acaba. */
+  var table='<div class="dd-body"><div class="dd-cols">'
+    +'<div class="dd-col dd-col-a">'+posDD(p)+mapSection+'</div>'
+    +'<div class="dd-col dd-col-b">'+calcDD(p)
     +'<div class="dd-unidades">'
     +'<div class="dd-section"><div class="dd-sec-t">Unidades disponibles</div>'+dchips
       +'<div class="dd-ubuscar">'
@@ -1971,7 +1983,7 @@ function buildDD(){
       +'</div>'
     +'</div>'
     +'<div class="dd-utwrap"><table class="utable"><thead><tr>'+th+'</tr></thead><tbody>'+body+'</tbody></table></div>'
-    +'</div>';
+    +'</div></div></div>';
 
   // ---- desarrolladora (abajo) ----
   var partner=findPartner(p.devN);
@@ -2073,6 +2085,13 @@ function montaNavFicha(){
   if(!bar)return;
   var secs=[].filter.call(dd.querySelectorAll('.dd-body .dd-section'),function(s){return s.querySelector('.dd-sec-t');});
   if(secs.length<2)return;
+  /* el cuerpo son dos columnas: en el DOM la de la izquierda va entera antes
+     que la derecha, asi que el indice se ordena por donde se ve, no por
+     donde esta escrito */
+  secs.sort(function(a,b){
+    var ra=a.getBoundingClientRect(),rb=b.getBoundingClientRect();
+    return Math.abs(ra.top-rb.top)>8?ra.top-rb.top:ra.left-rb.left;
+  });
   var nav=document.createElement('nav');
   nav.className='dd-nav';nav.setAttribute('aria-label','Secciones de la ficha');
   var lista=document.createElement('div');lista.className='dd-nav-in';nav.appendChild(lista);

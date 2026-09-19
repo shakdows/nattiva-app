@@ -520,37 +520,29 @@ html,body{max-width:100%;overflow-x:clip}
    tabla de unidades. Es solo colocacion: el JS que genera las secciones no
    se toca, y por eso se identifican por lo que contienen. */
 @media (min-width:1080px){
-  .dd-body{
-    display:grid;
-    grid-template-columns:repeat(12,minmax(0,1fr));
-    gap:16px;
-    align-items:start;
-  }
-  .dd-body>.dd-section{margin:0}
-  /* Por defecto todo ocupa el ancho completo; asi una seccion nueva nunca
-     queda aplastada. Solo se emparejan las cuatro que caben de a dos.
-     La tabla de unidades vive en un div sin clase, hermano de su cabecera,
-     por eso va aparte y a ancho completo. */
-  .dd-body>*{grid-column:span 12;min-width:0}
-  .dd-body>.dd-section:has(.dd-pos){grid-column:span 6}
-  .dd-body>.dd-section:has(.dd-calc){grid-column:span 6}
-  /* la ubicacion iba a un tercio y quedaba sola en su fila, con dos tercios
-     vacios al lado: a ancho completo el mapa se lee y no sobra hueco */
-  .dd-body>.dd-section:has(.dd-map){grid-column:span 12}
-  .dd-body>.dd-devbox{grid-column:span 12}
-
+  /* dos columnas independientes: cada una apila lo suyo y termina donde
+     termina. Con una rejilla de filas, la posicion de precio (160px) al lado
+     de la calculadora (640px) dejaba medio metro de papel en blanco. */
+  .dd-cols{display:flex;gap:16px;align-items:flex-start}
+  .dd-col{display:flex;flex-direction:column;gap:16px;min-width:0}
+  .dd-col-a{flex:0 0 37%}
+  .dd-col-b{flex:1 1 auto;min-width:0}
+  .dd-body>.dd-section,.dd-col>.dd-section{margin:0}
   /* la calculadora deja de ir lado a lado dentro de su tarjeta: ya esta en
      media pantalla, asi que se apila y la cuota queda debajo, grande */
   .dd-calc{display:block}
   .dd-calc-out{margin-top:16px}
 
   /* el mapa crece para llenar su columna */
-  .dd-map{height:280px}
+  .dd-map{height:380px}
 
 }
 
-/* la tarjeta de tipologias se convierte en una fila de opciones */
-.dd-typos{display:flex;flex-wrap:wrap;gap:12px}
+/* la tarjeta de tipologias se convierte en una fila de opciones que reparte
+   el ancho: con una sola tipologia no queda un cuadrito perdido a la izquierda */
+.dd-typos{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}
+.dd-hero .dd-section{margin:0}
+.dd-hero .dd-sec-t{margin-bottom:12px}
 
 /* ── ficha con portada: galeria a la izquierda, datos a la derecha ── */
 @media (min-width:1080px){
@@ -851,15 +843,11 @@ html,body{max-width:100%;overflow-x:clip}
 .dd-utwrap{max-height:70vh}
 
 @media (min-width:1080px){
-  /* la tabla lleva 10 columnas y precio y comparar son las que mas importan:
-     se le da dos tercios y al mapa un tercio, no mitad y mitad */
-  .dd-body>.dd-section:has(.dd-map){grid-column:span 4}
-  .dd-body>.dd-unidades{grid-column:span 8}
   /* la tabla se desplaza dentro de su caja: con 590 unidades la ficha medía
      13.000px y no habia forma de llegar al pie */
   .dd-utwrap{max-height:54vh;overscroll-behavior:contain}
   .dd-utwrap .utable tbody td,.dd-utwrap .utable thead th{padding-left:8px;padding-right:8px}
-  .dd-map{height:calc(54vh - 52px);min-height:280px}
+
 }
 
 /* titulos de seccion: de etiqueta diminuta a titulo legible */
