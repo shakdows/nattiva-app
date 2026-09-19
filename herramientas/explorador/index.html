@@ -1837,6 +1837,16 @@ function buildDD(){
   var broc = brocUrl
     ? '<a class="dd-broc" href="'+brocUrl+'" target="_blank" rel="noopener" title="Abrir brochure del proyecto"><svg viewBox="0 0 24 24"><path d="M4 4h10l6 6v10a0 0 0 0 1 0 0H4z"/><path d="M14 4v6h6"/><path d="M8 14h8M8 17h6"/></svg><span>Ver brochure</span></a>'
     : '<span class="dd-broc off" title="Brochure aún no disponible"><svg viewBox="0 0 24 24"><path d="M4 4h10l6 6v10H4z"/><path d="M14 4v6h6"/></svg><span>Brochure próximamente</span></span>';
+  /* resumen del proyecto en texto plano, para que la vendedora lo mande tal
+     cual. Solo lo que la hoja tiene: sin dato, la linea no aparece. */
+  var _entP=entregaProy(selU);
+  var txtP=[name+' — '+p.devN,p.distN+', Lima',
+    shownU+' unidades'+(ddDormTxt?' de '+ddDormTxt:' disponibles'),
+    selDesde?'Desde '+pen(selDesde):'',
+    selCuota?'Cuota desde '+pen(selCuota)+'/mes':'',
+    arTxt!=='—'?'Áreas '+arTxt:'',
+    _entP?'Entrega '+_entP:''].filter(Boolean).join('\n');
+  var share='<a class="dd-share" href="https://wa.me/?text='+encodeURIComponent(txtP)+'" target="_blank" rel="noopener" title="Compartir el proyecto por WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span>Compartir</span></a>';
   var coverId=portadaDe(p);
   GAL.img=galeriaDe(p); GAL.i=0; GAL.ref=!COVERS[p.n];
   var coverHtml='<div class="dd-cover">'
@@ -1850,11 +1860,14 @@ function buildDD(){
         return '<button type="button" class="gal-th'+(k===0?' on':'')+'" onclick="galVe('+k+')" aria-label="Ver imagen '+(k+1)+'"><img src="'+coverThumb(u,300)+'" alt="" loading="lazy" referrerpolicy="no-referrer"></button>';
       }).join('')+'</div>'
   +'</div>';
-  var hero='<div class="dd-hero'+(coverId?' has-cover':'')+'">'+coverHtml+'<div class="dd-actions">'+broc+'<button class="dd-print" onclick="printDD()" title="Descargar ficha en PDF"><svg viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4v-7h16v7h-2M8 14h8v8H8z"/></svg><span>Descargar ficha</span></button><button class="dd-close" onclick="closeDD()">×</button></div>'
+  var hero='<div class="dd-hero'+(coverId?' has-cover':'')+'">'+coverHtml+'<div class="dd-actions">'+broc+share+'<button class="dd-print" onclick="printDD()" title="Descargar ficha en PDF"><svg viewBox="0 0 24 24"><path d="M6 9V2h12v7M6 18H4v-7h16v7h-2M8 14h8v8H8z"/></svg><span>Descargar ficha</span></button><button class="dd-close" onclick="closeDD()">×</button></div>'
     +'<div class="dd-meta">'
     +'<span class="dd-eye">'+p.distN+'</span>'
     +'<div class="dd-name">'+name+'</div>'
     +'<div class="dd-dev">'+p.devN+'</div>'
+    +'<div class="dd-pills"><span class="dd-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>'+p.distN+', Lima</span>'
+      +(entregaProy(selU)?'<span class="dd-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>Entrega '+entregaProy(selU)+'</span>':'')
+    +'</div>'
     +'<div class="dd-kpis">'
       +'<div class="dd-kpi"><span class="dd-kpi-v num">'+shownU+'</span><span class="dd-kpi-k">Unidades</span></div>'
       +'<div class="dd-kpi"><span class="dd-kpi-v num">'+(selDesde?pen(selDesde):'—')+'</span><span class="dd-kpi-k">Desde</span></div>'
@@ -1895,7 +1908,9 @@ function buildDD(){
     var visTag=u[10]===1?'<span class="tag tag-vis">VIS</span>':(u[10]===0?'No':'—');
     var precio=u[7]===1?'<span class="u-price u-usd num">US$ '+u[8].toLocaleString('en-US')+'</span>':'<span class="u-price num">'+pen(u[8])+'</span>';
     var open=ddOpenRow===ri;
-    var tr='<tr class="urow'+(open?' open':'')+(checked?' sel':'')+'" onclick="toggleRow('+ri+')">'
+    /* texto de busqueda de la fila: numero, modelo, vista, entrega y banco */
+    var busca=[u[0],u[1],VISTA[u[5]],ENT[u[9]],BANCO[u[12]],dormLabel(u[6],esOfi(u))].join(' ').toLowerCase();
+    var tr='<tr class="urow'+(open?' open':'')+(checked?' sel':'')+'" data-b="'+busca.replace(/"/g,'')+'" onclick="toggleRow('+ri+')">'
       +'<td><span class="u-unit">'+(u[0]||'—')+'</span> <span class="u-model">'+(u[1]||'')+'</span></td>'
       +'<td>'+dormLabel(u[6],esOfi(u))+'</td>'
       +'<td class="r num">'+(u[4]||'—')+'</td>'
@@ -1908,7 +1923,16 @@ function buildDD(){
     if(open){
       var moneda=u[7]===1?'US$':'S/';
       var pf=function(v){return v?(u[7]===1?'US$ '+v.toLocaleString('en-US'):pen(v)):'—';};
-      tr+='<tr class="udetail"><td colspan="10"><div class="udetail-in">'
+      /* ficha de la unidad en texto plano: es lo que la vendedora manda al
+         cliente. Solo datos de la hoja; donde no hay dato, no se escribe. */
+      var ln=[name+' — '+p.devN, p.distN+', Lima', 'Unidad '+(u[0]||'—')+(u[1]?' · '+u[1]:'')];
+      ln.push([dormLabel(u[6],esOfi(u))+(esOfi(u)?'':' dorm.'),(u[4]?u[4]+' m²':null),'Vista '+VISTA[u[5]].toLowerCase()].filter(Boolean).join(' · '));
+      ln.push('Entrega: '+ENT[u[9]]);
+      ln.push('Precio: '+pf(u[8]));
+      if(u[11])ln.push('Cuota estimada: '+pf(u[11])+'/mes'+(BANCO[u[12]]&&BANCO[u[12]]!=='—'?' ('+BANCO[u[12]]+')':''));
+      if(u[10]===1)ln.push('Aplica restricción VIS');
+      var txtU=ln.join('\n');
+      tr+='<tr class="udetail" data-txt="'+encodeURIComponent(txtU)+'"><td colspan="10"><div class="udetail-in">'
         +'<div class="udt"><span class="udt-k">Unidad</span><span class="udt-v">'+(u[0]||'—')+'</span></div>'
         +'<div class="udt"><span class="udt-k">Modelo / Tipología</span><span class="udt-v">'+(u[1]||'—')+'</span></div>'
         +'<div class="udt"><span class="udt-k">Dormitorios</span><span class="udt-v">'+dormLabel(u[6],esOfi(u))+'</span></div>'
@@ -1921,7 +1945,12 @@ function buildDD(){
         +'<div class="udt"><span class="udt-k">Banco / financiamiento</span><span class="udt-v">'+BANCO[u[12]]+'</span></div>'
         +'<div class="udt"><span class="udt-k">Cuota aprox.</span><span class="udt-v">'+pf(u[11])+'/mes</span></div>'
         +'<div class="udt"><span class="udt-k">Precio</span><span class="udt-v" style="color:var(--em)">'+pf(u[8])+'</span></div>'
-      +'</div></td></tr>';
+      +'</div>'
+      +'<div class="udt-acc">'
+        +'<a class="udt-b wa" href="https://wa.me/?text='+encodeURIComponent(txtU)+'" target="_blank" rel="noopener" onclick="event.stopPropagation()"><svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-3-.2-.3A8 8 0 1 1 12 20z"/></svg>Enviar esta unidad</a>'
+        +'<button type="button" class="udt-b" onclick="event.stopPropagation();copiaUnidad(this)">Copiar datos</button>'
+      +'</div>'
+      +'</td></tr>';
     }
     return tr;
   }).join('');
@@ -1930,9 +1959,19 @@ function buildDD(){
   var dkeys=Object.keys(dset).map(Number).sort(function(a,b){return (a<0?99:a)-(b<0?99:b);});
   var dchips='<div class="dd-dchips"><button class="dd-dchip'+(ddDorm===null?' on':'')+'" onclick="setDDDorm(null)">Todas · '+p.u.length+'</button>'
     +dkeys.map(function(d){var lb=d<0?'Por confirmar':(d===0?'Estudio':dormLabel(d)+' dorm.');return '<button class="dd-dchip'+(ddDorm===d?' on':'')+'" onclick="setDDDorm('+d+')">'+lb+' · '+dset[d]+'</button>';}).join('')+'</div>';
+  /* la cabecera de unidades y la tabla van dentro de una misma caja: asi la
+     rejilla las coloca juntas al costado del mapa, no en filas distintas */
   var table='<div class="dd-body">'+dormBreakdown(p)+posDD(p)+calcDD(p)+mapSection
-    +'<div class="dd-section"><div class="dd-sec-t">Unidades disponibles</div>'+dchips+'</div>'
-    +'<div style="padding:0 clamp(1.2rem,3vw,2.4rem)"><table class="utable"><thead><tr>'+th+'</tr></thead><tbody>'+body+'</tbody></table></div>';
+    +'<div class="dd-unidades">'
+    +'<div class="dd-section"><div class="dd-sec-t">Unidades disponibles</div>'+dchips
+      +'<div class="dd-ubuscar">'
+        +'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>'
+        +'<input id="ddUq" type="search" autocomplete="off" placeholder="Buscar unidad, modelo, vista, entrega o banco…" oninput="filtraUnidades(this.value)">'
+        +'<span class="dd-ucount"><b id="ddUCount" class="num">'+rows.length+'</b> de '+rows.length+'</span>'
+      +'</div>'
+    +'</div>'
+    +'<div class="dd-utwrap"><table class="utable"><thead><tr>'+th+'</tr></thead><tbody>'+body+'</tbody></table></div>'
+    +'</div>';
 
   // ---- desarrolladora (abajo) ----
   var partner=findPartner(p.devN);
@@ -1952,8 +1991,73 @@ function buildDD(){
   var _dd=document.getElementById('dd');var _scroll=_dd.scrollTop;
   _dd.innerHTML=hero+table+cta;
   montaNavFicha();
+  var _q=document.getElementById('ddUq');
+  if(_q&&ddFiltroU){_q.value=ddFiltroU;filtraUnidades();}
   if(_scroll)_dd.scrollTop=_scroll;
   calcCuota();
+}
+
+/* ---- entrega del proyecto ----
+   La hoja trae la fecha por unidad. Si todas coinciden se muestra tal cual;
+   si no, la mas proxima con «en adelante». Si la hoja no la tiene, no se
+   muestra nada: el explorador no inventa fechas. */
+var MESN={ene:1,feb:2,mar:3,abr:4,may:5,jun:6,jul:7,ago:8,set:9,sep:9,oct:10,nov:11,dic:12};
+function entregaOrden(t){
+  if(!t)return 9999;
+  if(/inmediat/i.test(t))return 0;
+  var m=/^([a-zA-ZáéíóúÁÉÍÓÚ]{3})\.?-(\d{2})$/.exec(t.trim());
+  if(!m)return 9999;
+  var mes=MESN[m[1].toLowerCase()];if(!mes)return 9999;
+  return 2000+parseInt(m[2],10)+mes/100;
+}
+function entregaProy(us){
+  var set={};
+  us.forEach(function(u){
+    var t=ENT[u[9]];
+    if(t&&t!=='null'&&t!=='—'&&t!=='PENDIENTE')set[t]=1;
+  });
+  var ks=Object.keys(set);
+  if(!ks.length)return '';
+  if(ks.length===1)return ks[0];
+  ks.sort(function(a,b){return entregaOrden(a)-entregaOrden(b);});
+  return entregaOrden(ks[0])>=9999?'':ks[0]+' en adelante';
+}
+
+/* ---- buscador dentro de la tabla de unidades ----
+   No reconstruye la ficha: esconde filas. Asi no se pierde el foco ni la
+   posicion mientras se escribe, con 590 unidades igual que con 12. */
+var ddFiltroU='';
+function filtraUnidades(v){
+  if(v!==undefined)ddFiltroU=v;
+  var q=ddFiltroU.trim().toLowerCase();
+  var tb=document.querySelector('#dd .utable tbody');if(!tb)return;
+  var n=0,visible=true;
+  [].forEach.call(tb.children,function(tr){
+    if(tr.className.indexOf('udetail')>=0){tr.style.display=visible?'':'none';return;}
+    visible=!q||(tr.getAttribute('data-b')||'').indexOf(q)>=0;
+    tr.style.display=visible?'':'none';
+    if(visible)n++;
+  });
+  var c=document.getElementById('ddUCount');if(c)c.textContent=n;
+}
+
+/* ---- copiar la ficha de una unidad ---- */
+function copiaUnidad(btn){
+  var fila=btn.parentNode;while(fila&&fila.className.indexOf('udetail')<0)fila=fila.parentNode;
+  if(!fila)return;
+  var txt=decodeURIComponent(fila.getAttribute('data-txt')||'');
+  var listo=function(){var o=btn.textContent;btn.textContent='Copiado ✓';btn.classList.add('ok');
+    setTimeout(function(){btn.textContent=o;btn.classList.remove('ok');},1600);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(listo,function(){copiaViejo(txt,listo);});
+  }else copiaViejo(txt,listo);
+}
+function copiaViejo(txt,listo){
+  var t=document.createElement('textarea');
+  t.value=txt;t.style.position='fixed';t.style.opacity='0';
+  document.body.appendChild(t);t.select();
+  try{document.execCommand('copy');listo();}catch(e){}
+  document.body.removeChild(t);
 }
 
 /* ---- indice de secciones de la ficha ----

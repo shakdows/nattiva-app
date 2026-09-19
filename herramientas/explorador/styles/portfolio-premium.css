@@ -498,12 +498,12 @@ html,body{max-width:100%;overflow-x:clip}
 .dd-kpi-k{color:var(--n-faint);font-size:9px;letter-spacing:.15em}
 
 /* acciones: sobre papel necesitan contorno propio */
-.dd-broc,.dd-print,.dd-close{
+.dd-broc,.dd-print,.dd-share,.dd-close{
   background:var(--n-white)!important;
   border:1px solid var(--n-line)!important;
   color:var(--n-ink)!important;
 }
-.dd-print:hover,.dd-close:hover{background:var(--n-bone)!important;border-color:var(--n-ink)!important}
+.dd-print:hover,.dd-share:hover,.dd-close:hover{background:var(--n-bone)!important;border-color:var(--n-ink)!important}
 .dd-broc.off{opacity:.5}
 
 @media (max-width:1024px){ .dd-kpis{grid-template-columns:repeat(3,minmax(0,1fr))} }
@@ -736,8 +736,8 @@ html,body{max-width:100%;overflow-x:clip}
 .dd-nav .dd-actions{position:static;flex:0 0 auto;top:auto;right:auto}
 /* en pantallas angostas los dos botones largos se quedan en icono */
 @media (max-width:820px){
-  .dd-nav .dd-broc span,.dd-nav .dd-print span{display:none}
-  .dd-nav .dd-broc,.dd-nav .dd-print{padding:0 11px}
+  .dd-nav .dd-broc span,.dd-nav .dd-print span,.dd-nav .dd-share span{display:none}
+  .dd-nav .dd-broc,.dd-nav .dd-print,.dd-nav .dd-share{padding:0 11px}
 }
 /* sin los botones encima, el hero recupera su respiro arriba */
 @media (min-width:1080px){ .dd-hero.has-cover{padding-top:22px} }
@@ -759,6 +759,9 @@ html,body{max-width:100%;overflow-x:clip}
   body.printing .dd-nav{display:none!important}
   body.printing .gal-nav,body.printing .gal-count,body.printing .gal-thumbs{display:none!important}
   body.printing .gal-main{max-height:8cm}
+  body.printing .dd-utwrap{max-height:none!important;overflow:visible!important;border:0!important;box-shadow:none!important}
+  body.printing .dd-utwrap .utable td,body.printing .dd-utwrap .utable th{white-space:normal!important}
+  body.printing .udt-acc,body.printing .dd-ubuscar{display:none!important}
 }
 
 /* en el movil la barra pegada se comia 90px con tres lineas de texto */
@@ -769,3 +772,122 @@ html,body{max-width:100%;overflow-x:clip}
   .dd-nav{padding-top:6px;padding-bottom:6px}
   .dd-nav-b{padding:6px 12px;font-size:12px}
 }
+
+/* ════════ 17 · HERRAMIENTAS DE VENTA ════════
+   Lo que una vendedora necesita a la mano: encontrar la unidad que le
+   preguntan y mandarla al cliente sin copiar a mano. */
+.dd-ubuscar{
+  display:flex;align-items:center;gap:10px;
+  margin-top:14px;padding:0 14px;
+  background:var(--n-white);
+  border:1px solid var(--n-line);
+  border-radius:100px;min-height:42px;
+  transition:border-color var(--n-fast) var(--n-ease),box-shadow var(--n-fast) var(--n-ease);
+}
+.dd-ubuscar:focus-within{border-color:var(--n-ink);box-shadow:0 0 0 4px rgba(21,17,15,.06)}
+.dd-ubuscar svg{width:16px;height:16px;flex:0 0 auto;color:var(--n-faint)}
+.dd-ubuscar input{
+  flex:1 1 auto;min-width:0;border:0;background:none;outline:none;
+  font:inherit;font-size:13.5px;color:var(--n-ink);padding:0;
+}
+.dd-ubuscar input::placeholder{color:var(--n-faint)}
+.dd-ubuscar input::-webkit-search-cancel-button{cursor:pointer}
+.dd-ucount{
+  flex:0 0 auto;font-size:11px;color:var(--n-faint);font-weight:600;
+  letter-spacing:.04em;font-variant-numeric:tabular-nums;
+}
+.dd-ucount b{color:var(--n-ink);font-weight:700}
+
+/* acciones de la unidad abierta */
+.udt-acc{
+  display:flex;flex-wrap:wrap;gap:8px;
+  padding:0 18px 14px;
+}
+.udt-b{
+  display:inline-flex;align-items:center;gap:7px;
+  border:1px solid var(--n-line);border-radius:100px;
+  background:var(--n-white);color:var(--n-ink);
+  font:inherit;font-size:12.5px;font-weight:600;
+  padding:8px 15px;cursor:pointer;
+  transition:border-color var(--n-fast) var(--n-ease),background var(--n-fast) var(--n-ease),color var(--n-fast) var(--n-ease);
+}
+.udt-b:hover{border-color:var(--n-ink)}
+.udt-b.wa{background:#1FA855;border-color:#1FA855;color:#fff}
+.udt-b.wa:hover{background:#178f47;border-color:#178f47}
+.udt-b.ok{background:var(--n-ink);border-color:var(--n-ink);color:var(--n-paper)}
+@media (max-width:560px){
+  .dd-ucount{display:none}
+  .udt-acc{padding:0 14px 12px}
+  .udt-b{flex:1 1 auto;justify-content:center}
+}
+
+/* ════════ 18 · FICHA COMO TABLERO ════════
+   Como en la referencia: dos columnas arriba (precio y financiamiento) y dos
+   abajo (ubicacion y unidades), para que lo que se necesita para vender
+   entre de una sola mirada en vez de bajar cinco pantallas. */
+.dd-unidades{display:flex;flex-direction:column;min-width:0}
+.dd-unidades>.dd-section{margin:0}
+.dd-utwrap{
+  background:var(--n-white);
+  border:1px solid var(--n-line-soft);
+  border-radius:var(--n-r-lg);
+  box-shadow:var(--n-sh-card);
+  margin-top:12px;
+  overflow:auto;
+  min-width:0;
+}
+.dd-utwrap .utable{min-width:800px}
+.dd-utwrap .utable thead th{background:var(--n-white)}
+/* una unidad por linea: antes el modelo largo partia la fila en cuatro
+   renglones y 92 unidades median 10.000px */
+.dd-utwrap .utable td,.dd-utwrap .utable th{white-space:nowrap}
+.dd-utwrap .utable .udetail td{white-space:normal}
+.dd-utwrap .u-model{
+  display:inline-block;max-width:120px;vertical-align:bottom;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+/* la tabla tambien se desplaza en el movil: si no, la ficha vuelve a medir
+   13.000px y no se llega al pie */
+.dd-utwrap{max-height:70vh}
+
+@media (min-width:1080px){
+  /* la tabla lleva 10 columnas y precio y comparar son las que mas importan:
+     se le da dos tercios y al mapa un tercio, no mitad y mitad */
+  .dd-body>.dd-section:has(.dd-map){grid-column:span 4}
+  .dd-body>.dd-unidades{grid-column:span 8}
+  /* la tabla se desplaza dentro de su caja: con 590 unidades la ficha medía
+     13.000px y no habia forma de llegar al pie */
+  .dd-utwrap{max-height:54vh;overscroll-behavior:contain}
+  .dd-utwrap .utable tbody td,.dd-utwrap .utable thead th{padding-left:8px;padding-right:8px}
+  .dd-map{height:calc(54vh - 52px);min-height:280px}
+}
+
+/* titulos de seccion: de etiqueta diminuta a titulo legible */
+.dd-sec-t{
+  font-size:15px;text-transform:none;letter-spacing:-.01em;
+  color:var(--n-ink);margin-bottom:14px;
+}
+.dd-sec-t::before{
+  content:"";width:14px;height:2px;flex:0 0 auto;
+  background:var(--n-crimson);border-radius:2px;
+}
+
+/* datos rapidos del hero: distrito y entrega */
+.dd-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.dd-pill{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--n-white);border:1px solid var(--n-line);
+  border-radius:100px;padding:6px 13px;
+  font-size:12px;font-weight:600;color:var(--n-ink);
+}
+.dd-pill svg{width:14px;height:14px;color:var(--n-crimson)}
+
+.dd-share{
+  display:inline-flex;align-items:center;gap:7px;
+  height:36px;padding:0 14px;border-radius:8px;
+  font-size:12.5px;font-weight:700;white-space:nowrap;
+  transition:border-color var(--n-fast) var(--n-ease),background var(--n-fast) var(--n-ease);
+}
+.dd-share svg{width:15px;height:15px}
+/* el rotulo de la ultima columna se salia por unos pixeles */
+.dd-utwrap .ucmp-th{font-size:8.5px;letter-spacing:.06em;padding-left:6px;padding-right:6px}
