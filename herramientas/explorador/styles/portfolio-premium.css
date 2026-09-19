@@ -212,7 +212,8 @@ body{background:var(--n-paper)}
 
 /* la portada manda cuando existe */
 .ctop{
-  position:relative;aspect-ratio:4/3;min-height:0;padding:16px;
+  /* la base fijaba 128px de alto; con portada real manda la proporcion */
+  position:relative;aspect-ratio:4/3;height:auto;min-height:0;padding:16px;
   background:var(--n-bone);
   display:flex;flex-direction:column;justify-content:space-between;
 }
@@ -223,12 +224,21 @@ body{background:var(--n-paper)}
   content:"";position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(180deg,rgba(21,17,15,.34) 0%,transparent 34%,transparent 52%,rgba(21,17,15,.62) 100%);
 }
-.ctop.has-cover>*{position:relative;z-index:1}
+/* la portada es hija de .ctop y debe seguir absoluta, si no colapsa a 45px */
+.ctop.has-cover>*:not(.ccover){position:relative;z-index:1}
+.ctop.has-cover .ccover{position:absolute;inset:0;z-index:0}
+/* el degradado crimson de la base tapaba la foto entera */
+.ctop.has-cover::before{content:none}
 .ctop.has-cover .cdist,.ctop.has-cover .cbadge{color:#fff}
 
-/* Sin portada: 218 de 220 proyectos no tienen foto todavia. En vez de un
-   hueco gris se compone una placa arquitectonica con el monograma, que se
-   reemplaza sola en cuanto el proyecto reciba imagen en COVERS. */
+/* el velo crimson de la version anterior tapaba la imagen: ahora que todas
+   las tarjetas llevan portada, sobre la foto solo va el degradado de arriba
+   (.ctop.has-cover::after), suficiente para leer distrito y badges */
+.ctop .ccover::after{content:none}
+
+/* Sin portada: queda como red de seguridad, por si una imagen no carga. En
+   vez de un hueco gris se compone una placa arquitectonica con el
+   monograma, que se reemplaza sola en cuanto el proyecto reciba imagen. */
 .ctop:not(.has-cover){
   background:
     linear-gradient(180deg,rgba(21,17,15,0) 55%,rgba(21,17,15,.05) 100%),
@@ -557,11 +567,8 @@ html,body{max-width:100%;overflow-x:clip}
   }
   .dd-hero.has-cover .dd-cover img{width:100%;height:100%;object-fit:cover}
   .dd-hero.has-cover .dd-actions{grid-column:2;justify-content:flex-end}
-  .dd-hero.has-cover .dd-name,
-  .dd-hero.has-cover .dd-eye,
-  .dd-hero.has-cover .dd-dev{grid-column:2}
   .dd-hero.has-cover .dd-kpis{
-    grid-column:2;margin-left:0;margin-right:0;
+    margin-left:0;margin-right:0;
     grid-template-columns:repeat(3,minmax(0,1fr));
     border:1px solid var(--n-line-soft);border-radius:var(--n-r-md);overflow:hidden;
   }
@@ -584,4 +591,113 @@ html,body{max-width:100%;overflow-x:clip}
     opacity:.5;
   }
   .hero-in{position:relative;z-index:1}
+}
+
+/* ════════ 15 · GALERIA DE LA FICHA ════════
+   La portada dejo de ser un fondo a sangre bajo el titulo: ahora es una
+   galeria real (imagen grande + tira de miniaturas), como en la referencia.
+   Las imagenes son renders de arquitectura de la marca, no fotos del
+   edificio; por eso la ficha lo dice con el sello «Imagen referencial»
+   cuando el proyecto todavia no tiene foto propia. */
+.dd-hero .dd-cover{
+  position:relative;inset:auto;z-index:1;
+  padding:0;margin:0 0 2px;
+}
+/* el velo crimson servia para leer texto encima; ya no hay texto encima */
+.dd-hero .dd-cover::after{content:none}
+
+.gal-main{
+  position:relative;
+  aspect-ratio:4/3;
+  border-radius:var(--n-r-md);
+  overflow:hidden;
+  background:var(--n-bone);
+  border:1px solid var(--n-line-soft);
+}
+.gal-main img{width:100%;height:100%;object-fit:cover;display:block}
+
+.gal-nav{
+  position:absolute;top:50%;transform:translateY(-50%);
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(255,255,255,.94);
+  border:1px solid var(--n-line);
+  color:var(--n-ink);
+  box-shadow:0 6px 18px -8px rgba(21,17,15,.45);
+  opacity:0;transition:opacity .24s var(--n-ease),background .2s var(--n-ease);
+  cursor:pointer;padding:0;
+}
+.gal-nav svg{width:18px;height:18px}
+.gal-prev{left:12px}
+.gal-next{right:12px}
+.gal-main:hover .gal-nav,
+.gal-nav:focus-visible{opacity:1}
+.gal-nav:hover{background:#fff}
+/* en tactil no hay hover: las flechas se quedan puestas */
+@media (hover:none){ .gal-nav{opacity:1} }
+
+.gal-count{
+  position:absolute;right:12px;bottom:12px;
+  background:rgba(21,17,15,.72);color:#fff;
+  padding:4px 10px;border-radius:999px;
+  font-size:11px;font-weight:600;letter-spacing:.04em;
+  font-variant-numeric:tabular-nums;
+  backdrop-filter:blur(4px);
+}
+.gal-ref{
+  position:absolute;left:12px;bottom:12px;
+  background:rgba(250,246,239,.92);color:var(--n-muted);
+  border:1px solid var(--n-line);
+  padding:4px 10px;border-radius:999px;
+  font-size:9.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;
+  backdrop-filter:blur(4px);
+}
+
+.gal-thumbs{
+  display:grid;grid-template-columns:repeat(6,minmax(0,1fr));
+  gap:8px;margin-top:8px;
+}
+.gal-th{
+  aspect-ratio:4/3;
+  border-radius:var(--n-r-sm,8px);
+  overflow:hidden;padding:0;cursor:pointer;
+  background:var(--n-bone);
+  border:1px solid var(--n-line-soft);
+  opacity:.6;
+  transition:opacity .24s var(--n-ease),border-color .24s var(--n-ease);
+}
+.gal-th img{width:100%;height:100%;object-fit:cover;display:block}
+.gal-th:hover{opacity:.85}
+.gal-th.on{opacity:1;border-color:var(--n-crimson);box-shadow:0 0 0 1px var(--n-crimson)}
+
+/* apilada, la galeria no debe comerse la pantalla entera antes de los datos */
+@media (max-width:1079px){
+  /* al limitar el alto, aspect-ratio encogeria tambien el ancho; min-width
+     lo devuelve a la columna completa y el recorte lo hace object-fit */
+  .gal-main{max-height:min(48vh,440px);min-width:100%}
+  .gal-th{max-height:84px;min-width:100%}
+}
+@media (max-width:560px){
+  .gal-thumbs{gap:6px}
+  .gal-nav{width:34px;height:34px}
+}
+
+/* en la ficha de dos columnas la galeria manda su propia altura:
+   la caja deja de recortar y de imponer proporcion, eso lo hace .gal-main */
+@media (min-width:1080px){
+  .dd-hero.has-cover .dd-cover{
+    /* ya no hace falta abarcar varias filas: enfrente hay un solo bloque */
+    grid-row:auto;
+    align-self:center;
+    aspect-ratio:auto;border:0;border-radius:0;overflow:visible;
+    margin:0;
+  }
+  .dd-hero.has-cover{padding-bottom:22px}
+  /* los datos son un bloque unico, no cuatro celdas sueltas: asi quedan
+     centrados frente a la galeria en vez de repartirse el alto sobrante */
+  .dd-hero.has-cover .dd-meta{
+    align-self:center;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .dd-hero.has-cover .dd-dev{margin-top:8px}
 }
