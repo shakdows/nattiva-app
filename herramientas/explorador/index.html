@@ -1867,6 +1867,7 @@ function buildDD(){
     +'<span class="dd-eye">'+p.distN+'</span>'
     +'<div class="dd-name">'+name+'</div>'
     +'<div class="dd-dev">'+p.devN+'</div>'
+    +zonaDesc(p,selU,_entP)
     +'<div class="dd-pills"><span class="dd-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 21s-7-6-7-11a7 7 0 0 1 14 0c0 5-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>'+p.distN+', Lima</span>'
       +(entregaProy(selU)?'<span class="dd-pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 10h18"/></svg>Entrega '+entregaProy(selU)+'</span>':'')
     +'</div>'
@@ -2007,6 +2008,61 @@ function buildDD(){
   if(_q&&ddFiltroU){_q.value=ddFiltroU;filtraUnidades();}
   if(_scroll)_dd.scrollTop=_scroll;
   calcCuota();
+}
+
+/* ---- descripcion de la zona y del proyecto ----
+   No es copy de marketing: cada frase se arma con lo que la hoja y el
+   propio portafolio ya saben (distrito, tipologias, areas, entrega, precio
+   por m2 del proyecto contra el del distrito). Si un dato falta, esa parte
+   simplemente no se escribe. Asi nunca dice algo que no se pueda sostener
+   frente al cliente. */
+function zonaDesc(p,us,entTxt){
+  /* Las tipologias se redactan aparte: reusar la etiqueta de los indicadores
+     daba frases como «de 1, Ofic., Ofic. dorm.» cuando el proyecto mezcla
+     departamentos con oficinas. */
+  var dset={},ofi=0;
+  us.forEach(function(u){ if(esOfi(u))ofi++; else dset[u[6]]=1; });
+  var ks=Object.keys(dset).map(Number).filter(function(k){return k>=0;}).sort(function(a,b){return a-b;});
+  var nums=ks.filter(function(k){return k>0;}),partes=[];
+  if(ks.indexOf(0)>=0)partes.push('estudios');
+  if(nums.length){
+    /* una lista de cuatro numeros no se lee: con tres o mas se dice el rango */
+    var ld=nums.length===1?dormLabel(nums[0])
+          :(nums.length===2?dormLabel(nums[0])+' y '+dormLabel(nums[1])
+          :dormLabel(nums[0])+' a '+dormLabel(nums[nums.length-1]));
+    partes.push(ld+((nums.length===1&&nums[0]===1)?' dormitorio':' dormitorios'));
+  }
+  if(ofi&&ofi!==us.length)partes.push(ofi===1?'1 oficina':ofi+' oficinas');
+  var tipos=partes.join(' y '),soloOfi=(ofi===us.length&&ofi>0);
+
+  var ar=us.map(function(u){return u[4];}).filter(Boolean);
+  var areas='';
+  if(ar.length){
+    var lo=Math.min.apply(null,ar),hi=Math.max.apply(null,ar);
+    areas=(lo===hi)?(lo+' m²'):('de '+lo+' a '+hi+' m²');
+  }
+
+  var det=[];
+  det.push(us.length+(soloOfi?(us.length===1?' oficina':' oficinas')
+                             :(us.length===1?' unidad':' unidades')));
+  if(tipos)det.push('de '+tipos);
+  if(areas)det.push(areas);
+  var ent=entTxt?(/inmediat/i.test(entTxt)?', de entrega inmediata':', con entrega '+entTxt):'';
+  var t1='<b>'+projName(p)+'</b> es un proyecto de '+p.devN+' en <b>'+p.distN+'</b>'
+    +': '+det.join(', ')+ent+'.';
+
+  var t2='',arr=DISTPPM[p.distN]||[],med=DISTMED[p.distN]||0;
+  if(arr.length&&med&&p.ppm2med){
+    var plo=Math.min.apply(null,arr),phi=Math.max.apply(null,arr);
+    var d=Math.round((p.ppm2med/med-1)*100);
+    var comp=d<=-5?('<b>'+Math.abs(d)+'% por debajo</b> de esa mediana')
+            :(d>=5?('<b>'+d+'% por encima</b> de esa mediana'):'<b>en línea</b> con esa mediana');
+    var nProy=P.filter(function(x){return x.distN===p.distN;}).length;
+    t2=' En '+p.distN+' el m² va de '+pen(plo)+' a '+pen(phi)+' (mediana '+pen(med)+')'
+      +' y este proyecto está '+comp+'.'
+      +(nProy>1?' Nattiva tiene '+nProy+' proyectos en el distrito.':'');
+  }
+  return '<p class="dd-desc">'+t1+t2+'</p>';
 }
 
 /* ---- entrega del proyecto ----

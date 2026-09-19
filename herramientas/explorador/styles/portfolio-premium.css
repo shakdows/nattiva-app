@@ -879,3 +879,43 @@ html,body{max-width:100%;overflow-x:clip}
 .dd-share svg{width:15px;height:15px}
 /* el rotulo de la ultima columna se salia por unos pixeles */
 .dd-utwrap .ucmp-th{font-size:8.5px;letter-spacing:.06em;padding-left:6px;padding-right:6px}
+
+/* ════════ 19 · DESCRIPCION DE ZONA ════════
+   Se arma sola con los datos del proyecto y del distrito. No lleva adjetivos
+   de marketing: todo lo que dice se puede sostener frente al cliente. */
+.dd-desc{
+  margin-top:14px;max-width:64ch;
+  font-size:13.5px;line-height:1.62;color:var(--n-muted);
+}
+.dd-desc b{color:var(--n-ink);font-weight:600}
+.dd-desc .dn{color:var(--n-crimson)}
+@media (max-width:1079px){ .dd-desc{max-width:none} }
+
+/* ════════ 20 · TODO JUNTO ════════
+   La ficha se lee como una sola pieza, no como cinco pantallas seguidas:
+   se recorta el alto de la galeria, se aprieta la calculadora y se acorta la
+   tabla. Nada se quita, solo deja de sobrar aire. */
+@media (min-width:1080px){
+  .dd-hero.has-cover{
+    grid-template-columns:minmax(0,50fr) minmax(0,50fr);
+    gap:clamp(18px,2vw,28px);
+    padding-top:18px;padding-bottom:18px;
+  }
+  .gal-main{aspect-ratio:16/11}
+  .gal-thumbs{gap:7px;margin-top:7px}
+  .dd-name{font-size:clamp(2rem,3vw,2.6rem)}
+  .dd-desc{margin-top:12px;font-size:13px}
+  .dd-pills{margin-top:12px}
+  .dd-kpis{margin-top:16px}
+  .dd-kpi{padding-top:13px;padding-bottom:13px}
+  .dd-hero .dd-section{margin-top:14px;padding-top:14px}
+
+  /* la calculadora: los tres controles mas juntos y el resultado pegado */
+  .dd-calc-row{margin-top:12px}
+  .dd-calc-out{margin-top:12px;padding:16px 18px}
+
+  .dd-map{height:330px}
+  .dd-utwrap{max-height:46vh}
+  .dd-cols{gap:14px}
+  .dd-col{gap:14px}
+}

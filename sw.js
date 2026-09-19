@@ -1,7 +1,7 @@
 /* Nattiva · service worker mínimo para que el sitio sea instalable.
    Estrategia: red primero, caché como respaldo. Así una versión nueva
    publicada llega siempre; el caché solo sirve si no hay conexión. */
-const VERSION = 'nattiva-v2';
+const VERSION = 'nattiva-v3';
 const SHELL = ['/', '/index.html', '/manifest.json'];
 
 self.addEventListener('install', e => {
