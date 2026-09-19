@@ -534,8 +534,10 @@ html,body{max-width:100%;overflow-x:clip}
   .dd-body>*{grid-column:span 12;min-width:0}
   .dd-body>.dd-section:has(.dd-pos){grid-column:span 6}
   .dd-body>.dd-section:has(.dd-calc){grid-column:span 6}
-  .dd-body>.dd-section:has(.dd-map){grid-column:span 4}
-  .dd-body>.dd-devbox{grid-column:span 8}
+  /* la ubicacion iba a un tercio y quedaba sola en su fila, con dos tercios
+     vacios al lado: a ancho completo el mapa se lee y no sobra hueco */
+  .dd-body>.dd-section:has(.dd-map){grid-column:span 12}
+  .dd-body>.dd-devbox{grid-column:span 12}
 
   /* la calculadora deja de ir lado a lado dentro de su tarjeta: ya esta en
      media pantalla, asi que se apila y la cuota queda debajo, grande */
@@ -543,7 +545,7 @@ html,body{max-width:100%;overflow-x:clip}
   .dd-calc-out{margin-top:16px}
 
   /* el mapa crece para llenar su columna */
-  .dd-map{height:300px}
+  .dd-map{height:280px}
 
 }
 
@@ -700,4 +702,70 @@ html,body{max-width:100%;overflow-x:clip}
     display:flex;flex-direction:column;justify-content:center;
   }
   .dd-hero.has-cover .dd-dev{margin-top:8px}
+}
+
+/* ════════ 16 · LA FICHA SE DESPLAZA ENTERA ════════
+   Antes el hero era fijo y solo el cuerpo se desplazaba: con la galeria
+   dentro, al cuerpo le quedaba una franja de 170px y parecia que el mapa,
+   la calculadora y la tabla de unidades habian desaparecido. Ahora se
+   desplaza el modal completo y la barra oscura queda pegada arriba con el
+   indice de secciones. */
+.dd{overflow:auto;overscroll-behavior:contain}
+.dd-body{overflow:visible;flex:0 0 auto}
+.dd-bar{
+  position:sticky;top:0;z-index:6;
+  flex-wrap:nowrap;
+}
+/* ── indice de secciones, pegado bajo la barra ──
+   Cerrar, brochure y descargar se mudan aqui desde el hero: si se quedaban
+   ahi, al desplazarse la ficha desaparecian y no habia como cerrarla. */
+.dd-nav{
+  position:sticky;z-index:5;
+  display:flex;gap:10px;align-items:center;
+  padding:8px clamp(1.2rem,3vw,2.4rem);
+  background:rgba(250,246,239,.94);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--n-line-soft);
+}
+.dd-nav-in{
+  display:flex;gap:4px;align-items:center;
+  flex:1 1 auto;min-width:0;
+  overflow-x:auto;scrollbar-width:none;
+}
+.dd-nav-in::-webkit-scrollbar{display:none}
+.dd-nav .dd-actions{position:static;flex:0 0 auto;top:auto;right:auto}
+/* en pantallas angostas los dos botones largos se quedan en icono */
+@media (max-width:820px){
+  .dd-nav .dd-broc span,.dd-nav .dd-print span{display:none}
+  .dd-nav .dd-broc,.dd-nav .dd-print{padding:0 11px}
+}
+/* sin los botones encima, el hero recupera su respiro arriba */
+@media (min-width:1080px){ .dd-hero.has-cover{padding-top:22px} }
+.dd-nav-b{
+  flex:0 0 auto;
+  border:1px solid transparent;border-radius:100px;
+  background:none;color:var(--n-muted);
+  font:inherit;font-size:12.5px;font-weight:500;
+  padding:7px 14px;cursor:pointer;white-space:nowrap;
+  transition:background var(--n-fast) var(--n-ease),color var(--n-fast) var(--n-ease);
+}
+.dd-nav-b:hover{background:var(--n-bone);color:var(--n-ink)}
+.dd-nav-b.on{background:var(--n-ink);color:var(--n-paper)}
+
+/* la ficha impresa no se desplaza: nada pegado, nada recortado */
+@media print{
+  body.printing #dd{overflow:visible!important}
+  body.printing .dd-bar,body.printing .dd-nav{position:static!important}
+  body.printing .dd-nav{display:none!important}
+  body.printing .gal-nav,body.printing .gal-count,body.printing .gal-thumbs{display:none!important}
+  body.printing .gal-main{max-height:8cm}
+}
+
+/* en el movil la barra pegada se comia 90px con tres lineas de texto */
+@media (max-width:640px){
+  .dd-bar{padding-top:9px;padding-bottom:9px;gap:10px}
+  .dd-bar-t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;font-size:12.5px}
+  .dd-cmpwrap{flex:0 0 auto}
+  .dd-nav{padding-top:6px;padding-bottom:6px}
+  .dd-nav-b{padding:6px 12px;font-size:12px}
 }

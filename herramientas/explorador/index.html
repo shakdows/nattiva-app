@@ -1949,10 +1949,59 @@ function buildDD(){
   var msg=encodeURIComponent('Hola NATTIVA, me interesa el proyecto '+p.n+' ('+p.distN+'). Quisiera más información y disponibilidad.');
   var cta='<div class="dd-cta"><div class="dd-cta-t">¿Te interesa <b>'+name+'</b>? Un asesor te comparte planos y disponibilidad al instante.</div>'
     +'<a class="wabtn" id="ddWa" href="https://wa.me/51907528914?text='+msg+'" target="_blank" rel="noopener"><svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2a10 10 0 0 0-8.6 15l-1.4 5 5.2-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-3-.2-.3A8 8 0 1 1 12 20zm4.5-6c-.2-.1-1.4-.7-1.7-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5.1a6.5 6.5 0 0 1-3.2-2.8c-.2-.4.2-.4.6-1.2.1-.2 0-.3 0-.5l-.7-1.7c-.2-.4-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3c-.3.3-.9.9-.9 2.1s.9 2.5 1 2.6 1.8 2.8 4.4 3.9c1.6.7 2.2.7 3 .6.5 0 1.4-.6 1.6-1.1s.2-1 .1-1.1-.3-.2-.5-.3z"/></svg>Consultar por WhatsApp</a></div>';
-  var _oldBody=document.querySelector('#dd .dd-body');var _scroll=_oldBody?_oldBody.scrollTop:0;
-  document.getElementById('dd').innerHTML=hero+table+cta;
-  var _newBody=document.querySelector('#dd .dd-body');if(_newBody&&_scroll)_newBody.scrollTop=_scroll;
+  var _dd=document.getElementById('dd');var _scroll=_dd.scrollTop;
+  _dd.innerHTML=hero+table+cta;
+  montaNavFicha();
+  if(_scroll)_dd.scrollTop=_scroll;
   calcCuota();
+}
+
+/* ---- indice de secciones de la ficha ----
+   Se arma leyendo las secciones que realmente existen, no una lista fija:
+   si mañana se agrega o se quita una seccion, el indice la sigue solo. */
+var NAV_CORTO=[[/dormitorio/i,'Dormitorios'],[/posici[oó]n de precio/i,'Precio vs. mercado'],
+               [/cuota|financ/i,'Financiamiento'],[/ubicaci[oó]n/i,'Ubicación'],
+               [/unidades/i,'Unidades']];
+var navFichaScroll=null;
+function montaNavFicha(){
+  var dd=document.getElementById('dd'),bar=dd.querySelector('.dd-bar');
+  if(navFichaScroll){dd.removeEventListener('scroll',navFichaScroll);navFichaScroll=null;}
+  if(!bar)return;
+  var secs=[].filter.call(dd.querySelectorAll('.dd-body .dd-section'),function(s){return s.querySelector('.dd-sec-t');});
+  if(secs.length<2)return;
+  var nav=document.createElement('nav');
+  nav.className='dd-nav';nav.setAttribute('aria-label','Secciones de la ficha');
+  var lista=document.createElement('div');lista.className='dd-nav-in';nav.appendChild(lista);
+  secs.forEach(function(s,k){
+    var t=s.querySelector('.dd-sec-t').textContent.trim(),corto=t;
+    for(var j=0;j<NAV_CORTO.length;j++){if(NAV_CORTO[j][0].test(t)){corto=NAV_CORTO[j][1];break;}}
+    var b=document.createElement('button');
+    b.type='button';b.className='dd-nav-b'+(k===0?' on':'');b.textContent=corto;
+    b.addEventListener('click',function(){irASeccion(k);});
+    lista.appendChild(b);
+  });
+  var acc=dd.querySelector('.dd-actions');if(acc)nav.appendChild(acc);
+  bar.parentNode.insertBefore(nav,bar.nextSibling);
+  nav.style.top=bar.offsetHeight+'px';
+  function tope(){return bar.offsetHeight+nav.offsetHeight+10;}
+  dd._secs=secs;dd._nav=nav;dd._tope=tope;
+  navFichaScroll=function(){
+    /* dos secciones pueden compartir fila (precio y calculadora): entre las
+       que empiezan a la misma altura marca la primera, no la ultima */
+    var lim=dd.getBoundingClientRect().top+tope()+4,act=0,alto=-1e9;
+    secs.forEach(function(s,k){
+      var t=s.getBoundingClientRect().top;
+      if(t<=lim&&t>alto+2){alto=t;act=k;}
+    });
+    [].forEach.call(lista.children,function(b,k){b.classList.toggle('on',k===act);});
+  };
+  dd.addEventListener('scroll',navFichaScroll,{passive:true});
+}
+function irASeccion(k){
+  var dd=document.getElementById('dd'),s=dd._secs&&dd._secs[k];
+  if(!s)return;
+  var y=dd.scrollTop+s.getBoundingClientRect().top-dd.getBoundingClientRect().top-dd._tope();
+  dd.scrollTo({top:Math.max(0,y),behavior:'smooth'});
 }
 
 /* ---- init ---- */
