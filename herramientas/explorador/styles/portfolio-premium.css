@@ -919,3 +919,57 @@ html,body{max-width:100%;overflow-x:clip}
   .dd-cols{gap:14px}
   .dd-col{gap:14px}
 }
+
+/* ════════ 21 · BARRA DE FILTROS EN TABLET Y MOVIL ════════
+   La barra esta pegada bajo la cabecera y traia todos los controles
+   desplegados: en un telefono ocupaba media pantalla y no habia forma de
+   cerrarla. Pegado se queda lo que se usa a cada rato —buscar y abrir
+   filtros— y el resto vive en el panel, que ya los tiene todos. */
+@media (max-width:1024px){
+  .fbar{flex-wrap:nowrap;gap:8px;align-items:center}
+  .fbar>.fchips,
+  .fbar>.fsel,
+  .fbar>.fnum,
+  .fbar>.flab,
+  .fbar>.fdiv,
+  .fbar>#cvis,
+  .fbar>#copp,
+  .fbar>.fclr{display:none}
+  .fsearch{flex:1 1 auto;min-width:0;min-height:42px}
+  .fwrap{padding-top:.6rem;padding-bottom:.6rem}
+  .fopen{flex:0 0 auto;height:42px}
+  /* con la barra reducida vuelve a caber la palabra */
+  .fopen span{display:inline}
+}
+
+/* insignia con cuantos filtros hay puestos */
+.fopen-n{
+  display:inline-flex;align-items:center;justify-content:center;
+  min-width:19px;height:19px;padding:0 5px;margin-left:2px;
+  border-radius:100px;background:var(--n-crimson);color:#fff;
+  font-size:11px;font-weight:700;font-variant-numeric:tabular-nums;
+}
+.fopen-n[hidden]{display:none}
+
+/* los chips de filtros activos no se apilan en cinco lineas */
+@media (max-width:1024px){
+  .nfactive{
+    flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;
+    padding-top:10px;
+  }
+  .nfactive::-webkit-scrollbar{display:none}
+  .nfactive>*{flex:0 0 auto}
+}
+
+/* la fila de resultados se cortaba por la derecha en el telefono */
+@media (max-width:760px){
+  .rhead{flex-wrap:wrap;gap:12px;align-items:flex-start}
+  .rsort{flex-wrap:wrap;width:100%;gap:8px}
+  .rsort .fsel{flex:1 1 180px;min-width:0}
+  .rsort .flab{flex:0 0 auto}
+  .vtoggle{flex:0 0 auto}
+}
+
+/* la barra de filtros se pega justo debajo de la cabecera real, no a 66px
+   fijos: en el telefono la cabecera mide 102px y le comia 36px */
+.fwrap{top:var(--hdr-h,66px)}

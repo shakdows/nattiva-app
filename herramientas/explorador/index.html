@@ -938,7 +938,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.6);padding:2.4rem clamp(1re
 
 <div class="fwrap" id="proyectos">
   <div class="fbar">
-    <button class="fopen" onclick="openFilters()"><svg viewBox="0 0 24 24"><path d="M3 5h18M6 12h12M10 19h4"/></svg><span>Filtros</span></button>
+    <button class="fopen" onclick="openFilters()"><svg viewBox="0 0 24 24"><path d="M3 5h18M6 12h12M10 19h4"/></svg><span>Filtros</span><b class="fopen-n" id="fopenN" hidden></b></button>
     <div class="fsearch">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
       <input id="q" type="text" placeholder="Buscar proyecto, desarrolladora o distrito…" oninput="F.q=this.value;render()">
@@ -2200,6 +2200,17 @@ function irASeccion(k){
   var fv=document.getElementById('fdev');DEV.slice().sort().forEach(function(d){var o=document.createElement('option');o.value=d;o.textContent=d;fv.appendChild(o);});
   // header shadow
   window.addEventListener('scroll',function(){document.getElementById('hdr').classList.toggle('stuck',window.scrollY>10);});
+  /* La barra de filtros se pegaba a 66px fijos. En un telefono la cabecera
+     mide 102px porque las pestañas bajan de linea, asi que los primeros 36px
+     de los filtros quedaban debajo de ella. Se mide la cabecera de verdad. */
+  function ajustaPegados(){
+    var h=document.getElementById('hdr');
+    if(h)document.documentElement.style.setProperty('--hdr-h',h.offsetHeight+'px');
+  }
+  ajustaPegados();
+  window.addEventListener('resize',ajustaPegados);
+  window.addEventListener('load',ajustaPegados);
+  if(window.ResizeObserver)new ResizeObserver(ajustaPegados).observe(document.getElementById('hdr'));
   render();
   renderDevs();
   // hash routing
@@ -2768,6 +2779,10 @@ function pintaFiltrosActivos(){
   if(F.vis){chip('Con VIS',function(){F.vis=false;var c=document.getElementById('cvis');if(c)c.classList.remove('on');});}
   if(F.opp){chip('Oportunidades',function(){F.opp=false;var c=document.getElementById('copp');if(c)c.classList.remove('on');});}
   if(F.q){chip('"'+F.q+'"',function(){F.q='';var q=document.getElementById('q');if(q)q.value='';});}
+  /* el mismo conteo alimenta la insignia del boton Filtros: en movil los
+     controles viven dentro del panel y si no, no se nota que hay filtros */
+  var bn=document.getElementById('fopenN');
+  if(bn){ bn.textContent=out.length||''; bn.hidden=!out.length; }
   if(!out.length){box.innerHTML='';return;}
   box.innerHTML='<span class="nfactive-l">Filtros</span>'+out.join('')
     +'<button type="button" class="nfchip nfchip-clr" data-clr="1">Limpiar todo</button>';
@@ -2885,6 +2900,14 @@ render=function(){
 function openFilters(){buildFilterPanel();document.getElementById('fpbg').classList.add('on');var fp=document.getElementById('fpanel');fp.classList.add('on');fp.setAttribute('aria-hidden','false');}
 function closeFilters(){document.getElementById('fpbg').classList.remove('on');var fp=document.getElementById('fpanel');fp.classList.remove('on');fp.setAttribute('aria-hidden','true');syncBar();}
 function fpApply(){window.render();var rc=document.getElementById('rc'),go=document.getElementById('fpGo');if(go&&rc)go.textContent='Ver '+rc.textContent;}
+function fpTipo(el,t){
+  F.tipo=(F.tipo===t)?'':t;
+  [].forEach.call(el.parentNode.children,function(c){c.classList.remove('on');});
+  if(F.tipo)el.classList.add('on');
+  [].forEach.call(document.querySelectorAll('[data-tipo]'),function(c){
+    c.classList.toggle('on',!!F.tipo&&c.getAttribute('data-tipo')===F.tipo);});
+  fpApply();
+}
 function fpToggle(el,arr,val){var i=arr.indexOf(val);if(i<0)arr.push(val);else arr.splice(i,1);el.classList.toggle('on');fpApply();}
 function fpClear(){resetF();buildFilterPanel();var rc=document.getElementById('rc'),go=document.getElementById('fpGo');if(go&&rc)go.textContent='Ver '+rc.textContent;}
 function buildFilterPanel(){
@@ -2895,12 +2918,15 @@ function buildFilterPanel(){
   var dormChips=[[1,'1'],[2,'2'],[3,'3'],[4,'4'],[5,'5']].map(function(o){return '<span class="fp-chip'+(F.dorms.indexOf(o[0])>=0?' on':'')+'" onclick="fpToggle(this,F.dorms,'+o[0]+')">'+o[1]+' dorm.</span>';}).join('');
   var entChips=[['INM','Inmediata'],['2026','2026'],['2027','2027'],['2028','2028']].map(function(o){return '<span class="fp-chip'+(F.ents.indexOf(o[0])>=0?' on':'')+'" onclick="fpToggle(this,F.ents,\''+o[0]+'\')">'+o[1]+'</span>';}).join('');
   var vistaChips=[['int','Interior'],['ext','Exterior']].map(function(o){return '<span class="fp-chip'+(F.vistas.indexOf(o[0])>=0?' on':'')+'" onclick="fpToggle(this,F.vistas,\''+o[0]+'\')">'+o[1]+'</span>';}).join('');
+  var tipoChips=[['dep','Departamentos'],['ofi','Oficinas']].map(function(o){
+    return '<span class="fp-chip'+(F.tipo===o[0]?' on':'')+'" onclick="fpTipo(this,\''+o[0]+'\')">'+o[1]+'</span>';}).join('');
   var html=''
    +'<div class="fp-head"><h2>Filtros</h2><button class="fp-x" onclick="closeFilters()">×</button></div>'
    +'<div class="fp-body">'
      +grp('Distritos',F.dists.length?F.dists.length+' sel.':'',distChips,true)
      +grp('Desarrolladoras',F.devs.length?F.devs.length+' sel.':'',devChips,true)
      +grp('Dormitorios','',dormChips)
+     +grp('Tipo','',tipoChips)
      +grp('Entrega','',entChips)
      +grp('Vista','',vistaChips)
      +'<div class="fp-grp"><div class="fp-lab">Área (m²)</div><div class="fp-range"><input type="number" placeholder="Mín" value="'+(F.amin||'')+'" oninput="F.amin=this.value;fpApply()"><span>—</span><input type="number" placeholder="Máx" value="'+(F.amax||'')+'" oninput="F.amax=this.value;fpApply()"></div></div>'
