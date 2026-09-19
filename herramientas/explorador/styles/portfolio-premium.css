@@ -1,0 +1,433 @@
+/* ════════════════════════════════════════════════════════════════════════
+   NATTIVA · Portafolio premium
+   Se carga DESPUES del <style> incrustado de index.html y solo redefine
+   presentacion. No toca datos, filtros, calculos, modales ni navegacion:
+   quitar el <link> devuelve la interfaz anterior tal cual.
+
+   Reparto de color buscado: ~70% papel, ~20% tinta, ~7% crimson, ~3% oro.
+   El crimson queda para precio, CTA, estado activo y oportunidad.
+   ════════════════════════════════════════════════════════════════════════ */
+
+:root{
+  /* se apoyan en los tokens que ya existen; solo se agrega el oro real,
+     porque el --gold del archivo original es en realidad un rojo */
+  --n-ink:#15110F;
+  --n-paper:#FAF6EF;
+  --n-bone:#F3ECE0;
+  --n-white:#FFFDFA;
+  --n-crimson:#CE3A41;
+  --n-crimson-d:#A2272F;
+  --n-gold:#B0894E;
+  --n-gold-l:#C9A463;
+  --n-line:rgba(21,17,15,.10);
+  --n-line-soft:rgba(21,17,15,.06);
+  --n-muted:#7C726C;
+  --n-faint:#A79C95;
+
+  --n-r-sm:10px;
+  --n-r-md:16px;
+  --n-r-lg:22px;
+
+  --n-sh-card:0 16px 40px rgba(21,17,15,.08);
+  --n-sh-hover:0 26px 64px rgba(21,17,15,.13);
+  --n-sh-float:0 28px 80px rgba(21,17,15,.12);
+
+  --n-ease:cubic-bezier(.22,1,.36,1);
+  --n-fast:180ms;
+  --n-mid:340ms;
+  --n-slow:560ms;
+}
+
+body{background:var(--n-paper)}
+
+/* ── una sola escala de foco, visible en todo ── */
+.chip:focus-visible,.fsel:focus-visible,.fnum:focus-visible,.fopen:focus-visible,
+.card:focus-visible,.vbtn:focus-visible,.rpdf:focus-visible,.ctray-go:focus-visible,
+.dd-close:focus-visible,.htab:focus-visible,#q:focus-visible,.nfchip:focus-visible{
+  outline:2px solid var(--n-crimson);outline-offset:3px;border-radius:var(--n-r-sm);
+}
+
+/* ════════ 1 · CABECERA ════════ */
+.hdr{
+  background:rgba(250,246,239,.82);
+  backdrop-filter:blur(14px) saturate(1.1);
+  -webkit-backdrop-filter:blur(14px) saturate(1.1);
+  border-bottom:1px solid var(--n-line-soft);
+  box-shadow:none;
+}
+.htabs{background:rgba(21,17,15,.035);border:1px solid var(--n-line-soft);border-radius:100px;padding:4px}
+.htab{border-radius:100px;transition:color var(--n-fast) var(--n-ease),background var(--n-fast) var(--n-ease)}
+.htab.on{background:var(--n-ink);color:var(--n-paper);box-shadow:0 2px 10px rgba(21,17,15,.18)}
+
+/* ════════ 2 · TICKER DE MERCADO ════════ */
+/* informacion financiera, no una franja publicitaria */
+.pulse{
+  background:var(--n-ink);
+  min-height:32px;height:32px;
+  border-top:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+.pulse-lab{
+  background:transparent;color:var(--n-gold-l);
+  font-size:9.5px;letter-spacing:.22em;font-weight:600;
+  padding:0 16px;border-right:1px solid rgba(255,255,255,.12);
+}
+.pulse-lab::before{background:var(--n-crimson)}
+.pulse-track{gap:0}
+.pulse-i{
+  font-size:11px;padding:0 18px;
+  border-right:1px solid rgba(255,255,255,.07);
+  color:rgba(243,236,224,.62);
+}
+.pulse-i b{color:var(--n-bone);font-weight:600}
+.pulse-i .up{color:#6FBF8B}
+.pulse-i .dn{color:var(--n-crimson)}
+
+/* ════════ 3 · HERO EDITORIAL ════════ */
+.hero{background:linear-gradient(180deg,var(--n-paper) 0%,var(--n-bone) 100%);border-bottom:0}
+.heyebrow{color:var(--n-gold);letter-spacing:.26em;font-size:10.5px;font-weight:600}
+.heyebrow::before{background:var(--n-crimson)}
+.h1{color:var(--n-ink);letter-spacing:-.03em}
+.h1 em{color:var(--n-crimson);font-style:italic}
+.hsub{color:var(--n-muted);max-width:52ch}
+.hsub b{color:var(--n-ink)}
+
+.hero-btn-p{
+  background:var(--n-crimson);border-color:var(--n-crimson);
+  box-shadow:0 10px 26px -12px rgba(206,58,65,.65);
+  transition:transform var(--n-fast) var(--n-ease),box-shadow var(--n-fast) var(--n-ease),background var(--n-fast) var(--n-ease);
+}
+.hero-btn-p:hover{background:var(--n-crimson-d);transform:translateY(-1px);box-shadow:0 14px 32px -12px rgba(206,58,65,.7)}
+.hero-btn-o{border-color:var(--n-line);background:var(--n-white);color:var(--n-ink)}
+.hero-btn-o:hover{border-color:var(--n-ink)}
+.hpill{background:var(--n-white);border:1px solid var(--n-line);color:var(--n-muted)}
+.hpill svg{color:var(--n-gold)}
+
+/* microcopy editorial: DATOS / QUE CONSTRUYEN / OPORTUNIDADES */
+.n-kicker{
+  margin-top:26px;padding-top:18px;position:relative;
+  font-family:var(--serif,"Fraunces",Georgia,serif);
+  font-weight:300;font-size:12.5px;line-height:1.65;
+  letter-spacing:.24em;text-transform:uppercase;color:var(--n-faint);
+}
+.n-kicker::before{content:"";position:absolute;top:0;left:0;width:44px;height:1px;background:var(--n-gold)}
+
+/* panel de indice de mercado */
+.hstats-wrap{
+  background:var(--n-white);
+  border:1px solid var(--n-line-soft);
+  border-radius:var(--n-r-lg);
+  box-shadow:var(--n-sh-card);
+  overflow:hidden;
+}
+.hstats-hd{background:var(--n-ink);color:var(--n-bone);border-bottom:0}
+.hstats-hd-l{color:var(--n-gold-l);letter-spacing:.2em}
+.hstats-hd-r{color:rgba(243,236,224,.5)}
+.hstat{border-color:var(--n-line-soft)}
+.hstat-v{font-family:var(--serif,"Fraunces",Georgia,serif);font-weight:300;letter-spacing:-.02em}
+.hstat-v.em{color:var(--n-crimson)}
+.hstat-k{color:var(--n-faint);letter-spacing:.16em;font-size:9.5px}
+
+/* ════════ 4 · BUSQUEDA Y FILTROS ════════ */
+.fwrap{background:rgba(250,246,239,.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--n-line-soft);box-shadow:0 1px 0 rgba(21,17,15,.02)}
+.fbar{gap:10px}
+
+.fsearch{
+  background:var(--n-white);
+  border:1px solid var(--n-line);
+  border-radius:100px;
+  min-height:46px;
+  box-shadow:0 1px 2px rgba(21,17,15,.04);
+  transition:border-color var(--n-fast) var(--n-ease),box-shadow var(--n-fast) var(--n-ease);
+}
+.fsearch:focus-within{border-color:var(--n-ink);box-shadow:0 0 0 4px rgba(21,17,15,.06)}
+.fsearch svg{color:var(--n-faint)}
+#q{font-size:14.5px}
+#q::placeholder{color:var(--n-faint)}
+
+.fsel{
+  background:var(--n-white);border:1px solid var(--n-line);border-radius:100px;
+  min-height:38px;color:var(--n-ink);font-weight:500;
+  transition:border-color var(--n-fast) var(--n-ease);
+}
+.fsel:hover{border-color:var(--n-ink)}
+.flab{color:var(--n-faint);letter-spacing:.18em;font-size:9.5px;font-weight:600}
+
+.chip{
+  background:var(--n-white);border:1px solid var(--n-line);border-radius:100px;
+  color:var(--n-ink);font-weight:500;
+  transition:background var(--n-fast) var(--n-ease),border-color var(--n-fast) var(--n-ease),color var(--n-fast) var(--n-ease);
+}
+.chip:hover{border-color:var(--n-ink)}
+.chip.on{background:var(--n-ink);border-color:var(--n-ink);color:var(--n-paper)}
+.chip-opp{color:var(--n-crimson);border-color:rgba(206,58,65,.3)}
+.chip-opp:hover{border-color:var(--n-crimson)}
+.chip-opp.on{background:var(--n-crimson);border-color:var(--n-crimson);color:#fff}
+.fopen{background:var(--n-ink);border-color:var(--n-ink);color:var(--n-paper);border-radius:100px}
+.fnum{background:var(--n-white);border:1px solid var(--n-line);border-radius:100px;min-height:38px}
+.fnum:focus{border-color:var(--n-ink);outline:none}
+.fclr{color:var(--n-crimson)}
+
+/* chips de filtros activos, removibles */
+.nfactive{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding:0 var(--pad,22px) 12px}
+.nfactive:empty{display:none}
+.nfactive-l{font-size:9.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--n-faint);font-weight:600}
+.nfchip{
+  display:inline-flex;align-items:center;gap:7px;
+  background:var(--n-ink);color:var(--n-paper);
+  border:0;border-radius:100px;padding:6px 8px 6px 13px;
+  font:inherit;font-size:12px;font-weight:500;cursor:pointer;
+  transition:background var(--n-fast) var(--n-ease);
+}
+.nfchip:hover{background:var(--n-crimson)}
+.nfchip svg{width:12px;height:12px;opacity:.8}
+.nfchip-clr{background:transparent;color:var(--n-crimson);border:1px solid rgba(206,58,65,.3)}
+.nfchip-clr:hover{background:rgba(206,58,65,.08);color:var(--n-crimson)}
+
+/* ════════ 5 · BARRA DE RESULTADOS ════════ */
+.rhead{border-bottom:1px solid var(--n-line-soft)}
+.rhead-t{color:var(--n-muted);font-size:13.5px}
+.rhead-t b{color:var(--n-ink);font-weight:600}
+.vtog{background:rgba(21,17,15,.04);border-radius:100px;padding:3px;border:1px solid var(--n-line-soft)}
+.vbtn{border-radius:100px;color:var(--n-muted)}
+.vbtn.on{background:var(--n-ink);color:var(--n-paper)}
+.rsel{background:var(--n-white);border:1px solid var(--n-line);border-radius:100px}
+.rpdf{background:var(--n-crimson);border-color:var(--n-crimson);border-radius:100px}
+.rpdf:hover{background:var(--n-crimson-d)}
+
+/* ════════ 6 · TARJETAS DE PROYECTO ════════ */
+.card{
+  background:var(--n-white);
+  border:1px solid var(--n-line-soft);
+  border-radius:var(--n-r-lg);
+  box-shadow:var(--n-sh-card);
+  overflow:hidden;
+  transition:transform var(--n-slow) var(--n-ease),box-shadow var(--n-slow) var(--n-ease),border-color var(--n-slow) var(--n-ease);
+}
+@media (hover:hover){
+  .card:hover{transform:translateY(-4px);box-shadow:var(--n-sh-hover);border-color:var(--n-line)}
+  .card:hover .ccover img{transform:scale(1.045)}
+}
+
+/* la portada manda cuando existe */
+.ctop{
+  position:relative;aspect-ratio:4/3;min-height:0;padding:16px;
+  background:var(--n-bone);
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.ccover{position:absolute;inset:0;overflow:hidden;background:var(--n-bone)}
+.ccover img{width:100%;height:100%;object-fit:cover;display:block;
+  transition:transform var(--n-slow) var(--n-ease)}
+.ctop.has-cover::after{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(21,17,15,.34) 0%,transparent 34%,transparent 52%,rgba(21,17,15,.62) 100%);
+}
+.ctop.has-cover>*{position:relative;z-index:1}
+.ctop.has-cover .cdist,.ctop.has-cover .cbadge{color:#fff}
+
+/* Sin portada: 218 de 220 proyectos no tienen foto todavia. En vez de un
+   hueco gris se compone una placa arquitectonica con el monograma, que se
+   reemplaza sola en cuanto el proyecto reciba imagen en COVERS. */
+.ctop:not(.has-cover){
+  background:
+    linear-gradient(180deg,rgba(21,17,15,0) 55%,rgba(21,17,15,.05) 100%),
+    repeating-linear-gradient(90deg,rgba(21,17,15,.045) 0 1px,transparent 1px 34px),
+    repeating-linear-gradient(0deg,rgba(21,17,15,.03) 0 1px,transparent 1px 34px),
+    linear-gradient(145deg,#F6EFE4 0%,#EDE3D4 100%);
+}
+.ctop:not(.has-cover)::before{
+  content:"";position:absolute;left:16px;right:16px;bottom:52px;height:1px;
+  background:linear-gradient(90deg,var(--n-gold),transparent);opacity:.5;
+}
+.cmono{
+  font-family:var(--serif,"Fraunces",Georgia,serif);
+  font-weight:300;letter-spacing:-.03em;
+  color:rgba(21,17,15,.13);
+  font-size:clamp(46px,7vw,68px);
+}
+.ctop.has-cover .cmono{display:none}
+
+.cdist{
+  background:rgba(250,246,239,.9);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  border:1px solid var(--n-line-soft);border-radius:100px;
+  font-size:9.5px;letter-spacing:.16em;font-weight:600;color:var(--n-ink);padding:5px 11px;
+}
+.ctop.has-cover .cdist{background:rgba(21,17,15,.5);border-color:rgba(255,255,255,.2)}
+.cbadge{
+  background:rgba(250,246,239,.9);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);
+  border:1px solid var(--n-line-soft);border-radius:100px;
+  font-size:10px;font-weight:600;color:var(--n-ink);padding:4px 10px;
+}
+.cbadge.opp{background:var(--n-crimson);border-color:var(--n-crimson);color:#fff}
+.cbadge.vis{background:var(--n-gold);border-color:var(--n-gold);color:#fff}
+.ctop.has-cover .cbadge{background:rgba(21,17,15,.5);border-color:rgba(255,255,255,.18)}
+.ctop.has-cover .cbadge.opp{background:var(--n-crimson);border-color:var(--n-crimson)}
+.ctop.has-cover .cbadge.vis{background:var(--n-gold);border-color:var(--n-gold)}
+
+.cbody{padding:20px 20px 18px;background:var(--n-white)}
+.cname{
+  font-family:var(--serif,"Fraunces",Georgia,serif);
+  font-weight:400;font-size:21px;line-height:1.15;letter-spacing:-.018em;color:var(--n-ink);
+}
+.cunits{color:var(--n-muted);font-size:12.5px;margin-top:3px}
+.cmetrics{
+  margin-top:16px;padding-top:15px;border-top:1px solid var(--n-line-soft);
+  display:grid;grid-template-columns:1fr 1fr;gap:14px;
+}
+.cm-k{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--n-faint);font-weight:600}
+.cm-v{font-family:var(--serif,"Fraunces",Georgia,serif);font-weight:400;font-size:19px;
+  letter-spacing:-.02em;margin-top:4px;font-variant-numeric:tabular-nums;color:var(--n-ink)}
+.cm-v.em{color:var(--n-crimson)}
+.cm-v small{font-family:var(--sans,"Manrope",system-ui,sans-serif);font-size:11px;color:var(--n-faint);font-weight:500}
+.cppm{border-top:1px solid var(--n-line-soft);color:var(--n-muted)}
+.cppm-v{font-variant-numeric:tabular-nums;color:var(--n-ink);font-weight:600}
+.cppm-ctx{color:var(--n-faint)}
+.cfoot{border-top:1px solid var(--n-line-soft);padding-top:14px;margin-top:14px}
+.cdorm span{background:rgba(21,17,15,.05);border:0;border-radius:6px;color:var(--n-ink);font-weight:600;font-size:11px}
+.cgo{color:var(--n-crimson);font-weight:600;font-size:12.5px;
+  transition:transform var(--n-mid) var(--n-ease)}
+@media (hover:hover){.card:hover .cgo{transform:translateX(3px)}}
+
+/* ── lista ── */
+.lrow{background:var(--n-white);border:1px solid var(--n-line-soft);border-radius:var(--n-r-md);
+  transition:border-color var(--n-mid) var(--n-ease),box-shadow var(--n-mid) var(--n-ease),transform var(--n-mid) var(--n-ease)}
+@media (hover:hover){.lrow:hover{border-color:var(--n-line);box-shadow:var(--n-sh-card);transform:translateY(-2px)}}
+.lname{font-family:var(--serif,"Fraunces",Georgia,serif);font-weight:400;letter-spacing:-.015em;color:var(--n-ink)}
+.lsub{color:var(--n-muted)}
+.lk{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--n-faint);font-weight:600}
+.lv{font-variant-numeric:tabular-nums;color:var(--n-ink);font-weight:600}
+.lv.em{color:var(--n-crimson)}
+.lgo{color:var(--n-crimson);font-weight:600}
+
+/* ════════ 7 · FICHA DE PROYECTO ════════ */
+.dd-bar{
+  background:var(--n-ink);
+  border-bottom:0;
+}
+.dd-bar-t{color:var(--n-bone)}
+.dd-close{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.16);color:var(--n-bone);border-radius:100px}
+.dd-close:hover{background:rgba(255,255,255,.18)}
+.dd-body{background:var(--n-paper)}
+.dd-section{background:var(--n-white);border:1px solid var(--n-line-soft);border-radius:var(--n-r-lg);
+  box-shadow:var(--n-sh-card)}
+.dd-sec-t{font-family:var(--serif,"Fraunces",Georgia,serif);font-weight:400;color:var(--n-ink);letter-spacing:-.01em}
+
+/* metricas de la ficha */
+.dd-kpi,.dd-metrics{gap:1px;background:var(--n-line-soft)}
+.dd-kpi>div,.dd-metrics>div{background:var(--n-white)}
+.dd-kpi-v{font-family:var(--serif,"Fraunces",Georgia,serif);font-weight:300;letter-spacing:-.025em;
+  font-variant-numeric:tabular-nums}
+.dd-kpi-k{font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--n-faint);font-weight:600}
+
+/* calculadora */
+.dd-calc-out{
+  background:linear-gradient(155deg,var(--n-crimson) 0%,var(--n-crimson-d) 100%);
+  border-radius:var(--n-r-md);color:#fff;
+  box-shadow:0 18px 44px -20px rgba(162,39,47,.7);
+}
+.dd-calc-k{color:rgba(255,255,255,.78);font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:600}
+.dd-calc-v{font-family:var(--serif,"Fraunces",Georgia,serif);font-weight:300;letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;color:#fff}
+.dd-calc-rows b{color:#fff;font-variant-numeric:tabular-nums}
+.dd-calc-rows span{color:rgba(255,255,255,.72)}
+.dd-calc-note{color:rgba(255,255,255,.62)}
+.dd-calc-f input[type=number]{background:var(--n-white);border:1px solid var(--n-line);border-radius:var(--n-r-sm);
+  font-variant-numeric:tabular-nums}
+.dd-calc-f input[type=number]:focus{border-color:var(--n-ink);outline:none}
+.dd-calc-f label,.dd-calc-lab span{color:var(--n-muted)}
+.dd-calc-lab b{color:var(--n-crimson);font-variant-numeric:tabular-nums}
+
+/* posicion de precio: analitica, no un slider */
+.dd-pos-v{font-family:var(--serif,"Fraunces",Georgia,serif);font-weight:300;color:var(--n-crimson);
+  letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.dd-bar-track,.dd-pos-track{background:var(--n-bone);border-radius:100px}
+.dd-pos-fill{background:linear-gradient(90deg,rgba(206,58,65,.16),var(--n-crimson))}
+.dd-pos-dot{background:var(--n-crimson);border:3px solid var(--n-white);box-shadow:0 2px 10px rgba(162,39,47,.45)}
+.dd-pos-x{color:var(--n-faint);font-variant-numeric:tabular-nums}
+.dd-pos-x .m{color:var(--n-ink);font-weight:600}
+
+/* tabla de unidades: terminal limpia */
+.utable,.cmp-table,.rz-tbl{font-variant-numeric:tabular-nums}
+/* la tabla de unidades es .utable; el encabezado se fija dentro del scroll
+   de la ficha para no perder de vista las columnas en listas largas */
+.utable th,.cmp-table th,.rz-tbl th{
+  position:sticky;top:0;z-index:2;
+  background:var(--n-bone);
+  font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--n-muted);font-weight:600;
+  border-bottom:1px solid var(--n-line);
+}
+.utable td,.cmp-table td,.rz-tbl td{border-bottom:1px solid var(--n-line-soft);color:var(--n-ink)}
+.urow{transition:background var(--n-fast) var(--n-ease)}
+@media (hover:hover){.urow:hover{background:var(--n-bone)}}
+.urow.sel{background:rgba(206,58,65,.05)}
+.u-unit{font-weight:700;color:var(--n-ink)}
+.u-model{color:var(--n-faint)}
+.u-price{color:var(--n-crimson);font-weight:600;font-variant-numeric:tabular-nums}
+.u-cuota{color:var(--n-ink);font-variant-numeric:tabular-nums}
+.tag-v{background:rgba(21,17,15,.05);color:var(--n-muted);border-radius:6px;font-weight:500}
+.tag-vis{background:var(--n-gold);color:#fff;border-radius:6px;font-weight:600}
+
+/* mapa como tarjeta */
+.dd-map,.dd-mapwrap{border-radius:var(--n-r-md);overflow:hidden;border:1px solid var(--n-line-soft)}
+.dd-map iframe{display:block;filter:saturate(.85) contrast(1.02)}
+
+/* ════════ 8 · BARRA DE COMPARACION ════════ */
+.ctray{
+  background:var(--n-ink);color:var(--n-bone);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:100px;
+  box-shadow:var(--n-sh-float);
+}
+.ctray-go{background:var(--n-crimson);border-color:var(--n-crimson);color:#fff;border-radius:100px;font-weight:600}
+.ctray-go:hover:not(:disabled){background:var(--n-crimson-d)}
+.ctray-go:disabled{opacity:.4}
+.ctray-clr{color:rgba(243,236,224,.6)}
+.ctray-clr:hover{color:var(--n-bone)}
+
+/* ════════ 9 · RESPONSIVE ════════ */
+@media (max-width:1280px){ .ctop{aspect-ratio:16/11} }
+@media (max-width:1024px){
+  .cname{font-size:19px}
+  .cm-v{font-size:17px}
+}
+@media (max-width:768px){
+  .pulse,.pulse-i{font-size:10.5px}
+  .n-kicker{font-size:11px;letter-spacing:.2em}
+  .cbody{padding:16px}
+  .nfactive{padding-left:16px;padding-right:16px}
+}
+@media (max-width:430px){
+  .ctop{aspect-ratio:3/2;padding:13px}
+  .cmono{font-size:40px}
+  .cmetrics{gap:10px}
+  .cm-v{font-size:16px}
+  .cname{font-size:18px}
+}
+
+/* ════════ 10 · MOVIMIENTO ════════ */
+@media (prefers-reduced-motion:reduce){
+  .card,.ccover img,.cgo,.lrow,.chip,.hero-btn-p{transition:none!important}
+  .card:hover{transform:none}
+}
+
+/* ════════ 11 · DESBORDE HORIZONTAL EN MOVIL ════════
+   Preexistente: la navegacion de pestanas mide 550px y el viewport 390, asi
+   que el documento se iba a 566px y la pagina se movia de lado. Se comprobo
+   con y sin esta hoja: el mismo 566px en ambos casos. Aqui se deja que las
+   pestanas se desplacen dentro de su propia caja en vez de empujar el body. */
+@media (max-width:820px){
+  .htabs{
+    max-width:100%;
+    overflow-x:auto;
+    overflow-y:hidden;
+    flex-wrap:nowrap;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+    scroll-snap-type:x proximity;
+    justify-content:flex-start;
+  }
+  .htabs::-webkit-scrollbar{display:none}
+  .htab{flex:0 0 auto;scroll-snap-align:center}
+}
+html,body{max-width:100%;overflow-x:clip}

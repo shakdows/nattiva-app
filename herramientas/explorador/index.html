@@ -875,6 +875,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.6);padding:2.4rem clamp(1re
 .cbadge.dtype{background:var(--em);color:#fff;font-weight:700;border-color:var(--em)}
 .ltype{font:600 11px var(--sans);color:var(--em);background:var(--emsoft);padding:2px 8px;border-radius:999px;margin-left:6px;vertical-align:middle}
 </style>
+<link rel="stylesheet" href="styles/portfolio-premium.css">
 </head>
 <body>
 
@@ -911,6 +912,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.6);padding:2.4rem clamp(1re
         <a class="hero-btn hero-btn-p" href="#proyectos">Explorar portafolio <svg viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
         <a class="hero-btn hero-btn-o" href="https://wa.me/51907528914" target="_blank" rel="noopener">Hablar con un asesor</a>
       </div>
+      <div class="n-kicker">Datos<br>que construyen<br>oportunidades</div>
       <div class="hmeta">
         <span class="hpill"><svg viewBox="0 0 24 24"><path d="M3 21h18M5 21V7l8-4 8 4v14M9 9h0M9 13h0M9 17h0"/></svg>Entrega inmediata y en planos</span>
         <span class="hpill"><svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg>Financiamiento bancario</span>
@@ -982,6 +984,7 @@ footer{background:var(--ink);color:rgba(255,255,255,.6);padding:2.4rem clamp(1re
   </div>
 </div>
 
+<div class="nfactive" id="nfactive" aria-live="polite"></div>
 <div class="rhead">
   <div class="rhead-t">Mostrando <b id="rc">—</b> · <span id="ru">—</span> unidades</div>
   <div class="rsort">
@@ -2462,7 +2465,38 @@ function renderDevs(){
     +'</div>';
   }
 
-  render=function(){
+  /* Chips de los filtros activos, removibles. Solo leen y reusan las mismas
+   funciones de siempre, para no duplicar la logica de filtrado. */
+function pintaFiltrosActivos(){
+  var box=document.getElementById('nfactive'); if(!box)return;
+  var x='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>';
+  var out=[];
+  function chip(txt,fn){out.push('<button type="button" class="nfchip" data-q="'+out.length+'" aria-label="Quitar filtro '+txt.replace(/"/g,'')+'">'+txt+x+'</button>');QUITA.push(fn);}
+  var QUITA=[];
+  F.dists.forEach(function(d){chip(d,function(){F.dists=F.dists.filter(function(v){return v!==d;});var sel=document.getElementById('fdist');if(sel&&sel.value===d)sel.value='';});});
+  F.devs.forEach(function(d){chip(d,function(){F.devs=F.devs.filter(function(v){return v!==d;});var sel=document.getElementById('fdev');if(sel&&sel.value===d)sel.value='';});});
+  F.dorms.forEach(function(d){chip(dormLabel(d)+' dorm.',function(){F.dorms=F.dorms.filter(function(v){return v!==d;});
+    var c=document.querySelector('.chip[data-d="'+d+'"]');if(c)c.classList.remove('on');});});
+  if(F.tipo){chip(F.tipo==='ofi'?'Oficinas':'Departamentos',function(){F.tipo='';
+    [].forEach.call(document.querySelectorAll('[data-tipo]'),function(c){c.classList.remove('on');});});}
+  F.ents.forEach(function(e){chip(e==='INM'?'Entrega inmediata':'Entrega '+e,function(){F.ents=F.ents.filter(function(v){return v!==e;});
+    var c=document.querySelector('.chip[data-e="'+e+'"]');if(c)c.classList.remove('on');});});
+  F.vistas.forEach(function(v){chip(v==='int'?'Vista interior':'Vista exterior',function(){F.vistas=F.vistas.filter(function(z){return z!==v;});
+    var c=document.querySelector('.chip[data-vst="'+v+'"]');if(c)c.classList.remove('on');});});
+  if(F.vis){chip('Con VIS',function(){F.vis=false;var c=document.getElementById('cvis');if(c)c.classList.remove('on');});}
+  if(F.opp){chip('Oportunidades',function(){F.opp=false;var c=document.getElementById('copp');if(c)c.classList.remove('on');});}
+  if(F.q){chip('"'+F.q+'"',function(){F.q='';var q=document.getElementById('q');if(q)q.value='';});}
+  if(!out.length){box.innerHTML='';return;}
+  box.innerHTML='<span class="nfactive-l">Filtros</span>'+out.join('')
+    +'<button type="button" class="nfchip nfchip-clr" data-clr="1">Limpiar todo</button>';
+  box.querySelectorAll('[data-q]').forEach(function(b){
+    b.addEventListener('click',function(){QUITA[+b.dataset.q]();render();});
+  });
+  var clr=box.querySelector('[data-clr]'); if(clr)clr.addEventListener('click',resetF);
+}
+
+render=function(){
+    pintaFiltrosActivos();
     var r=filteredItems();
     var units=r.reduce(function(a,it){return a+it.count;},0);
     document.getElementById('rc').textContent=r.length+(r.length===1?' tipo':' tipos');
