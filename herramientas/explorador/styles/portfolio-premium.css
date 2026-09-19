@@ -568,3 +568,20 @@ html,body{max-width:100%;overflow-x:clip}
   .dd-hero.has-cover .dd-kpi:first-child,
   .dd-hero.has-cover .dd-kpi:last-child{padding-left:16px;padding-right:16px}
 }
+
+/* ════════ 14 · IMAGEN ARQUITECTONICA DEL HERO ════════
+   Render generico de la marca, no la foto de ningun proyecto: se usa como
+   atmosfera del portafolio y por eso no lleva pie ni se asocia a una ficha.
+   Vive detras del panel de indice de mercado y se desvanece hacia el texto. */
+@media (min-width:1080px){
+  .hero{position:relative;overflow:hidden}
+  .hero::after{
+    content:"";position:absolute;z-index:0;pointer-events:none;
+    top:0;right:0;bottom:0;width:52%;
+    background:url('/img/arquitectura/arq-03.webp') center right/cover no-repeat;
+    -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.55) 26%,rgba(0,0,0,.9) 60%,#000 100%);
+    mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.55) 26%,rgba(0,0,0,.9) 60%,#000 100%);
+    opacity:.5;
+  }
+  .hero-in{position:relative;z-index:1}
+}
