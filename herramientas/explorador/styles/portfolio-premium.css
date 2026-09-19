@@ -431,3 +431,74 @@ body{background:var(--n-paper)}
   .htab{flex:0 0 auto;scroll-snap-align:center}
 }
 html,body{max-width:100%;overflow-x:clip}
+
+/* ════════ 12 · CABECERA DE LA FICHA ════════
+   Era un bloque rojo a sangre de 238px con el titulo, la desarrolladora y
+   seis KPI en blanco sobre rojo. Pasa a papel: tipografia en tinta, KPI
+   como rejilla de tarjetas y el crimson reservado al precio. El rojo del
+   degradado venia de .dd-hero::before, no de .dd-hero. */
+.dd-hero{
+  color:var(--n-ink);
+  background:linear-gradient(180deg,var(--n-white) 0%,var(--n-paper) 100%);
+  border-bottom:1px solid var(--n-line-soft);
+  padding-bottom:0;
+}
+.dd-hero::before{
+  background:none;
+  /* se conserva un filete crimson arriba: la marca sigue presente sin ocupar
+     238px de rojo */
+  border-top:3px solid var(--n-crimson);
+  inset:0 0 auto 0;height:3px;
+}
+.dd-hero::after{
+  background:
+    radial-gradient(420px 220px at 88% -10%,rgba(176,137,78,.10),transparent 70%),
+    repeating-linear-gradient(125deg,rgba(21,17,15,.02) 0 1px,transparent 1px 16px);
+}
+
+.dd-eye{color:var(--n-gold);letter-spacing:.2em}
+.dd-eye::before{background:var(--n-crimson)!important}
+.dd-name{color:var(--n-ink);letter-spacing:-.025em}
+.dd-dev{color:var(--n-muted);letter-spacing:.06em;text-transform:uppercase;font-size:11.5px}
+
+/* KPI: de fila suelta sobre rojo a rejilla de tarjetas */
+.dd-kpis{
+  border-top:1px solid var(--n-line-soft);
+  margin-top:22px;padding-top:0;
+  gap:1px;background:var(--n-line-soft);
+  display:grid;grid-template-columns:repeat(6,minmax(0,1fr));
+  margin-left:calc(-1 * clamp(1.2rem,3vw,2.4rem));
+  margin-right:calc(-1 * clamp(1.2rem,3vw,2.4rem));
+  border-bottom:1px solid var(--n-line-soft);
+}
+.dd-kpi{
+  background:var(--n-white);
+  padding:16px clamp(10px,1.4vw,18px);
+  gap:5px;min-width:0;
+}
+.dd-kpi:first-child{padding-left:clamp(1.2rem,3vw,2.4rem)}
+.dd-kpi:last-child{padding-right:clamp(1.2rem,3vw,2.4rem)}
+.dd-kpi-v{
+  color:var(--n-ink);font-weight:300;font-size:clamp(1.05rem,1.7vw,1.45rem);
+  letter-spacing:-.025em;font-variant-numeric:tabular-nums;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+/* el precio es lo unico que va en crimson */
+.dd-kpi:nth-child(2) .dd-kpi-v{color:var(--n-crimson)}
+.dd-kpi-k{color:var(--n-faint);font-size:9px;letter-spacing:.15em}
+
+/* acciones: sobre papel necesitan contorno propio */
+.dd-broc,.dd-print,.dd-close{
+  background:var(--n-white)!important;
+  border:1px solid var(--n-line)!important;
+  color:var(--n-ink)!important;
+}
+.dd-print:hover,.dd-close:hover{background:var(--n-bone)!important;border-color:var(--n-ink)!important}
+.dd-broc.off{opacity:.5}
+
+@media (max-width:1024px){ .dd-kpis{grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media (max-width:560px){
+  .dd-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .dd-kpi{padding:13px 14px}
+  .dd-kpi:first-child,.dd-kpi:last-child{padding-left:14px;padding-right:14px}
+}
