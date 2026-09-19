@@ -502,3 +502,69 @@ html,body{max-width:100%;overflow-x:clip}
   .dd-kpi{padding:13px 14px}
   .dd-kpi:first-child,.dd-kpi:last-child{padding-left:14px;padding-right:14px}
 }
+
+/* ════════ 13 · FICHA EN DOS COLUMNAS ════════
+   La ficha apilaba sus cinco secciones en una sola columna y obligaba a
+   bajar mucho. Se reparten en una rejilla de 12, igual que la referencia:
+   posicion de precio junto a la calculadora, y la ubicacion junto a la
+   tabla de unidades. Es solo colocacion: el JS que genera las secciones no
+   se toca, y por eso se identifican por lo que contienen. */
+@media (min-width:1080px){
+  .dd-body{
+    display:grid;
+    grid-template-columns:repeat(12,minmax(0,1fr));
+    gap:16px;
+    align-items:start;
+  }
+  .dd-body>.dd-section{margin:0}
+  /* Por defecto todo ocupa el ancho completo; asi una seccion nueva nunca
+     queda aplastada. Solo se emparejan las cuatro que caben de a dos.
+     La tabla de unidades vive en un div sin clase, hermano de su cabecera,
+     por eso va aparte y a ancho completo. */
+  .dd-body>*{grid-column:span 12;min-width:0}
+  .dd-body>.dd-section:has(.dd-pos){grid-column:span 6}
+  .dd-body>.dd-section:has(.dd-calc){grid-column:span 6}
+  .dd-body>.dd-section:has(.dd-map){grid-column:span 4}
+  .dd-body>.dd-devbox{grid-column:span 8}
+
+  /* la calculadora deja de ir lado a lado dentro de su tarjeta: ya esta en
+     media pantalla, asi que se apila y la cuota queda debajo, grande */
+  .dd-calc{display:block}
+  .dd-calc-out{margin-top:16px}
+
+  /* el mapa crece para llenar su columna */
+  .dd-map{height:300px}
+
+}
+
+/* la tarjeta de tipologias se convierte en una fila de opciones */
+.dd-typos{display:flex;flex-wrap:wrap;gap:12px}
+
+/* ── ficha con portada: galeria a la izquierda, datos a la derecha ── */
+@media (min-width:1080px){
+  .dd-hero.has-cover{
+    display:grid;
+    grid-template-columns:minmax(0,55fr) minmax(0,45fr);
+    gap:clamp(20px,2.4vw,34px);
+    align-items:center;
+    padding-top:0;
+  }
+  .dd-hero.has-cover .dd-cover{
+    position:relative;inset:auto;
+    grid-row:1/3;
+    aspect-ratio:4/3;border-radius:var(--n-r-md);overflow:hidden;
+    border:1px solid var(--n-line-soft);
+  }
+  .dd-hero.has-cover .dd-cover img{width:100%;height:100%;object-fit:cover}
+  .dd-hero.has-cover .dd-actions{grid-column:2;justify-content:flex-end}
+  .dd-hero.has-cover .dd-name,
+  .dd-hero.has-cover .dd-eye,
+  .dd-hero.has-cover .dd-dev{grid-column:2}
+  .dd-hero.has-cover .dd-kpis{
+    grid-column:2;margin-left:0;margin-right:0;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    border:1px solid var(--n-line-soft);border-radius:var(--n-r-md);overflow:hidden;
+  }
+  .dd-hero.has-cover .dd-kpi:first-child,
+  .dd-hero.has-cover .dd-kpi:last-child{padding-left:16px;padding-right:16px}
+}
