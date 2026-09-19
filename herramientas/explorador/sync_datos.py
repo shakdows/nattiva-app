@@ -54,8 +54,12 @@ ALIAS_PROYECTO = {
 
 # Casos donde un proyecto de la hoja 2 son en realidad dos de la hoja 1,
 # separados por la columna TORRE.  (dev_norm, proyecto_norm) -> {torre: nombre}
+# La hoja 2 ya nombra casi todo como "VILLARÁN 1"/"VILLARÁN 2", pero quedan
+# filas sueltas con el nombre a secas. Antes la torre venia como 1/2 y ahora
+# como A/B, asi que se aceptan las dos formas.
 ALIAS_PROYECTO_POR_TORRE = {
-    ('VYV', 'VILLARAN'): {'1': 'VILLARÁN 1', '2': 'VILLARÁN 2'},
+    ('VYV', 'VILLARAN'): {'A': 'VILLARÁN 1', 'B': 'VILLARÁN 2',
+                          '1': 'VILLARÁN 1', '2': 'VILLARÁN 2'},
 }
 
 # Nombre definitivo de un proyecto, se aplique en la hoja que se aplique.
@@ -103,6 +107,13 @@ OVR_VIS = {'SI': 1, 'NO': 0, 'null': -1, '': -1, 'NA': -1}
 # Si la hoja 2 quiere agregar mas de este % del tamano que el proyecto tiene en
 # la hoja 1, se avisa: casi siempre significa que numeran distinto.
 AVISO_UMBRAL = 0.25
+
+# La hoja solo trae CUOTA APROXIMADA en 2,224 de 14,613 filas, pero donde la
+# trae la relacion con el precio es siempre la misma: cuota = precio / 123.4941
+# acierta en las 2,142 filas con precio (±1 sol). Con ese mismo factor se
+# completa la cuota que falta, para que el vendedor la tenga en toda la oferta.
+# Poner None para no calcular ninguna y dejar solo las que vienen en la hoja.
+FACTOR_CUOTA = 123.4941
 
 MESES = {1: 'Ene', 2: 'Feb', 3: 'Mar', 4: 'Abr', 5: 'May', 6: 'Jun',
          7: 'Jul', 8: 'Ago', 9: 'Set', 10: 'Oct', 11: 'Nov', 12: 'Dic'}
@@ -159,11 +170,32 @@ def num(v, d=0.0):
         return d
 
 
+def area(v):
+    """Area en m2. Si Excel la convirtio en fecha, se deja sin dato.
+
+    Aqui no se adivina como con los dormitorios: la fecha es ambigua
+    (27.2 y 27.02 dan las dos 2026-02-27) y al contrastarla contra la hoja
+    anterior solo acerto en 77 de 109. Un m2 inventado corrompe el precio
+    por m2 y enganaria al vendedor, asi que se reporta y se deja en blanco.
+    """
+    if hasattr(v, 'day') and hasattr(v, 'month'):
+        _areas_perdidas[0] += 1
+        return 0.0
+    return num(v)
+
+
+def es_oficina(modelo):
+    return 'OFICINA' in txt(modelo).upper()
+
+
 def compacta(x):
     return int(x) if float(x) == int(float(x)) else float(x)
 
 
 _entrega_rescatadas = [0]
+_dorm_rescatados = [0]
+_areas_perdidas = [0]
+_cuotas_calculadas = [0]
 
 
 def fecha_entrega(v):
@@ -192,7 +224,7 @@ def fecha_entrega(v):
             _entrega_rescatadas[0] += 1
             return '%s-%02d' % (MESES[mes], dia)
         return '%s-%02d' % (MESES[mes], ano % 100)
-    m = re.fullmatch(r'([A-Za-zÁÉÍÓÚáéíóú]{3})-(\d{2})', v)
+    m = re.fullmatch(r'([A-Za-zÁÉÍÓÚáéíóú]{3})\.?-(\d{2})', v)
     if m:
         return m.group(1).capitalize() + '-' + m.group(2)
     return v or 'null'
@@ -209,6 +241,15 @@ def banco(v):
 
 
 def dormitorios(v):
+    """Excel convirtio los decimales en fechas: "2.5" quedo como 2 de mayo.
+
+    Se recupera leyendo dia.mes, que es lo que se tecleo. Contrastado contra
+    la version anterior de la hoja: acierta en 1,117 de 1,120 casos con
+    referencia, y los 3 restantes son cambios reales del proyecto.
+    """
+    if hasattr(v, 'day') and hasattr(v, 'month'):
+        _dorm_rescatados[0] += 1
+        return compacta(float('%d.%d' % (v.day, v.month)))
     v = txt(v)
     if v.upper() in OVR_DORM:
         return OVR_DORM[v.upper()]
@@ -252,8 +293,8 @@ def canon1(r):
         'proyecto': canonico(txt(r.get('DESARROLLADORA')).upper(), txt(r.get('PROYECTO'))),
         'unidad': txt(r.get('N° INMUEBLE')),
         'modelo': txt(r.get('MODELO')),
-        'at': num(r.get('AREA TECHADA')), 'al': num(r.get('AREA LIBRE')),
-        'total': num(r.get('AREA TOTAL')),
+        'at': area(r.get('AREA TECHADA')), 'al': area(r.get('AREA LIBRE')),
+        'total': area(r.get('AREA TOTAL')),
         'vista': vista(r.get('VISTA')),
         'dorm': dormitorios(r.get('DORMITORIOS')),
         'moneda': OVR_MONEDA.get(txt(r.get('MONEDA')).upper(), 0),
@@ -262,6 +303,7 @@ def canon1(r):
         'vis': OVR_VIS.get(txt(r.get('RESTRICCIÓN VIS')).upper(), -1),
         'cuota': num(r.get('CUOTA APROXIMADA')),
         'banco': banco(r.get('BANCO')),
+        'tipo': 1 if es_oficina(r.get('MODELO')) else 0,
         'origen': 'hoja1',
     }
 
@@ -289,8 +331,8 @@ def canon2(r):
         'proyecto': proyecto,
         'unidad': txt(r.get('N° Unidad')),
         'modelo': txt(r.get('MODELO')),
-        'at': num(r.get('A T')), 'al': num(r.get('AL')),
-        'total': num(r.get('AreaTotal')),
+        'at': area(r.get('A T')), 'al': area(r.get('AL')),
+        'total': area(r.get('AreaTotal')),
         'vista': vista(r.get('VISTA')),
         'dorm': dormitorios(r.get('Dormitorios')),
         'moneda': OVR_MONEDA.get(txt(r.get('MONEDA')).upper(), 0),
@@ -299,6 +341,7 @@ def canon2(r):
         'vis': -1,
         'cuota': 0,
         'banco': 'Por definir',
+        'tipo': 1 if es_oficina(r.get('MODELO')) else 0,
         'origen': 'hoja2',
     }
 
@@ -346,6 +389,12 @@ def fusiona(f1, f2, log):
                       '(%.0f%%). Revisa que no numeren distinto.'
                       % (k[0], k[1], n, tam1[k], 100.0 * n / tam1[k]))
 
+    if FACTOR_CUOTA:
+        for c in base + agregadas:
+            if c['cuota'] <= 0 and c['precio'] > 1000:
+                c['cuota'] = round(c['precio'] / FACTOR_CUOTA)
+                _cuotas_calculadas[0] += 1
+
     return base + agregadas, agregadas, por_proyecto, proyectos_nuevos
 
 
@@ -374,7 +423,7 @@ def construye_db(regs):
               compacta(c['at']), compacta(c['al']), compacta(c['total']),
               idx(VISTA, c['vista']), c['dorm'], c['moneda'], compacta(c['precio']),
               idx(ENT, c['entrega']), c['vis'], compacta(c['cuota']),
-              idx(BANCO, c['banco'])] for c in cs]
+              idx(BANCO, c['banco']), c.get('tipo', 0)] for c in cs]
         P.append({'n': nombre, 'dv': idx(DEV, cs[0]['dev']), 'di': idx(DIST, dist),
                   'b': '', 'u': u})
 
@@ -435,7 +484,7 @@ def escribe_csv(regs):
             ('AREA LIBRE', 'al'), ('AREA TOTAL', 'total'), ('VISTA', 'vista'),
             ('DORMITORIOS', 'dorm'), ('MONEDA', 'moneda'), ('PRECIO', 'precio'),
             ('F ENTREGA', 'entrega'), ('VIS', 'vis'), ('CUOTA', 'cuota'),
-            ('BANCO', 'banco'), ('ORIGEN', 'origen')]
+            ('BANCO', 'banco'), ('TIPO', 'tipo'), ('ORIGEN', 'origen')]
     with open(CSV_OUT, 'w', newline='', encoding='utf-8') as f:
         w = csv.writer(f)
         w.writerow([c[0] for c in cols])
@@ -456,6 +505,8 @@ def revisa_huecos(f1, log):
     complete lo suyo.
     """
     def vacio(v):
+        if hasattr(v, 'day') and hasattr(v, 'month'):
+            return True          # Excel la convirtio en fecha: no es un area
         return txt(v).upper() in VACIOS
 
     por_dev = collections.defaultdict(collections.Counter)
@@ -559,6 +610,21 @@ def main():
     escribe_html(db, log)
     escribe_csv(regs)
     print('Escrito nattiva_data_limpia.csv (%d filas)' % len(regs))
+
+    ofi = sum(1 for c in regs if c.get('tipo') == 1)
+    if ofi:
+        print('\nTipo de inmueble: %d oficinas y %d departamentos.' % (ofi, len(regs) - ofi))
+    if _dorm_rescatados[0]:
+        print('DORMITORIOS: %d celdas venian convertidas en fecha por Excel y se '
+              'leyeron como dia.mes ("2.5" estaba guardado como 2-may).' % _dorm_rescatados[0])
+    if _cuotas_calculadas[0]:
+        print('CUOTA: %d unidades no la traian y se calculo como precio/%.4f, el '
+              'mismo factor que usa la hoja.' % (_cuotas_calculadas[0], FACTOR_CUOTA))
+    if _areas_perdidas[0]:
+        log.aviso('%d celdas de area estan convertidas en fecha y se dejaron en blanco: '
+                  'la fecha es ambigua (27.2 y 27.02 dan la misma) y adivinarla falsearia '
+                  'el precio por m2. Corrigelas en la hoja; estan en datos-faltantes.csv.'
+                  % _areas_perdidas[0])
 
     if _entrega_rescatadas[0]:
         print('\nF. ENTREGA: %d celdas venian convertidas en fecha por Google (el año'
