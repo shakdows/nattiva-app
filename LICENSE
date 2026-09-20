@@ -1,0 +1,94 @@
+LICENCIA DE SOFTWARE PROPIETARIO
+================================
+
+Copyright (c) 2026 Aram Ramírez (@shakdows). Todos los derechos reservados.
+
+ADVERTENCIA: este documento es una plantilla redactada para dejar constancia
+de la titularidad. NO sustituye a un contrato revisado por un abogado. Antes
+de apoyarse en él frente a un tercero, hágalo revisar por un profesional
+colegiado en Perú.
+
+
+1. TITULARIDAD
+--------------
+
+El titular de los derechos patrimoniales y morales de autor sobre este
+software —código fuente, hojas de estilo, scripts de sincronización de datos,
+estructura de la base de datos y documentación— es Aram Ramírez (@shakdows),
+en adelante "el Autor".
+
+La titularidad nace con la creación de la obra, conforme al Decreto
+Legislativo 822, Ley sobre el Derecho de Autor del Perú, y no depende de
+registro alguno. El registro ante INDECOPI es voluntario y sirve como medio
+de prueba, no como requisito para ser titular.
+
+
+2. LICENCIA A NATTIVA
+---------------------
+
+NATTIVA (en adelante "el Cliente") recibe una licencia de uso sobre este
+software en los siguientes términos:
+
+2.1. Mientras exista contraprestación económica pendiente de pago al Autor,
+     el Cliente recibe una licencia NO EXCLUSIVA, NO TRANSFERIBLE y REVOCABLE,
+     limitada a usar el software para su operación comercial propia.
+
+2.2. Una vez pagada íntegramente la contraprestación acordada entre el Autor
+     y el Cliente, los derechos patrimoniales de explotación pasan a ser
+     compartidos entre ambas partes en los términos que el contrato de
+     desarrollo establezca. A falta de contrato escrito que diga otra cosa,
+     la licencia se convierte en perpetua e irrevocable para el Cliente,
+     pero el Autor conserva la titularidad del código y el derecho a
+     reutilizarlo en otros proyectos.
+
+2.3. Los derechos morales de autor son irrenunciables e intransferibles y
+     permanecen siempre con el Autor, conforme al artículo 21 del Decreto
+     Legislativo 822.
+
+2.4. Ninguna cláusula de este documento transfiere al Cliente la titularidad
+     de los datos de terceros contenidos o procesados por el software. Esos
+     datos se rigen por los acuerdos que el Cliente tenga con cada
+     desarrolladora inmobiliaria.
+
+
+3. PROHIBICIONES
+----------------
+
+Salvo autorización escrita y previa del Autor, queda prohibido a cualquier
+persona distinta del Cliente:
+
+  a) copiar, reproducir o distribuir el código, total o parcialmente;
+  b) crear obras derivadas, adaptaciones o traducciones;
+  c) realizar ingeniería inversa sobre las partes compiladas o minificadas;
+  d) extraer, copiar o reutilizar de forma sistemática la base de datos de
+     proyectos, unidades y precios, ya sea de forma manual o automatizada
+     (scraping, crawling, APIs no autorizadas);
+  e) usar el nombre, el logotipo o la identidad visual de NATTIVA;
+  f) sublicenciar, vender, alquilar o ceder cualquiera de los derechos aquí
+     concedidos.
+
+
+4. ACTIVOS DE TERCEROS
+----------------------
+
+Este repositorio incorpora material cuya titularidad NO corresponde al Autor
+ni al Cliente. Su origen, licencia y condiciones de uso están documentados en
+el archivo CREDITOS.md, que forma parte de esta licencia. Nada de lo dispuesto
+aquí otorga derecho alguno sobre ese material.
+
+
+5. SIN GARANTÍA
+---------------
+
+El software se entrega "TAL CUAL", sin garantía de ningún tipo, expresa o
+implícita. El Autor no responde por decisiones comerciales tomadas a partir
+de los datos que el software muestra: la exactitud de precios, áreas,
+disponibilidad y fechas de entrega depende de la información que cada
+desarrolladora entrega al Cliente.
+
+
+6. CONTACTO
+-----------
+
+Para solicitar autorizaciones o reportar un uso no autorizado:
+Aram Ramírez — aramramirez1995@gmail.com — github.com/shakdows

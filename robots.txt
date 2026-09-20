@@ -1,0 +1,76 @@
+# NATTIVA · Real Estate Intelligence
+# © 2026. Ver /terminos.html
+#
+# La extraccion masiva del catalogo de proyectos, unidades y precios esta
+# prohibida por los terminos de uso, con independencia de lo que este
+# archivo permita. robots.txt es una convencion, no un control de acceso.
+
+# ── Buscadores: que indexen la web de marca, no la herramienta interna ──
+User-agent: *
+Allow: /$
+Allow: /terminos.html
+Disallow: /herramientas/
+Disallow: /crm.html
+Disallow: /*.csv$
+Disallow: /media/
+
+# ── Rastreadores de entrenamiento de IA ──
+# No damos permiso para usar el contenido de este sitio como material de
+# entrenamiento. Estos agentes respetan robots.txt de forma voluntaria.
+User-agent: GPTBot
+Disallow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: Applebot-Extended
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: meta-externalagent
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+User-agent: cohere-ai
+Disallow: /
+
+# ── Herramientas de scraping y analisis SEO de la competencia ──
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /

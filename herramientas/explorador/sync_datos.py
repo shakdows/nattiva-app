@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+#
+# © 2026 Aram Ramírez (@shakdows) / NATTIVA. Todos los derechos reservados.
+# Código propietario — ver LICENSE en la raíz del repositorio.
+#
 """
 Sincroniza el Explorador de Proyectos con la hoja maestra de Google Drive.
 
