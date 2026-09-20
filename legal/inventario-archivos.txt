@@ -1,0 +1,149 @@
+NATTIVA — Plataforma de Inteligencia Inmobiliaria
+INVENTARIO DE ARCHIVOS DE LA OBRA
+Autor: Aram Ramirez (shakdows) · Lima, Peru
+Generado: 2026-09-20
+Repositorio: shakdows/nattiva-app · rama main
+Commit de referencia: 8e9a05c68522b33bb982e29f82ef7c1189557b6e
+
+El hash SHA-256 fija el contenido exacto de cada archivo en esta fecha.
+Si manana aparece un archivo identico en otro lugar, el hash lo demuestra.
+Para comprobarlo:  sha256sum <archivo>
+
+==============================================================================================================================
+ARCHIVO                                                                               BYTES   1a VERSION  SHA-256 (16)      
+------------------------------------------------------------------------------------------------------------------------------
+.gitignore                                                                               19   2026-09-06  862263fa1f46c20f
+CREDITOS.md                                                                            5146   2026-09-20  5c53ed046152516c
+LICENSE                                                                                3813   2026-09-20  62d02659e2208fce
+README.md                                                                                13   2026-05-12  69c7c688c25b776c
+crm.html                                                                              20135   2026-05-13  1fffef4fc7abf977
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_42_31 p.m..png           2069033   2026-09-19  25f0c4c3864995e4
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_43_52 p.m..png           1627717   2026-09-19  1f5e3525ddbe91be
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_52_35 p.m. (1).png       2639298   2026-09-19  821c162931be070d
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_52_35 p.m. (2).png       2364806   2026-09-19  27cd2e2b3774556e
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_52_35 p.m. (3).png       2304482   2026-09-19  9f5d02a9a551ae5f
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_52_35 p.m. (4).png       2372187   2026-09-19  af62491c68fd561a
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_52_36 p.m. (5).png       2274519   2026-09-19  64bb487f1088eac0
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_52_36 p.m. (6).png       2147264   2026-09-19  684d8c2abb396c93
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_52_36 p.m. (7).png       2349763   2026-09-19  807aaeca304ebfce
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_52_36 p.m. (8).png       2010418   2026-09-19  3b06f06f3783ce00
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_55_14 p.m. (1).png       2656024   2026-09-19  bc2f9a13b4d60232
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_55_14 p.m. (2).png       2067097   2026-09-19  6ea987f7143dee07
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_55_14 p.m. (3).png       2266035   2026-09-19  5bcdfc0428c0c7ad
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_55_14 p.m. (4).png       2504960   2026-09-19  a44020b735a30634
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_55_15 p.m. (5).png       2076106   2026-09-19  7ab4581252ff0b18
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_55_15 p.m. (6).png       2528113   2026-09-19  228613a484b5213f
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_55_15 p.m. (7).png       2563755   2026-09-19  e9c7bf3a4828cbfc
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_55_15 p.m. (8).png       2476075   2026-09-19  b0b8066c9939e54b
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_55_16 p.m. (10).png      1931416   2026-09-19  7c3ba2ac224a3ccc
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_55_16 p.m. (9).png       2476689   2026-09-19  ff9e5b44b79b7d9f
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_58_18 p.m. (1).png       1918938   2026-09-19  6a5ab9664128d9e3
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_58_18 p.m. (2).png       1658011   2026-09-19  8cf44267b2c422af
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_58_18 p.m. (3).png       2539874   2026-09-19  9938f2ec30f92db3
+fotos nattiva departamentos/ChatGPT Image 18 sept 2026, 11_58_19 p.m. (4).png       2081720   2026-09-19  11ea3b0449ad150d
+herramientas/explorador/COMO_ACTUALIZAR.md                                             4037   2026-09-06  0e98b57618901b7a
+herramientas/explorador/datos-faltantes.csv                                          138291   2026-09-15  a7076a582077547e
+herramientas/explorador/index.html                                                  1385142   2026-09-05  c2bf3e41e4400cf2
+herramientas/explorador/nattiva_data_limpia.csv                                     1691171   2026-09-06  d3603bcd9043098d
+herramientas/explorador/styles/portfolio-premium.css                                  42314   2026-09-19  bd520171d7682bc2
+herramientas/explorador/sync_datos.py                                                 25665   2026-09-06  b81aa7293987371c
+herramientas/hipotecaria/index.html                                                    9740   2026-09-05  17cb4b435bbbd898
+herramientas/hipotecaria/script.js                                                    27826   2026-09-05  077b70524fe45622
+herramientas/hipotecaria/styles.css                                                   12379   2026-09-05  3dfa951f7a578561
+herramientas/rentabilidad/index.html                                                  35374   2026-09-05  aaeff72abf2bb851
+icons/apple-touch-icon.png                                                             8958   2026-09-05  21b4f7b77433ebe8
+icons/favicon-32.png                                                                    980   2026-09-05  518c2634e6bf92fa
+icons/icon-144.png                                                                     7139   2026-09-05  4a230295e265af79
+icons/icon-192.png                                                                    10252   2026-09-05  98ea91c2aae3c235
+icons/icon-384.png                                                                    31816   2026-09-05  10b0e6588378ec8a
+icons/icon-512.png                                                                    49733   2026-09-05  00273aabfb75e5a3
+icons/maskable-512.png                                                                37672   2026-09-05  a552a4f9911a7098
+img/arquitectura/arq-01.webp                                                         171726   2026-09-19  f523123884d187c5
+img/arquitectura/arq-02.webp                                                         139572   2026-09-19  f290e50ee93a4cbe
+img/arquitectura/arq-03.webp                                                         264096   2026-09-19  74a7d694f094737d
+img/arquitectura/arq-04.webp                                                         203188   2026-09-19  385c3c290b46b7c1
+img/arquitectura/arq-05.webp                                                         184164   2026-09-19  74c07f403c76248b
+img/arquitectura/arq-06.webp                                                         175974   2026-09-19  8430f84a321bba72
+img/arquitectura/arq-07.webp                                                         153450   2026-09-19  abba5f348ff038c6
+img/arquitectura/arq-08.webp                                                         135516   2026-09-19  e60e8f352dd9b148
+img/arquitectura/arq-09.webp                                                         196990   2026-09-19  9b66eac42587ca57
+img/arquitectura/arq-10.webp                                                          48958   2026-09-19  64e9e6c6026a0e41
+img/arquitectura/arq-11.webp                                                         264990   2026-09-19  2ed10ac661844f1e
+img/arquitectura/arq-12.webp                                                         155190   2026-09-19  b290beed57c2f8a5
+img/arquitectura/arq-13.webp                                                         185278   2026-09-19  ba8a1d47edbd1d3b
+img/arquitectura/arq-14.webp                                                         203680   2026-09-19  91ada88ff8e54480
+img/arquitectura/arq-15.webp                                                         125526   2026-09-19  22fd1c6db9595f0c
+img/arquitectura/arq-16.webp                                                         173782   2026-09-19  943417b633b231b7
+img/arquitectura/arq-17.webp                                                         192658   2026-09-19  99c9db092469d49d
+img/arquitectura/arq-18.webp                                                         231898   2026-09-19  157bfd9c6449b697
+img/arquitectura/arq-19.webp                                                          88722   2026-09-19  7c7ab3d49d59fa86
+img/arquitectura/arq-20.webp                                                         227040   2026-09-19  1b814e374643286a
+img/arquitectura/arq-21.webp                                                          33564   2026-09-19  fe56340a73ca8fc7
+img/arquitectura/arq-22.webp                                                          57596   2026-09-19  19edd62260c427c0
+img/arquitectura/arq-23.webp                                                         115406   2026-09-19  b4c9d0fb902c43aa
+img/arquitectura/arq-24.webp                                                          95132   2026-09-19  b9b042134b804a79
+img/hero-nattiva.jpg                                                                 248047   2026-09-10  3b0f63ee89b1ba0b
+img/hero-nattiva.webp                                                                109112   2026-09-10  ece19a680022cc40
+index.html                                                                           429462   2026-05-12  74dccd3df07a8ee4
+logos/2k-inmobiliaria.png                                                              6723   2026-06-26  0c5863666dfa740a
+logos/albamar.png                                                                     15992   2026-06-26  d4b3c800026017a8
+logos/andiamo.png                                                                     16800   2026-06-26  3a72d9d82eabff88
+logos/arch.png                                                                        17462   2026-06-26  baaa0dc2d2c51b01
+logos/armando-paredes.png                                                             26099   2026-06-26  7b7606b95223ebd7
+logos/avenir.png                                                                      13443   2026-06-26  a7b2e626bfb4fa62
+logos/cantabria.png                                                                   25470   2026-06-26  faff466101bea1b5
+logos/casaideal.png                                                                   10432   2026-06-26  a2b7cd6c4983f5d1
+logos/cimentares.png                                                                  25646   2026-06-26  f0659fd4bc8506fa
+logos/ciudaris.png                                                                    15809   2026-06-26  379583ee6917bf1d
+logos/conforta.png                                                                    18462   2026-06-26  8c3601b67cf40d9a
+logos/cosapi.png                                                                      18603   2026-06-26  407372e4722506f2
+logos/cumbres-andinas.png                                                              9979   2026-06-26  4ff2bcbc15ebd3c2
+logos/edifica.png                                                                      7961   2026-06-26  e4156f8b0d1f6c06
+logos/efron-arquitectos.png                                                           14969   2026-06-26  54522dd6846863a6
+logos/fai.png                                                                          9018   2026-06-26  6811d33a9b7f10d5
+logos/fcm-construcciones.png                                                          15791   2026-06-26  65dc5a1254657ba3
+logos/franca.png                                                                      17003   2026-09-05  a52429c8eae2a370
+logos/galeon.png                                                                      14317   2026-06-26  252ca930e658820e
+logos/gdc.png                                                                         38875   2026-09-05  a6329def934bac1c
+logos/gracia.png                                                                      11780   2026-06-26  09560ff0789e8510
+logos/gratto.png                                                                      34649   2026-09-05  17efcc388a6d89b1
+logos/grupo-lar.png                                                                    6917   2026-06-26  5d3a5452bbf9a6f5
+logos/grupo-mg.png                                                                    13701   2026-06-26  0d9ed083d685b7e0
+logos/grupo-octagon.png                                                               24508   2026-06-26  b5393abec06602d1
+logos/grupo-tyc.png                                                                   19524   2026-06-26  10f1a9d689a5cb86
+logos/illusione.png                                                                    7096   2026-06-26  021afe3f1ad1755f
+logos/imagina.png                                                                      9527   2026-06-26  86008119cd24d8dc
+logos/inarco.png                                                                      82133   2026-09-05  bede70d0301de358
+logos/la-venturosa.png                                                                19411   2026-06-26  add9ac570998fabe
+logos/libre.png                                                                        7445   2026-06-26  84ebf88ad2d4cd26
+logos/make.png                                                                        10301   2026-06-26  7a2869fb7c2db2d6
+logos/marca-diagonal.png                                                              13604   2026-06-26  495a520f412acd72
+logos/marcan.png                                                                      42443   2026-09-05  da11a5d3bb9d1bfe
+logos/mirano.png                                                                      35250   2026-06-26  1debceb766245bcb
+logos/ms-inmobiliaria.png                                                              5061   2026-06-26  4831f96000730b7f
+logos/nattiva-2.png                                                                    7229   2026-06-26  b55d5fe38536677c
+logos/nattiva.png                                                                      7480   2026-06-26  656b7cb68d8d1f74
+logos/nexo-agentes.png                                                                13084   2026-06-26  cf429b2f3d877528
+logos/noi-inmobiliaria.png                                                            16950   2026-06-26  550da3851a0a59bd
+logos/pisonay.png                                                                     30759   2026-06-26  c34c0dc4860225f5
+logos/procity.png                                                                     26129   2026-06-26  49548af3cc3d314e
+logos/quatro.png                                                                      12018   2026-06-26  23a95d7a3c0612da
+logos/rb-arquitectura.png                                                             19661   2026-06-26  d90c29cf044d390e
+logos/senda.png                                                                       21699   2026-06-26  1ae610d749112518
+logos/tale.png                                                                        11347   2026-06-26  ce9be70a1dc8f439
+logos/tucan-inversiones.png                                                           15452   2026-06-26  4991fd804f1b0fb2
+logos/urbalima.png                                                                     9431   2026-06-26  44f1d466b3da0655
+logos/urbana-peru.png                                                                  7306   2026-06-26  9d5acd60d51a2587
+logos/verdant.png                                                                     33664   2026-06-26  b9adb7b08da80d1d
+logos/vidarq.png                                                                       8267   2026-06-26  129425ccf63364ab
+logos/vita-in.png                                                                     24160   2026-06-26  7108a8de9d5cacea
+logos/vyv.png                                                                         23258   2026-06-26  db211c31136ac111
+logos/zafira.png                                                                      16662   2026-06-26  fe22e87f4e5e4d37
+manifest.json                                                                           970   2026-09-05  6146581e313b19ef
+media/intro.mp3                                                                      396225   2026-09-10  90807bf47a9e1b8d
+media/intro.mp4                                                                     2428625   2026-09-10  c19ce89596808312
+robots.txt                                                                             1467   2026-09-20  7edfd5f0b9da3117
+sw.js                                                                                  1790   2026-09-05  d76c3f6acbfd2799
+terminos.html                                                                          9087   2026-09-20  a5249f15df889474
+------------------------------------------------------------------------------------------------------------------------------
+TOTAL: 133 archivos                                                                65887556

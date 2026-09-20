@@ -42,27 +42,46 @@ La atribución «© Colaboradores de OpenStreetMap» la pinta el propio iframe y
 
 ## Imágenes de arquitectura — `img/arquitectura/arq-01..24.webp`
 
-> ⚠️ **PENDIENTE DE DOCUMENTAR.** Origen no confirmado.
+**Origen: generadas con ChatGPT (OpenAI) por el titular de la cuenta, el 18
+de septiembre de 2026 entre las 23:42 y las 23:58.**
 
-Se usan como portada y galería de los 221 proyectos, con el sello «Imagen
-referencial» visible en la ficha. Son imágenes de ejemplo, no fotografías de
-los edificios reales.
+Lo acreditan los nombres de los 24 archivos originales conservados en
+`fotos nattiva departamentos/`, que OpenAI asigna automáticamente:
 
-Antes de seguir publicándolas hay que anotar aquí:
+```
+ChatGPT Image 18 sept 2026, 11_42_31 p.m..png
+ChatGPT Image 18 sept 2026, 11_43_52 p.m..png
+ChatGPT Image 18 sept 2026, 11_52_35 p.m. (1).png
+… 24 archivos, todos con el mismo patrón
+```
 
-- [ ] Quién las creó y con qué herramienta
-- [ ] Fecha
-- [ ] Si vienen de un banco de imágenes: nombre, número de licencia y si la
-      licencia cubre uso comercial y modificación
-- [ ] Si se generaron con IA: qué herramienta, qué plan (los planes gratuitos
-      de varias herramientas **no** permiten uso comercial) y guardar el
-      recibo o captura de los términos vigentes al generarlas
+**No borrar esos originales:** son la prueba del origen. Si algún día alguien
+reclama, ese nombre de archivo con su fecha y hora es la primera evidencia.
 
-**Riesgo si no se documenta:** están publicadas como portada de 221 fichas en
-un sitio comercial. Es el material más visible del proyecto y el más fácil de
-rastrear con una búsqueda inversa de imágenes.
+### Situación de derechos
 
-Originales sin optimizar en `fotos nattiva departamentos/` (24 PNG).
+| Punto | Estado |
+|---|---|
+| Uso comercial | Permitido. Los Términos de Uso de OpenAI ceden al usuario los derechos sobre el resultado generado |
+| Atribución obligatoria | No la exigen |
+| Titularidad | Del titular de la cuenta con que se generaron |
+| Registro como obra propia | **No procede.** Una imagen generada íntegramente por IA no es registrable por derecho de autor en la mayoría de jurisdicciones, porque falta autoría humana |
+
+La consecuencia práctica de lo último: **puedes usarlas, pero no puedes
+impedir que otro use una imagen idéntica o muy parecida.** Para lo que se
+usan aquí —imágenes de ejemplo hasta que lleguen las fotos reales de cada
+edificio— eso no representa ningún problema.
+
+- [ ] Guardar una captura de los Términos de Uso de OpenAI vigentes al 18 de
+      septiembre de 2026, por si cambian
+- [ ] Confirmar que la cuenta usada es la del titular y que su plan permite
+      uso comercial
+
+### Cómo se usan
+
+Portada y galería de los 221 proyectos, con el sello **«Imagen referencial»**
+visible en cada ficha y la advertencia correspondiente en `/terminos.html`.
+No son fotografías ni renders de los edificios reales, y el sitio lo dice.
 
 `arq-01.webp` es una captura de la propia interfaz de Nattiva y no se usa.
 `arq-02.webp` se retiró del banco de portadas: su render trae el cielo en
