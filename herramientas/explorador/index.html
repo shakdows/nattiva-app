@@ -1354,6 +1354,51 @@ function dormBreakdown(p){
   return '<div class="dd-section"><div class="dd-sec-t">Disponibilidad por tipo de dormitorio</div><div class="dd-typos">'+cards+'</div></div>';
 }
 var CALC={inicial:20,tasa:11.5,plazo:20};
+/* ---- inicio del pago del credito ----
+   Muchos proyectos en planos tienen desembolso postergado: el banco recien
+   suelta el dinero cuando entrega la obra, asi que hasta esa fecha el
+   comprador no paga cuota. El campo se autocompleta con la entrega del
+   proyecto y el asesor puede moverlo. */
+function entregaAMes(t){
+  if(!t)return '';
+  var hoy=new Date();
+  if(/inmediat/i.test(t))return hoy.getFullYear()+'-'+('0'+(hoy.getMonth()+1)).slice(-2);
+  var m=/^([a-zA-ZáéíóúÁÉÍÓÚ]{3})\.?-(\d{2})/.exec(t.trim());
+  if(!m)return '';
+  var mes=MESN[m[1].toLowerCase()];if(!mes)return '';
+  return '20'+m[2]+'-'+('0'+mes).slice(-2);
+}
+function mesesHasta(ym){
+  if(!ym)return 0;
+  var q=/^(\d{4})-(\d{2})$/.exec(ym);if(!q)return 0;
+  var hoy=new Date();
+  var d=(parseInt(q[1],10)-hoy.getFullYear())*12+(parseInt(q[2],10)-1-hoy.getMonth());
+  /* Se descuenta un mes: con desembolso normal la primera cuota cae el mes
+     siguiente a la compra, no este. Comprando en setiembre 2026 con arranque
+     en diciembre 2027, las cuotas que no se pagan son las de octubre 2026 a
+     noviembre 2027: 14, no 15. La de diciembre 2027 ya se paga. */
+  d-=1;
+  return d>0?d:0;
+}
+/* Intereses contenidos en las primeras k cuotas de un credito frances.
+   Se calcula con el saldo real, no con una regla de tres: en cuota fija la
+   parte de interes baja cada mes y aproximar sobreestima el numero. */
+function interesesPrimeras(financiado,r,n,k){
+  if(k<=0||n<=0||financiado<=0)return 0;
+  if(k>n)k=n;
+  if(r<=0)return 0;
+  var cuota=financiado*r/(1-Math.pow(1+r,-n));
+  var f=Math.pow(1+r,k);
+  var saldo=financiado*f-cuota*((f-1)/r);
+  return k*cuota-(financiado-saldo);
+}
+function nombreMes(ym){
+  var q=/^(\d{4})-(\d{2})$/.exec(ym||'');if(!q)return '';
+  var M=['enero','febrero','marzo','abril','mayo','junio','julio','agosto',
+         'setiembre','octubre','noviembre','diciembre'];
+  return M[parseInt(q[2],10)-1]+' '+q[1];
+}
+
 function calcCuota(){
   var pr=document.getElementById('calcPrecio');if(!pr)return;
   var precio=parseFloat(pr.value)||0;
@@ -1370,27 +1415,70 @@ function calcCuota(){
   document.getElementById('calcIniL').textContent=ini+'%';
   document.getElementById('calcTasaL').textContent=tasa.toFixed(1)+'%';
   document.getElementById('calcPlazoL').textContent=plazo+' años';
+
+  /* ---- ahorro financiero por desembolso postergado ---- */
+  var elIni=document.getElementById('calcInicio'),g=0,intG=0;
+  if(elIni){
+    g=mesesHasta(elIni.value);
+    var gl=document.getElementById('calcGraciaL');
+    if(gl)gl.textContent=g?(g+(g===1?' mes':' meses')+' sin pagar'):'Desde este mes';
+    var caja=document.getElementById('calcAhorro');
+    if(caja){
+      if(g>0&&cuota>0){
+        intG=interesesPrimeras(financiado,r,n,g);
+        var nCuo=Math.min(g,n);
+        document.getElementById('ahoInt').textContent=pen(intG);
+        document.getElementById('ahoSub').textContent='en intereses que no corren hasta '+nombreMes(elIni.value);
+        document.getElementById('ahoN').textContent=nCuo+(nCuo===1?' cuota':' cuotas');
+        document.getElementById('ahoTot').textContent=pen(nCuo*cuota);
+        document.getElementById('ahoNote').textContent=
+          'Mientras el banco no desembolsa no pagas cuota ni generas intereses. '
+          +'El crédito arranca en '+nombreMes(elIni.value)+' y sus '+plazo
+          +' años se cuentan desde esa fecha, así que no se acorta el plazo: '
+          +'lo que ganas es no desembolsar nada durante '+g+(g===1?' mes':' meses')+'.';
+        caja.hidden=false;
+      }else caja.hidden=true;
+    }
+  }
+
   var wa=document.getElementById('ddWa');
   if(wa&&typeof ddP!=='undefined'&&ddP&&precio>0){
     var txt='Hola NATTIVA, me interesa el proyecto '+ddP.n+' ('+ddP.distN+'). '
       +'Simulé mi financiamiento: precio S/ '+Math.round(precio).toLocaleString('es-PE')
       +', inicial '+ini+'% ('+pen(precio*ini/100)+'), plazo '+plazo+' años → cuota aprox. '+pen(cuota)+'/mes. '
+      +(g>0?'Con desembolso postergado no pago cuota por '+g+(g===1?' mes':' meses')+' ('+pen(intG)+' en intereses que no corren). ':'')
       +'Quisiera más información y disponibilidad.';
     wa.href='https://wa.me/51907528914?text='+encodeURIComponent(txt);
   }
 }
-function calcDD(p){
+function calcDD(p,entTxt){
   var precio=p.desde||0;if(!precio)return '';
+  var _h=new Date(),hoyYM=_h.getFullYear()+'-'+('0'+(_h.getMonth()+1)).slice(-2);
+  var ini0=entregaAMes(entTxt);
+  if(ini0&&ini0<hoyYM)ini0=hoyYM;
   return '<div class="dd-section"><div class="dd-sec-t">Calcula tu cuota mensual</div>'
    +'<div class="dd-calc"><div class="dd-calc-form">'
      +'<div class="dd-calc-f"><label>Precio del departamento (S/)</label><input id="calcPrecio" type="number" value="'+Math.round(precio)+'" oninput="calcCuota()"></div>'
      +'<div class="dd-calc-f"><div class="dd-calc-lab"><span>Cuota inicial</span><b id="calcIniL">'+CALC.inicial+'%</b></div><input id="calcIni" type="range" min="0" max="50" step="5" value="'+CALC.inicial+'" oninput="calcCuota()"></div>'
      +'<div class="dd-calc-f"><div class="dd-calc-lab"><span>Tasa anual (TEA)</span><b id="calcTasaL">'+CALC.tasa.toFixed(1)+'%</b></div><input id="calcTasa" type="range" min="5" max="18" step="0.5" value="'+CALC.tasa+'" oninput="calcCuota()"></div>'
      +'<div class="dd-calc-f"><div class="dd-calc-lab"><span>Plazo del crédito</span><b id="calcPlazoL">'+CALC.plazo+' años</b></div><input id="calcPlazo" type="range" min="5" max="25" step="1" value="'+CALC.plazo+'" oninput="calcCuota()"></div>'
+     +'<div class="dd-calc-f"><div class="dd-calc-lab"><span>Empiezo a pagar la cuota en</span><b id="calcGraciaL">—</b></div>'
+       +'<input id="calcInicio" type="month" value="'+ini0+'" min="'+hoyYM+'" oninput="calcCuota()">'
+       +'<div class="dd-calc-hint">'+(ini0?'Tomado de la entrega del proyecto. Cámbialo si el banco desembolsa en otra fecha.':'Si el desembolso es postergado, pon aquí el mes en que arranca la cuota.')+'</div></div>'
    +'</div>'
    +'<div class="dd-calc-out"><div class="dd-calc-k">Cuota mensual estimada</div><div class="dd-calc-v" id="calcOut">—</div>'
      +'<div class="dd-calc-rows"><div><span>Inicial</span><b id="calcIniM">—</b></div><div><span>Monto a financiar</span><b id="calcFin">—</b></div></div>'
      +'<div class="dd-calc-note">Estimado referencial con sistema de cuota fija. La cuota real depende del banco, tu perfil crediticio y seguros.</div></div>'
+   +'<div class="dd-ahorro" id="calcAhorro" hidden>'
+     +'<div class="dd-ahorro-k">Ahorro financiero</div>'
+     +'<div class="dd-ahorro-v num" id="ahoInt">—</div>'
+     +'<div class="dd-ahorro-s" id="ahoSub">—</div>'
+     +'<div class="dd-ahorro-rows">'
+       +'<div><span>Cuotas que no pagas</span><b class="num" id="ahoN">—</b></div>'
+       +'<div><span>Total que no desembolsas</span><b class="num" id="ahoTot">—</b></div>'
+     +'</div>'
+     +'<div class="dd-ahorro-note" id="ahoNote"></div>'
+   +'</div>'
    +'</div></div>';
 }
 function printDD(){document.body.classList.add('printing');window.print();setTimeout(function(){document.body.classList.remove('printing');},400);}
@@ -1984,7 +2072,7 @@ function buildDD(){
      donde se acaba. */
   var table='<div class="dd-body"><div class="dd-cols">'
     +'<div class="dd-col dd-col-a">'+posDD(p)+mapSection+'</div>'
-    +'<div class="dd-col dd-col-b">'+calcDD(p)
+    +'<div class="dd-col dd-col-b">'+calcDD(p,_entP)
     +'<div class="dd-unidades">'
     +'<div class="dd-section"><div class="dd-sec-t">Unidades disponibles</div>'+dchips
       +'<div class="dd-ubuscar">'
