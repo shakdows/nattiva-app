@@ -52,6 +52,11 @@
             <label for="plazo">Plazo (años)</label>
             <input id="plazo" type="text" inputmode="numeric" placeholder="Ej: 20" />
           </div>
+          <div class="field full">
+            <label for="inicioPago">Empieza a pagar la cuota en <span class="opt">(opcional)</span></label>
+            <input id="inicioPago" type="month" oninput="pintaGracia()" />
+            <p class="field-hint" id="graciaInfo">Si el proyecto tiene desembolso postergado, pon el mes en que arranca la primera cuota.</p>
+          </div>
         </div>
         <button class="calc-btn" onclick="calcular()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="16" y2="14"/><line x1="8" y1="18" x2="12" y2="18"/></svg>
@@ -101,6 +106,21 @@
             <div class="insight-card-label">Monto a financiar</div>
             <div class="insight-card-value" id="outMonto"></div>
           </div>
+        </div>
+
+        <!-- Ahorro por desembolso postergado -->
+        <div class="ahorro-board hide" id="ahorroBoard">
+          <div class="ahorro-head">
+            <div class="ahorro-label">Ahorro financiero</div>
+            <div class="ahorro-value" id="ahorroInteres"></div>
+            <div class="ahorro-sub" id="ahorroSub"></div>
+          </div>
+          <div class="ahorro-rows">
+            <div><span>Cuotas que no paga</span><b id="ahorroCuotas"></b></div>
+            <div><span>Total que no desembolsa</span><b id="ahorroTotal"></b></div>
+            <div><span>Primera cuota</span><b id="ahorroPrimera"></b></div>
+          </div>
+          <p class="ahorro-note">Mientras el banco no desembolsa no hay cuota ni intereses. El crédito arranca en esa fecha y su plazo corre desde ahí, así que no se acorta: lo que gana el cliente es no desembolsar nada durante ese periodo.</p>
         </div>
 
         <!-- Detail -->

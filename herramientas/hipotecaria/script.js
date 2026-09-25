@@ -46,6 +46,48 @@ plazo.addEventListener("input",   () => { plazo.value   = plazo.value.replace(/[
 cliente.addEventListener("input", () => { cliente.value = cliente.value.replace(/[0-9]/g, ""); });
 
 /* ── Calcular ── */
+/* ══════════════════════════════════════════════
+   DESEMBOLSO POSTERGADO
+   En proyectos en planos el banco recien desembolsa cuando entregan la obra.
+   Hasta esa fecha no hay cuota ni intereses: ese periodo es un argumento de
+   venta y aqui se cuantifica.
+   ══════════════════════════════════════════════ */
+
+/* Cuotas que el cliente NO paga si su primera cuota se corre hasta `ym`.
+   Se descuenta un mes porque, con desembolso normal, la primera cuota cae el
+   mes siguiente a la compra y no este. Comprando en setiembre de 2026 con
+   arranque en diciembre de 2027 no se pagan 14 cuotas —de octubre 2026 a
+   noviembre 2027—; la de diciembre 2027 ya se paga. */
+function mesesDeGracia(ym) {
+  const q = /^(\d{4})-(\d{2})$/.exec(ym || "");
+  if (!q) return 0;
+  const hoy = new Date();
+  const d = (+q[1] - hoy.getFullYear()) * 12 + (+q[2] - 1 - hoy.getMonth()) - 1;
+  return d > 0 ? d : 0;
+}
+
+const MESES_ES = ["enero","febrero","marzo","abril","mayo","junio",
+                  "julio","agosto","setiembre","octubre","noviembre","diciembre"];
+function mesLargo(ym) {
+  const q = /^(\d{4})-(\d{2})$/.exec(ym || "");
+  return q ? MESES_ES[+q[2] - 1] + " de " + q[1] : "";
+}
+
+/* Aviso en vivo bajo el campo, antes de calcular */
+function pintaGracia() {
+  const el = document.getElementById("graciaInfo");
+  const v  = document.getElementById("inicioPago").value;
+  if (!el) return;
+  if (!v) {
+    el.textContent = "Si el proyecto tiene desembolso postergado, pon el mes en que arranca la primera cuota.";
+    return;
+  }
+  const g = mesesDeGracia(v);
+  el.textContent = g
+    ? g + (g === 1 ? " mes" : " meses") + " sin pagar cuota, hasta " + mesLargo(v) + "."
+    : "Con esa fecha la cuota arranca de inmediato, no hay periodo sin pagar.";
+}
+
 function calcular() {
   err.textContent = "";
   const nombre = cliente.value.trim();
@@ -75,12 +117,40 @@ function calcular() {
   outIngreso.textContent   = "S/ " + nf.format(ing);
 
   // Guardamos la simulación para el cronograma francés
+  const tabla = generarCronograma(mf, r, m, cm);
+
+  /* ── Ahorro por desembolso postergado ──
+     Los intereses se suman del propio cronograma, no de una formula aparte:
+     asi el numero del recuadro y el del detalle mensual nunca se contradicen.
+     Aproximar con una regla de tres sobreestimaria, porque en cuota fija la
+     parte de interes es altisima al principio y baja cada mes. */
+  const inicioYM = document.getElementById("inicioPago").value;
+  const gracia   = Math.min(mesesDeGracia(inicioYM), m);
+  let interesGracia = 0;
+  for (let k = 0; k < gracia; k++) interesGracia += tabla[k].interes;
+  const totalGracia = tabla.slice(0, gracia).reduce((x, f) => x + f.cuota, 0);
+
   simActual = {
     nombre, precio: p, cuotaInicialPct: c, cuotaInicial: ci,
     montoFinanciado: mf, tasaMensual: r, meses: m, anios: a, tcea: t, cuotaMensual: cm,
-    tabla: generarCronograma(mf, r, m, cm)
+    inicioYM, gracia, interesGracia, totalGracia,
+    tabla
   };
   vistaAmort = "anual";
+
+  const board = document.getElementById("ahorroBoard");
+  if (gracia > 0) {
+    document.getElementById("ahorroInteres").textContent = "S/ " + nf.format(interesGracia);
+    document.getElementById("ahorroSub").textContent =
+      "en intereses que no corren hasta " + mesLargo(inicioYM);
+    document.getElementById("ahorroCuotas").textContent =
+      gracia + (gracia === 1 ? " cuota" : " cuotas");
+    document.getElementById("ahorroTotal").textContent = "S/ " + nf.format(totalGracia);
+    document.getElementById("ahorroPrimera").textContent = mesLargo(inicioYM);
+    board.classList.remove("hide");
+  } else {
+    board.classList.add("hide");
+  }
 
   form.classList.add("hide");
   result.classList.remove("hide");
@@ -91,6 +161,9 @@ function calcular() {
 function resetear() {
   cerrarAmortizacion();
   simActual = null;
+  const ip = document.getElementById("inicioPago"); if (ip) ip.value = "";
+  const ab = document.getElementById("ahorroBoard"); if (ab) ab.classList.add("hide");
+  pintaGracia();
   form.classList.remove("hide");
   result.classList.add("hide");
   cliente.value = precio.value = cuota.value = tea.value = plazo.value = "";
@@ -330,7 +403,14 @@ function construirPropuesta() {
     ["Plazo", s.anios + " años (" + s.meses + " cuotas)"],
     ["TCEA", s.tcea + " %"]
   ];
-  const tY = 400, rH = 38;
+  if (s.gracia > 0) {
+    filas.push(["Primera cuota", mesLargo(s.inicioYM)]);
+    filas.push(["Periodo sin pagar cuota", s.gracia + (s.gracia === 1 ? " mes" : " meses")]);
+    filas.push(["Intereses que no corren", "S/ " + nf.format(s.interesGracia)]);
+  }
+  /* con el bloque de desembolso postergado la tabla pasa de 4 a 7 filas:
+     se aprieta la fila para que la nota y el pie sigan entrando en la pagina */
+  const tY = 400, rH = filas.length > 5 ? 34 : 38;
   fill(doc, C.white); stroke(doc, C.line); doc.setLineWidth(0.8);
   doc.roundedRect(PDF_M, tY, PDF_CW, rH * filas.length, 10, 10, "FD");
   filas.forEach((f, i) => {

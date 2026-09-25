@@ -33,10 +33,10 @@ h1 em{color:var(--vino);font-style:italic}
 .field{display:flex;flex-direction:column}
 .field.full{grid-column:1/-1}
 label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--gris);margin-bottom:6px}
-input[type=text],input[type=email],input[type=tel]{width:100%;font-family:'Jost',sans-serif;font-size:14px;font-weight:600;color:var(--vino);
+input[type=text],input[type=email],input[type=tel],input[type=month]{width:100%;font-family:'Jost',sans-serif;font-size:14px;font-weight:600;color:var(--vino);
   padding:10px 12px;border:1px solid var(--linea);border-radius:8px;background:var(--crema);outline:none;transition:.16s}
 input[type=text]::placeholder,input[type=email]::placeholder,input[type=tel]::placeholder{color:#b5adaf;font-weight:400}
-input[type=text]:focus,input[type=email]:focus,input[type=tel]:focus{border-color:var(--oro);background:#fff}
+input[type=text]:focus,input[type=email]:focus,input[type=tel]:focus,input[type=month]:focus{border-color:var(--oro);background:#fff}
 
 /* ─── BOTONES ─── */
 button{font-family:'Jost',sans-serif;cursor:pointer;transition:.18s}
@@ -179,4 +179,37 @@ footer{text-align:center;padding:26px 0 46px;color:var(--gris);font-size:12px;fo
   body{background:#fff!important}
   header,.premium-actions,.amort-modal,.volver-nattiva{display:none!important}
   .result-cover{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+
+/* ══ Desembolso postergado ══
+   El cliente no paga cuota hasta que el banco desembolsa. El recuadro va en
+   tinta y oro para no competir con el vino de la cuota mensual. */
+label .opt{font-weight:400;letter-spacing:.04em;text-transform:none;color:var(--gris);opacity:.8}
+.field-hint{margin-top:6px;font-size:11.5px;line-height:1.45;color:var(--gris)}
+
+.ahorro-board{
+  background:linear-gradient(140deg,var(--tinta),#3a2f33);
+  border-radius:14px;padding:18px 20px;margin-bottom:12px;color:var(--crema);
+}
+.ahorro-board.hide{display:none}
+.ahorro-label{
+  font-size:10.5px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+  color:var(--oro);
+}
+.ahorro-value{
+  font-family:'Cormorant Garamond',serif;font-weight:600;
+  font-size:clamp(28px,5vw,40px);line-height:1.05;color:#fff;margin-top:6px;
+  font-variant-numeric:tabular-nums;
+}
+.ahorro-sub{margin-top:4px;font-size:12.5px;color:rgba(250,246,241,.72)}
+.ahorro-rows{
+  margin-top:15px;padding-top:13px;
+  border-top:1px solid rgba(255,255,255,.17);
+  display:flex;flex-direction:column;gap:9px;
+}
+.ahorro-rows div{display:flex;justify-content:space-between;gap:14px;font-size:12.5px}
+.ahorro-rows span{color:rgba(250,246,241,.72)}
+.ahorro-rows b{font-weight:600;color:#fff;font-variant-numeric:tabular-nums;text-align:right}
+.ahorro-note{
+  margin-top:13px;font-size:10.5px;line-height:1.55;color:rgba(250,246,241,.55);
 }
