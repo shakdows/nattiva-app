@@ -1429,13 +1429,13 @@ function calcCuota(){
         var nCuo=Math.min(g,n);
         document.getElementById('ahoInt').textContent=pen(intG);
         document.getElementById('ahoSub').textContent='en intereses que no corren hasta '+nombreMes(elIni.value);
-        document.getElementById('ahoN').textContent=nCuo+(nCuo===1?' cuota':' cuotas');
+        document.getElementById('ahoN').textContent=nCuo+(nCuo===1?' mes':' meses');
         document.getElementById('ahoTot').textContent=pen(nCuo*cuota);
         document.getElementById('ahoNote').textContent=
-          'Mientras el banco no desembolsa no pagas cuota ni generas intereses. '
-          +'El crédito arranca en '+nombreMes(elIni.value)+' y sus '+plazo
-          +' años se cuentan desde esa fecha, así que no se acorta el plazo: '
-          +'lo que ganas es no desembolsar nada durante '+g+(g===1?' mes':' meses')+'.';
+          'No es un descuento: el crédito arranca en '+nombreMes(elIni.value)+', sus '+plazo
+          +' años corren desde ahí y el total que se paga por el préstamo no cambia. '
+          +'Lo que gana el cliente es no desembolsar nada durante '+g+(g===1?' mes':' meses')
+          +', y tener esos '+pen(nCuo*cuota)+' disponibles mientras tanto.';
         caja.hidden=false;
       }else caja.hidden=true;
     }
@@ -1474,8 +1474,8 @@ function calcDD(p,entTxt){
      +'<div class="dd-ahorro-v num" id="ahoInt">—</div>'
      +'<div class="dd-ahorro-s" id="ahoSub">—</div>'
      +'<div class="dd-ahorro-rows">'
-       +'<div><span>Cuotas que no pagas</span><b class="num" id="ahoN">—</b></div>'
-       +'<div><span>Total que no desembolsas</span><b class="num" id="ahoTot">—</b></div>'
+       +'<div><span>Meses de gracia</span><b class="num" id="ahoN">—</b></div>'
+       +'<div><span>Efectivo que no sale de tu bolsillo</span><b class="num" id="ahoTot">—</b></div>'
      +'</div>'
      +'<div class="dd-ahorro-note" id="ahoNote"></div>'
    +'</div>'

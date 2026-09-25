@@ -1015,7 +1015,8 @@ html,body{max-width:100%;overflow-x:clip}
 }
 .dd-ahorro-rows div{display:flex;justify-content:space-between;gap:12px;font-size:12px}
 .dd-ahorro-rows span{color:rgba(243,236,224,.7)}
-.dd-ahorro-rows b{font-weight:700;color:#fff;font-variant-numeric:tabular-nums}
+.dd-ahorro-rows b{font-weight:700;color:#fff;font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+.dd-ahorro-rows span{flex:1 1 auto;min-width:0}
 .dd-ahorro-note{
   margin-top:12px;font-size:10px;line-height:1.55;color:rgba(243,236,224,.55);
 }

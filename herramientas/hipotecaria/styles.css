@@ -209,7 +209,8 @@ label .opt{font-weight:400;letter-spacing:.04em;text-transform:none;color:var(--
 }
 .ahorro-rows div{display:flex;justify-content:space-between;gap:14px;font-size:12.5px}
 .ahorro-rows span{color:rgba(250,246,241,.72)}
-.ahorro-rows b{font-weight:600;color:#fff;font-variant-numeric:tabular-nums;text-align:right}
+.ahorro-rows b{font-weight:600;color:#fff;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+.ahorro-rows span{flex:1 1 auto;min-width:0}
 .ahorro-note{
   margin-top:13px;font-size:10.5px;line-height:1.55;color:rgba(250,246,241,.55);
 }

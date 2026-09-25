@@ -144,7 +144,7 @@ function calcular() {
     document.getElementById("ahorroSub").textContent =
       "en intereses que no corren hasta " + mesLargo(inicioYM);
     document.getElementById("ahorroCuotas").textContent =
-      gracia + (gracia === 1 ? " cuota" : " cuotas");
+      gracia + (gracia === 1 ? " mes" : " meses");
     document.getElementById("ahorroTotal").textContent = "S/ " + nf.format(totalGracia);
     document.getElementById("ahorroPrimera").textContent = mesLargo(inicioYM);
     board.classList.remove("hide");
@@ -404,13 +404,16 @@ function construirPropuesta() {
     ["TCEA", s.tcea + " %"]
   ];
   if (s.gracia > 0) {
+    /* En el PDF el registro es formal: es un documento que el cliente guarda,
+       no la pantalla desde la que se lo explican. */
     filas.push(["Primera cuota", mesLargo(s.inicioYM)]);
-    filas.push(["Periodo sin pagar cuota", s.gracia + (s.gracia === 1 ? " mes" : " meses")]);
-    filas.push(["Intereses que no corren", "S/ " + nf.format(s.interesGracia)]);
+    filas.push(["Meses de gracia", s.gracia + (s.gracia === 1 ? " mes" : " meses")]);
+    filas.push(["Intereses que aún no corren", "S/ " + nf.format(s.interesGracia)]);
+    filas.push(["Liquidez no comprometida", "S/ " + nf.format(s.totalGracia)]);
   }
   /* con el bloque de desembolso postergado la tabla pasa de 4 a 7 filas:
      se aprieta la fila para que la nota y el pie sigan entrando en la pagina */
-  const tY = 400, rH = filas.length > 5 ? 34 : 38;
+  const tY = 400, rH = filas.length > 7 ? 32 : (filas.length > 5 ? 34 : 38);
   fill(doc, C.white); stroke(doc, C.line); doc.setLineWidth(0.8);
   doc.roundedRect(PDF_M, tY, PDF_CW, rH * filas.length, 10, 10, "FD");
   filas.forEach((f, i) => {
